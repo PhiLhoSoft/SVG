@@ -1,0 +1,1118 @@
+Base of this tutorial comes from Gerald Bauer SVG Overview,
+found at <http://luxor-xul.sourceforge.net/talk/jug-nov-2002/slides.html>.
+
+-----
+
+SVG 1.1 standard is quite complex: over 600 printed pages!
+It relies on other standards, XML-based or not:
+XML, XML namespaces, XPath, XLink, XPointer, CSS2, JPEG, PNG, DOM2, and ECMAScript.
+
+-----
+
+Some SVG Tags:
+
+Shape: <line>, <rect>, <circle>, <ellipse>, <polyline>, <polygon>, <path>
+Paint: <linearGradient>, <radialGradient>, <pattern>, <mask>
+Text and fonts: <text>, <tspan>, <textPath>, <font>, <font-face>, <glyph>
+Filter: <filter>, <feBlend>, <feFlood>, <feColorMatrix>, <feGaussianBlur> <feMorphology> <feSpotLight>
+Animation: <animate>, <animateMotion>, <animateTransform>, <animateColor>, <set>
+Misc.: <image>, <symbol>, <g>, <defs>, <use>
+Metadata: <title>, <desc>, <metadata>
+
+TODO: provide some basic information about each tag.
+
+-----
+
+Circle example:
+
+circle parameters:
+- cx & cy are x and y coordinates of the center of the circle. Defaults to 0.
+- r is radius of circle.
+
+<svg>
+  <g style="fill-opacity: 0.5; stroke: black; stroke-width: 10;">
+    <circle cx="200" cy="150" r="100" style="fill: red;"/>
+    <circle cx="150" cy="200" r="100" style="fill: green;"/>
+    <circle cx="250" cy="200" r="100" style="fill: blue;"/>
+  </g>
+</svg>
+
+<svg>
+  <g style="fill-opacity: 0.5; stroke: black; stroke-width: 10;">
+    <circle r="100" style="fill: red;"   transform="translate(200, 150)"/>
+    <circle r="100" style="fill: green;" transform="translate(150, 200)"/>
+    <circle r="100" style="fill: blue;"  transform="translate(250, 200)"/>
+  </g>
+</svg>
+
+-----
+
+Filter/Special Effects example:
+
+<svg>
+  <filter id="DropShadow" filterUnits="ObjectBoundingBox" width="1.4" height="1.4">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+    <feOffset dx="4" dy="4"/>
+    <feComponentTransfer result="Shadow">
+       <feFuncA type="linear" slope="0.5" intercept="0"/>
+    </feComponentTransfer>
+  </filter>
+
+  <filter id="Emboss" >
+    <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="Blur"/>
+    <feSpecularLighting in="Blur" surfaceScale="-3" style="lighting-color: white"
+                        specularConstant="1" specularExponent="16"
+                        result="Spec" kernelUnitLength="1">
+    <feDistantLight azimuth="45" elevation="45"/>
+    </feSpecularLighting>
+    <feComposite in="Spec" in2="SourceGraphic" operator="in" result="SpecOut"/>
+  </filter>
+
+  <rect x="0" y="0" width="100%" height="100%" style="fill: #0AF"/>
+
+  <g style="font-size:90; font-weight:bold;">
+    <text x="20" y="100" style="fill: #048">PhiLhoSoft</text>
+
+    <text x="20" y="200" style="filter: url(#DropShadow)">PhiLhoSoft</text>
+
+    <text x="20" y="300" style="filter: url(#Emboss)">PhiLhoSoft</text>
+
+    <text x="20" y="400" style="fill: #048;">PhiLhoSoft</text>
+    <text x="20" y="400" style="filter: url(#DropShadow)">PhiLhoSoft</text>
+    <text x="20" y="400" style="filter: url(#Emboss)">PhiLhoSoft</text>
+  </g>
+</svg>
+
+-----
+
+Basic Shapes
+
+Shape / Description
+
+<line x1="start-x" y1="start-y" x2="end-x" y2="end-y"/>
+    Draws a line from the starting point (start-x, start-y) to the end point (end-x, end-y).
+<rect x="left-x" y="top-y" width="width" height="height"/>
+    Draws a rectangle with a upper left corner at (left-x, top-y) and the given width and height.
+    It can have rx and ry parameters, to specify rounded corners with the given radii (arcs).
+<circle cx="center-x" cy="center-y" r="radius"/>
+    Draws a circle with the given radius centered at (center-x, center-y).
+<ellipse cx="center-x" cy="center-y" rx="x-radius" ry="y-radius"/>
+    Draws an ellipse with the given x-radius and y-radius centered at (center-x, center-y).
+<polygon points="points"/>
+    Draws an arbitrary closed polygon outlined by x, y coordinate pairs.
+<polyline points="points"/>
+    Draws a series of connected lines (open shape) defined by x, y coordinate pairs.
+
+-----
+
+Line example:
+
+<svg>
+  <line x1="20" y1="20" x2="300" y2="20"
+        style="stroke: black; stroke-width: 5;"/>
+
+  <line x1="20" y1="60" x2="300" y2="60"
+        style="stroke: red; stroke-width: 10;"/>
+
+  <line x1="20" y1="100" x2="300" y2="100"
+        style="stroke: green; stroke-width: 10;
+        stroke-dasharray: 10"/>
+
+  <line x1="20" y1="140" x2="300" y2="140"
+        style="stroke: blue; stroke-width: 5;
+        stroke-dasharray: 10, 2; fill: none;"/>
+
+  <line x1="20" y1="180" x2="300" y2="180"
+        style="stroke: magenta; stroke-width: 20;
+        stroke-dasharray: 8, 4, 2; fill: none;"/>
+</svg>
+
+-----
+
+CSS Line Stroke Styles
+
+Style / Description
+stroke             Line color.
+stroke-width       Line width.
+stroke-opacity     Number between 0.0 and 1.0; 0.0 for entirely transparent;
+                   1.0 for entirely opaque (that is, non-transparent).
+stroke-dasharray   Series of numbers to define the length of dashes
+                   and gaps for lines.
+stroke-linecap     Shape of the ends of a line; use butt, round, or square.
+stroke-linejoin    Shape of the corners of a polygon or polyline; use miter
+                   (that is, pointed), round, or bevel (that is, flat).
+stroke-miterlimit  To avoid to have the tip of a sharp angle to go too far
+                   from the axis, renderer should switch to bevel linejoin
+                   if the angle is below a limit computed from miterlimit.
+
+-----
+
+Simple Shapes Example
+
+<svg>
+  <g style="stroke: black; stroke-width: 3;">
+    <circle cx="70" cy="70" r="50"
+            style="fill: red"/>
+    <rect x="20" y="140" width="100" height="100"
+          style="fill: green"/>
+    <ellipse cx="200" cy="130" rx="50" ry="110"
+             style="fill: blue"/>
+    <rect rx="10" ry="20" x="280" y="20" width="50" height="220"
+          style="fill: yellow"/>
+  </g>
+</svg>
+
+-----
+
+Polygon Example
+
+<svg>
+  <!-- Star -->
+  <polygon points="96,20 113,74 173,74 126,107 143,161 96,127 49,159 66,107 20,74 77,74"
+           style="fill: yellow; stroke: black; stroke-width: 2"/>
+
+  <!-- Arrow -->
+  <polygon points="20,210 70,210 70,180 120,225 70,270 70,240 20,240"
+           style="fill: blue; stroke: black; stroke-width: 2"/>
+
+  <!-- Another star (W3C) -->
+  <polygon fill="red" stroke="blue" stroke-width="10"
+           points="350,75 379,161 469,161 397,215 423,301 350,250 277,301 303,215 231,161 321,161"/>
+
+  <!-- Hexagon (W3C) -->
+  <polygon fill="lime" stroke="blue" stroke-width="10"
+           points="650,75 758,137.5 758,262.5 650,325 542,262.6 542,137.5"/>
+</svg>
+
+-----
+
+Path Example
+
+<svg>
+  <path style="fill: #27B;"
+        d="M 132.3  41.9
+           C 153.6  48.9 139.8  70.2 150.7  82.5
+           C 155.4  92.8 165.3 102.0 181.7 110.5
+           C 209.3 124.4 176.2 149.3 142.7 162.0
+           C 101.9 175.6  94.0 212.9  49.3 201.8
+           C  33.1 196.4  28.3 181.8  28.8 159.1
+           C  34.2 112.7  27.7  80.4  28.7  48.8
+           C  28.7  36.1  33.5  34.6  57.2  37.9
+           C  60.0  76.3 102.3  77.3 132.3  41.9
+           z"/>
+
+  <path style="fill: #2BF;"
+        d="M 89.6 176.6
+           C 121.6 164.3 153.8 148.1 179.8 132.1
+           C 187.8 127.4 188.9 115.9 177.6 112.3
+           C 153.3  98.5 140.1  81.2 142.9  58.7
+           C 143.3  50.9 133.6  42.5 131.1  50.0
+           C 109.8 121.4  41.3 117.6  50.7  46.9
+           C  51.2  44.8  51.7  42.7  52.2  40.7
+           C  39.9  38.2  35.2  40.9  35.7  50.4
+           L  45.2 156.6
+           C  47.6 180.8  67.3 186.1  89.6 176.6
+           z"/>
+ ...
+</svg>
+
+-----
+
+Another Path Example (Spiral)
+
+<svg>
+  <path style="fill: white; stroke: red; stroke-width: 4"
+        d="M 153 334
+           C 153 334 151 334 151 334
+           C 151 339 153 344 156 344
+           C 164 344 171 339 171 334
+           C 171 322 164 314 156 314
+           C 142 314 131 322 131 334
+           C 131 350 142 364 156 364
+           C 175 364 191 350 191 334
+           C 191 311 175 294 156 294
+           C 131 294 111 311 111 334
+           C 111 361 131 384 156 384
+           C 186 384 211 361 211 334
+           C 211 300 186 274 156 274"/>
+</svg>
+
+-----
+
+And Still Another Path Example...
+
+<svg>
+  <path fill="none" stroke="green" stroke-width="2"
+    d="M 20,30
+       h 10
+       a 10,20 0 0,0 15,0
+       h 10
+       a 10,20 0 0,1 15,0
+       h 10
+       a 10,20 0 1,0 15,0
+       h 10
+       a 10,20 0 1,1 15,0
+       h 10
+       a 10,20 50 1,1 15,0
+       h 10" />
+
+  <path fill="lightblue" fill-opacity="0.4" stroke="blue" stroke-width="1"
+    d="M 100,100
+       C 50,10 150,10 100,100
+       C 190,50 190,150 100,100
+       C 50,190 150,190 100,100
+       C 10,50 10,150 100,100
+       z" />
+</svg>
+
+-----
+
+Single-Letter Path Commands
+
+Command / Description
+
+M | m   moveto (x,y)
+L | l   lineto (x,y)
+H | h   horizontal lineto (x)
+V | v   vertical lineto (y)
+C | c   curveto (x1,y1 x2,y2 x,y): cubic Bézier curve
+S | s   smooth curveto (x2,y2 x,y): use control point from previous Bézier curve
+Q | q   quadratic Bézier curve (x1,y1 x,y)
+T | t   smooth quadratic Bezier curve (x,y): use control point from previous Bézier curve
+A | a   elliptical arc (rx,ry x-axis-rotation large-arc-flag,sweep-flag x,y)
+Z | z   closepath, that is, draw a straight line from last point to first point
+
+Uppercase letters for absolutely positioned coordinates,
+lowercases for relatively positioned coordinates.
+
+If M or m are followed by a number of coordinate pairs, additional pairs act as linetos.
+
+L or l can be followed by any number of coordinate pairs.
+
+H, h, V or v can be followed by a number of coordinates, but this isn't very useful...
+
+C or c draws a cubic Bézier curve from the current point to (x,y)
+using (x1,y1) as the control point at the beginning of the curve
+and (x2,y2) as the control point at the end of the curve.
+
+S or s draws a cubic Bézier curve from the current point to (x,y)
+using the reflection of the second control point on the previous command
+relative to the current point as control point of the beginning of the curve,
+and using (x2,y2) as the control point at the end of the curve.
+
+Q or q draws a quadratic Bézier curve from the current point to (x,y)
+using (x1,y1) as the control point.
+
+T or t draws a quadratic Bézier curve from the current point to (x,y)
+using the reflection of the control point on the previous command
+relative to the current point as control point of the beginning of the curve,
+
+Multiple sets of coordinates may be specified to draw a polybézier.
+
+A or a draws an elliptical arc from the current point to (x,y).
+The size and orientation of the ellipse are defined by two radii (rx,ry)
+and an x-axis-rotation, which indicates how the ellipse as a whole is rotated
+relative to the current coordinate system. + large arc & sweep
+
+rx,ry -- Radii of the ellipse (semi-major and semi-minor axes)
+x-axis-rotation -- angle from the x-axis of the current coordinate system to the x-axis of the ellipse (phi)
+large-arc-flag -- 0 if arc is spanning less than or equal to 180 degrees,
+                  1 if arc is spanning greater than 180 degrees
+sweep-flag -- 0 if the line joining center to arc sweeps through decreasing angles
+              1 if it sweeps through increasing angles
+x,y -- Coordinates of the end of arc
+
+
+For your information, PostScript fonts (Type1) are made out of cubic Bézier
+curves while TrueType fonts (TTF) and Macromedia Flash drawings are made out
+of quadratic Bézier curves.
+
+-----
+
+Pattern Example
+
+<svg>
+  <!-- Pattern definitions -->
+  <defs>
+    <pattern id="CircPat" x="0" y="0" width="16" height="16"
+             patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="7"
+              style="fill: yellow; stroke: red;"/>
+    </pattern>
+
+    <pattern id="RectPat" x="0" y="0" width="20" height="20"
+             patternUnits="userSpaceOnUse">
+      <rect x="2" y="2" height="16" width="16"
+            style="fill: green; stroke: blue;"/>
+    </pattern>
+
+    <pattern id="TriPat" x="0" y="0" width="16" height="16"
+             patternUnits="userSpaceOnUse"
+             viewBox="0 0 10 10">
+      <g fill="yellow" stroke-width="1" stroke-linejoin="bevel">
+        <path d="M  1 0.5 L  9 0.5 L 5 9.5 z" stroke="blue"/>
+        <path d="M  0 0.5 L -5 9.5 L 4 9.5 z" stroke="green"/>
+        <path d="M 10 0.5 L 15 9.5 L 6 9.5 z" stroke="green"/>
+      </g>
+    </pattern>
+  </defs>
+
+  <!-- Pattern uses -->
+  <g stroke="black" stroke-width="4">
+    <rect x="20" y="20" width="160" height="160"
+          style="fill: url(#CircPat);"/>
+
+    <circle cx="280" cy="100" r="80"
+            style="fill: url(#RectPat);"/>
+
+    <ellipse cx="440" cy="100" rx="60" ry="80"
+          style="fill: url(#TriPat);"/>
+  </g>
+</svg>
+
+<svg>
+  <desc>Hexagon tiling by Doug Schepers</desc>
+  <pattern id='hex' x='0' y='0' width='80' height='45.5' patternUnits='userSpaceOnUse' >
+     <path d='M0.5,22.75 L13,0 H40.5 L53,22.75 L40.5,45.5 H13 Z M53,22.75 H80.5'
+           stroke='gray' fill='none'/>
+  </pattern>
+  <rect x='0' y='0' width='100%' height='100%' fill='url(#hex)'/>
+
+  <path d='M0.5,22.75 L13,0 H40.5 L53,22.75 L40.5,45.5 H13 Z M53,22.75 H80.5'
+        stroke='red' fill='dodgerblue'/>
+</svg>
+
+-----
+
+Gradient Example
+
+<svg>
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="LinGrad">
+      <stop offset="0%"   stop-color="yellow"/>
+      <stop offset="100%" stop-color="blue"/>
+    </linearGradient>
+
+    <linearGradient id="VectLinGrad" xlink:href="#LinGrad"
+                    x1="0.4" y1="0.4" x2="0.6" y2="0.6">
+      <!-- spreadMethod defaults to "pad" -->
+    </linearGradient>
+
+    <linearGradient id="LinReflGrad" xlink:href="#VectLinGrad"
+                    spreadMethod="reflect">
+    </linearGradient>
+
+    <linearGradient id="LinRepGrad" xlink:href="#VectLinGrad"
+                    spreadMethod="repeat">
+    </linearGradient>
+
+
+    <radialGradient id="RadGrad">
+      <stop offset="0%"   stop-color="yellow"/>
+      <stop offset="100%" stop-color="blue"/>
+    </radialGradient>
+
+    <radialGradient id="SmallRadGrad" xlink:href="#RadGrad"
+                    cx="0.25" cy="0.25" r="0.4">
+      <!-- spreadMethod defaults to "pad" -->
+    </radialGradient>
+
+    <radialGradient id="RadReflGrad" xlink:href="#SmallRadGrad"
+                    spreadMethod="reflect">
+    </radialGradient>
+
+    <radialGradient id="RadRepGrad" xlink:href="#SmallRadGrad"
+                    spreadMethod="repeat">
+    </radialGradient>
+
+
+    <radialGradient id="OffsetRadGrad" xlink:href="#RadGrad"
+                    cx="0" cy="0" r="1">
+    </radialGradient>
+
+    <radialGradient id="Offset2RadGrad" xlink:href="#OffsetRadGrad"
+                    fx="1" fy="0">
+    </radialGradient>
+
+    <radialGradient id="Offset3RadGrad" xlink:href="#OffsetRadGrad"
+                    fx="0.25" fy="0.6">
+    </radialGradient>
+
+    <radialGradient id="Offset4RadGrad" xlink:href="#OffsetRadGrad"
+                    fx="0.75" fy="0.75">
+    </radialGradient>
+  </defs>
+
+  <!-- Gradient uses -->
+  <g stroke="green" stroke-width="1">
+    <rect x="20" y="20" width="100" height="100"
+          fill="url(#LinGrad)"/>
+
+    <rect x="140" y="20" width="100" height="100"
+          fill="url(#VectLinGrad)"/>
+
+    <rect x="260" y="20" width="100" height="100"
+          fill="url(#LinReflGrad)"/>
+
+    <rect x="380" y="20" width="100" height="100"
+          fill="url(#LinRepGrad)"/>
+
+
+    <rect x="20" y="140" width="100" height="100"
+          fill="url(#RadGrad)"/>
+
+    <rect x="140" y="140" width="100" height="100"
+          fill="url(#SmallRadGrad)"/>
+
+    <rect x="260" y="140" width="100" height="100"
+          fill="url(#RadReflGrad)"/>
+
+    <rect x="380" y="140" width="100" height="100"
+          fill="url(#RadRepGrad)"/>
+
+
+    <rect x="20" y="260" width="100" height="100"
+          fill="url(#OffsetRadGrad)"/>
+
+    <rect x="140" y="260" width="100" height="100"
+          fill="url(#Offset2RadGrad)"/>
+
+    <rect x="260" y="260" width="100" height="100"
+          fill="url(#Offset3RadGrad)"/>
+
+    <rect x="380" y="260" width="100" height="100"
+          fill="url(#Offset4RadGrad)"/>
+  </g>
+</svg>
+
+-----
+
+Text Example
+
+<svg>
+  <text x="60" y="60" style="font-size: 55;">PhiLhoSoft</text>
+
+  <text x="60" y="140"
+        style="stroke: blue; fill: none; font-size: 55;
+               font-family: 'Courier New';">
+    PhiLhoSoft
+  </text>
+
+  <text x="60" y="220"
+        style="stroke: black; fill: gold; font-size: 55; font-weight: 800;
+               font-family: 'Times New Roman';">
+    PhiLhoSoft
+  </text>
+
+  <text x="60" y="300"
+        style="font-size: 55; font-style: italic;
+               stroke: navy; fill: navy;
+               font-family: Impact;
+               text-decoration: underline;">
+    PhiLhoSoft
+  </text>
+
+  <text x="30" y="20" style="font-size: 55; writing-mode: tb;">PhiLhoSoft</text>
+
+  <text x="400" y="200"
+        style="font-size: 196; stroke-width: 8;
+               stroke: indigo; fill: dodgerblue;">PLS</text>
+</svg>
+
+-----
+
+Another text example
+
+<svg>
+  <defs>
+    <path id="TextPath" d="M 10 50 C 10 0 90 0 90 50"/>
+  </defs>
+  <!-- Three alignments -->
+  <g style="fill: magenta; font-family: 'Times New Roman'; font-size: 15;" transform="translate(100, 50)">
+    <text x="200" y="0" text-anchor="start">Left aligned text (start)</text>
+    <text x="200" y="14" text-anchor="middle">Centered text (middle)</text>
+    <text x="200" y="28" text-anchor="end">Right aligned text (end)</text>
+  </g>
+  <!-- Multiline text -->
+  <text x="0" y="0" style="fill: purple; font-family: Verdana; font-size: 12; text-anchor: start;" transform="translate(20, 20)">
+    <tspan>This is one line</tspan>
+    <tspan x="0" dy="1em">This is another line</tspan>
+    <tspan x="0" dy="1em">And here is the last line</tspan>
+  </text>
+  <!-- Text on a path -->
+  <text fill="blue" transform="translate(20, 75)">
+    <textPath xlink:href="#TextPath">Text on a Path</textPath>
+  </text>
+  <!-- Non selectable text (buttons...) -->
+  <text x="20" y="100" pointer-events="none">You can't select this!</text>
+</svg>
+
+-----
+
+Marker Example
+
+<svg>
+  <defs>
+    <marker id="Arrow"
+            viewBox="0 0 10 10" refX="0" refY="5"
+            markerUnits="strokeWidth"
+            markerWidth="8" markerHeight="6"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+  <g stroke="black" stroke-width="1" marker-end="url(#Arrow)" font-size="10" font-family="Verdana">
+    <line x1="50" y1="150" x2="350" y2="150"/>
+    <line x1="200" y1="75" x2="200" y2="225"/>
+    <text x="350" y="162">x</text>
+    <text x="207" y="225">y</text>
+  </g>
+</svg>
+
+-----
+
+Filter Example
+
+<svg>
+  <defs>
+    <filter id="Blur" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="R" />
+    </filter>
+
+    <filter id="CastShadow" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="Blured" />
+      <feOffset in="Blured" result="Crisp" dx="5" dy="5" />
+      <feComposite in="SourceGraphic" in2="Crisp" operator="over" />
+    </filter>
+
+    <filter id="Relief" >
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="Blur"/>
+      <feSpecularLighting in="Blur" surfaceScale="-3" style="lighting-color: white"
+                specularConstant="1" specularExponent="16" result="Spec" kernelUnitLength="1" >
+        <feDistantLight azimuth="45" elevation="45" />
+      </feSpecularLighting>
+      <feComposite in="Spec" in2="SourceGraphic" operator="in" result="SpecOut"/>
+    </filter>
+
+    <filter id="NeutralGlow" filterUnits="ObjectBoundingBox"
+            x="-20%" y="-20%" width="150%" height="150%">
+      <feMorphology in="SourceGraphic" result="Bigger" operator="dilate" radius="1"/>
+      <feGaussianBlur in="Bigger" result="Blured" stdDeviation="2"/>
+      <feComposite in="SourceGraphic" in2="Blured" operator="over"/>
+    </filter>
+
+    <filter id="RedGlow" filterUnits="ObjectBoundingBox"
+            x="-25%" width="150%" y="-25%" height="150%">
+      <feColorMatrix in="SourceGraphic" result="Reddish" type="matrix"
+                     values="0 0 0 0 1,
+                             0 0 0 0 0,
+                             0 0 0 0 0,
+                             0 0 0 1 0"/>
+      <feMorphology in="Reddish" result="Bigger" operator="dilate" radius="1"/>
+      <feGaussianBlur in="Bigger" result="Blured" stdDeviation="2"/>
+      <feComposite in="SourceGraphic" in2="Blured" operator="over"/>
+    </filter>
+
+    <!-- This defines the glow effect -->
+    <!-- Found at: http://xweb.sourceforge.net/manual/images/svg.html -->
+    <filter id="YellowGlow" filterUnits="objectBoundingBox" x="-10%" y="-10%"
+            width="150%" height="150%">
+      <!-- Make a slightly bigger version of the input alpha channel -->
+      <feMorphology in="SourceAlpha" result="MorphedAlpha" radius="1.5"
+                    operator="dilate"/>
+      <!-- Blur this -->
+      <feGaussianBlur in="MorphedAlpha" result="BlurredAlpha"
+                      stdDeviation="0.5"/>
+      <!-- Create some yellow color -->
+      <feFlood result="Flooded" style="flood-color: #FF4; flood-opacity: 0.5;"/>
+      <!-- Mix the color with the resized and blurred alpha information -->
+      <feComposite in="Flooded" in2="BlurredAlpha" operator="in"
+                   result="ColoredShadow"/>
+      <!-- Put the input on top of the result -->
+      <feComposite in="SourceGraphic" in2="ColoredShadow" operator="over"/>
+    </filter>
+  </defs>
+
+  <g style="font-size: 128; font-weight: bold">
+    <text x="20" y="120" filter="url(#Blur)">
+      PhiLhoSoft
+    </text>
+
+    <text x="20" y="220" fill="deepskyblue" filter="url(#CastShadow)">
+      PhiLhoSoft
+    </text>
+
+	<!-- Bad effect, as the text is repeated. Should use a filter to duplicate. -->
+    <text x="20" y="320" fill="darkviolet" filter="url(#CastShadow)">
+      PhiLhoSoft
+    </text>
+    <text x="20" y="320" fill="darkturquoise" filter="url(#Relief)">
+      PhiLhoSoft
+    </text>
+
+    <text x="20" y="420" fill="darkturquoise" filter="url(#RedGlow)">
+      PhiLhoSoft
+    </text>
+
+    <text x="20" y="520" fill="deepskyblue" filter="url(#YellowGlow)">
+      PhiLhoSoft
+    </text>
+  </g>
+</svg>
+
+-----
+
+Filter/Special Effects Line-Up
+
+Effect / Description
+
+- Blend And Merge Effects
+feBlend             merges content with content below.
+feComposite         blends content with another content.
+feMerge             duplicates content using different effects.
+
+- Color Effects
+feColorMatrix       changes content's colors and alpha channels using matrix mathematics (similar to Photoshop's Hue/Saturation/Balance tool).
+feComponentTransfer changes content's colors and alpha channels using matrix mathematics (similar to Photoshop's Contrast/Brightness tool).
+feFlood             fills content with color.
+
+- More Effects
+feConvolveMatrix    changes content's edges using matrix mathematics for creating bevels, embossing, blurring and so on.
+feDisplacementMap   moves content using matrix mathematics for RGB color values.
+feTurbulence        fills content with randomized patterns of dots or color (similar to Photoshop noise filters).
+feGaussianBlur      blurs content
+feOffset            shifts content's position
+feImage             adds external raster or vector image.
+feMorphology        changes content by adding or subracting weight from the edges (thus, fattening or slimming the content's shape).
+feTile              fills content with tiled objects, similar to pattern fill.
+
+- Lighting Effects
+feDiffuseLighting   lits content using alpha channel values.
+feSpectularLighting lits content from above (that is, uses light source from above).
+
+- Light Sources
+fePointLight        uses light source defined by a source point.
+feDistantLight      uses light source defined by angles.
+feSpotLight         uses light source defined by a source point and a target point.
+
+-----
+
+Sound Example
+
+<svg xmlns:a="http://www.adobe.com/svg10-extensions" a:timeline="independent">
+  <a:audio xlink:href="ding.wav" begin="play.click" />
+  <circle id="play" cx="25" cy="25" r="10" fill="red"/>
+</svg>
+
+-----
+
+Notes and issues:
+
+If you use a transform like translate or rotate, you must be sure
+to have specified a width and height to your SVG file, otherwise
+drawing will happens outside of the browser window... (ie. you will
+see nothing!).
+
+Mozilla (1.7 and below) doesn't handle communication of SVG with enclosing HTML nor
+with another SVG drawing. Such cases must be viewed with IE.
+
+To be able to scroll an SVG drawing with scroll bars, you have to enclose it in HTML,
+with correct specification of width and height.
+
+With ASV (Adobe SVG Viewer), you can:
+- zoom in: Ctrl+<Left click> or Ctrl+<drag mouse to enclose area to zoom in>
+- zoom out: Ctrl+Shift+<Left click> (you can drag mouse, but it does nothing)
+- pan: Alt+<hold down left mouse button and move>
+
+-----
+
+  <!-- A square with inner corners rounded as the outer ones -->
+  <g id="NiceRoundedSquare" stroke="#555">
+    <!-- Fill the outer square with stroke color,
+         so the space between the inner square corner of the outer square and
+         the rounding corner of the inner square is hidden. -->
+    <rect fill="#555" stroke-width="20"
+          x="0" y="0" width="100" height="100" ry="10"/>
+    <!-- Inner square just make the round corners and the inner fill -->
+    <rect fill="#08F" stroke-width="1"
+          x="10" y="10" width="80" height="80" ry="5"/>
+  </g>
+
+  <!-- A square with dotted stroke -->
+  <rect x="200" y="200" height="100" width="100" fill="blue"
+	    stroke="black" stroke-linecap="round" stroke-dasharray="0 20"
+	    stroke-width="10"/>
+
+-----
+
+Other filters:
+
+<filter id="PencilEffect" filterUnits="objectBoundingBox" x="-10%" y="-10%" width="150%" height="150%">
+  <feTurbulence baseFrequency="1.5" numOctaves="5" result="turb"/>
+  <feDisplacementMap in="SourceAlpha" in2="turb" scale="4" xChannelSelector="R" yChannelSelector="G" result="displacedSource"/>
+  <feGaussianBlur in="displacedSource" stdDeviation="2" result="blur"/>
+  <feComposite in="displacedSource" in2="blur" operator="arithmetic" k1="0" k2="0.7" k3="1" k4="" result="litPaint"/>
+</filter>
+<filter id="SawCutting" filterUnits="objectBoundingBox" x="-10%" y="-10%" width="150%" height="150%">
+  <feTurbulence baseFrequency="0.08" numOctaves="2" result="turb" stitchTiles="noStitch" type="turbulence"/>
+  <feDisplacementMap in="SourceGraphic" in2="turb" scale="8" xChannelSelector="R" yChannelSelector="G" resultz="displacedSource"/>
+</filter>
+
+-----
+
+Animation Lesson  by Paul Hounshell of the Wood Elves
+http://www.svgelves.com/learn/L1_03_01.php
+
+Animation in SVG is a big topic. Unfortunately it's also a confusing topic. So many things can (or at least should) be animatable, but most of this functionality gets lost simply because it is difficult to set up and get working properly.
+
+Animation can be broken down into two tags, which are placed as children of nearly any other tag. They both do fundamentally similar things, but they work on different premises.
+
+The first tag is "animateTransform." The purpose of this tag is to....well... it's to animate transforms (bet you didn't expect that). Let me explain it a bit better.
+
+I'm sure you know what the transforms are. Scale, Rotate, Translate, etc. These are very important things to be able to manipulate. Instead of having to do this via very complicated Javascript or even worse methods, this tag does the hard work for you. The most common attributes of this tag are:
+
+attributeName
+# type
+# dur
+# values
+# repeatCount
+# fill
+# begin
+# end
+
+"attributeName" specifies the actual attribute you are modifying. This is almost always "transform" I honestly can't think of a realistic case where it wouldn't be.
+
+"type" specifies the actual transformation you want to modify. If you want to turn something, it's "rotate", for moving it's "translate", and so on.
+
+"dur" specifies how long this action is supposed to take. If you want something to do something for one minute, you'd use a dur of "60s" or "1m" A valid duration is a real number (x[.y]) followed by a unit of time.
+
+"values" specifies the range of values you intend for this to take. Keep in mind that these values are linear. The object will pass every point between the two values only once and in succession (well, in theory at least). This can be further extended by tacking extra values on the back. For instance, the values "0;360;0" will turn something around once, then turn it back. The values "0;360;0;180;0" will turn something around, turn it back, turn it halfway, then turn it back again.
+
+"repeatCount" unsurprisingly specifies the number of times this action should happen. Once you've reached the end of the cycle, if there are any remaining repetitions, the animation will start over again. A repeat count of "indefinite" specifies that the animation should run until the page is unloaded. This behavior can be circumvented with the "end" tag though.
+
+"fill" specifies what to do once the animation has finished. If "fill" is set to "freeze" the object will remain where it is once the animation ends. Note that this is an irrelevant attribute if repeatCount is "indefinite".
+
+"begin" is used to specify when that action should occur. Once again, you can use a timecode as specified in "dur" Additionally you can use events, though this topic is tricky and reserved for another tutorial.
+
+"end" is typically used when specifying exactly when an animation should stop. It is not redundant though. An animation can repeat over its' duration several times, but it would stop when the "end" timecode is reached, even if mid-way through a cycle. This tag also can use events as in the begin tag.
+
+
+The other animation tag available is "animate" It's used to animate everything except for transforms.
+
+This tag uses all of the same attributes as the animateTransform tag. However there is one minor difference. The attributeName tag actually matters. It is used to specify which attribute of the parent tag is being animated. All others are identical though.
+
+In general, the animation support in the SVG plugin is commendable. Any attribute of any tag can be animated in the exact same way with only one exception: It is not allowed to animate an animation tag. I personally think it would be cool for things like animating a ball whose bounce gets smaller and smaller, but it does not exist.
+
+The final thing to note is the difference between SVG animations and Flash animations. Flash animations are all cell based with a default number of intervals per second being 15. However, if the computer can not keep up, the time is slowed down. This means that audio in conjunction with the animation will either be off or disjointed. Furthermore, you can not be guaranteed that an animation will run in a specific amount of time. On your dual 800MHz, half gig of ram machine, your full screen, highly detailed flash splash page may look fine, but on someone elses 133 MHz 16 Mb RAM machine, it would take half an hour to get to the next page of your site.
+
+By comparison, all of Adobe's SVG animation is time based instead of frame based. This means that every user will finish the animation in the exact same amount of time. If their machine can't keep up, frames are dropped to keep the overall speed guaranteed.
+
+Next time I'll discuss a few of the more advanced animation features such as event offset timecodes, splines and anything else I can think of.
+
+-----
+
+# Doug Schepers
+> You really shouldn't use getters and setters (node.get*())... They are
+> proprietary Adobe extensions.
+
+The offending getters and setters I was speaking about are:
+
+getTarget()
+getOwnerDocument()
+getStyle()
+getFirstChild()
+getClientX()
+getClientY()
+getScreenX()
+getScreenY()
+getChildNodes()
+getParentNode()
+(there may be more, but these are common)
+
+Some are mandatory:
+In addition to those you (Alastair Fettes) list,
+
+>From http://www.w3.org/TR/SVG11/ecmascript-binding.html:
+getBBox()
+getCTM()
+getScreenCTM()
+getCurrentTime()
+getSVGDocument()
+getTotalLength()
+getNumberOfChars()
+getComputedTextLength()
+getStartTime()
+getCurrentTime()
+getSimpleDuration()
+
+there are a few others that are mandated:
+
+setProperty('[stylePropertyName]', value)
+getPropertyValue('[stylePropertyName]')
+getAttributeNS(ns, [attributeName]) (and getAttribute() )
+setAttributeNS(ns, [attributeName], [attributeValue]) (and setAttribute() )
+getElementById('[uniqueID]')
+getElementsByTagNameNS(ns, '[elementTagName]' )
+getEndPositionOfChar( [integer] )
+getExtentOfChar( [integer] )
+
+As a general rule, if it's not one of the ones Alastair or I mention as
+standard, you can test if you need a getter or setter by removing the "get"
+and the "()", and changing the case of the first letter. For instance:
+   "node.getOwnerDocument()" becomes "node.ownerDocument"
+
+The reason not to use these non-standard calls is that they may not work in
+any given UA (viewer). Use the correct ones, and your code becomes portable.
+
+AF> I didn't realize that getFirstChild() was a Adobe proprietary call
+
+Chris Lilley> Yes. They were added so that NS4.x Live Connect would work.
+
+-----
+
+It seems it is best not to specify a type to script element.
+
+As Thomas DeWeese summaries (in SVG-www, "ISSUE: 'script' element and 'type' attribute"):
+
+     Is the 'type' attribute on the 'script' element required or not?
+
+    The wording in section 18.1.2 is tantalizingly ambiguous:
+
+	It is also possible to specify the scripting language for each
+	individual 'script' element by specifying a
+	type attribute on the 'script' element.
+
+    Reading further in section 18, in particular the DTD for the script element:
+
+<!ATTLIST %SVG.script.qname; [...]
+      type %ContentType.datatype; #REQUIRED >
+
+    I would come to the conclusion that it is required (after all
+    the DTD says it is).  Also in the description of the attribute there
+    is no discussion of the behavior when the attribute is not provided
+    (as is customary when attributes can be omitted).
+
+    But then Johnathan Watt pointed out this mail from Robin Berjon:
+
+	http://groups.yahoo.com/group/svg-developers/message/46338
+
+    Philippe Lhoste wrote:
+    > Note that the type attribute is mandatory: the SVG Validation
+    > service <http://jiggles.w3.org/svgvalidator/> will complain if
+    > you omit it.
+
+    Robin Berjon wrote:
+    That is due to an error in the DTD which the validator propagates.
+    If 'type' were required 'contentScriptType' would be useless.
+    Jonathan is right: it is best to not specify the type ever, unless
+    of course you're not using ECMAScript.
+
+Robin confirmed his statement...
+
+I know that <script type="text/ecmascript"> works sometime in Mozilla (1.7)
+and sometime not. And <script type="text/javascript"> seems to be rejected
+by Batik.
+See also https://bugzilla.mozilla.org/show_bug.cgi?id=62485.
+
+-----
+
+To have onmouseover event over empty shapes, use pointer-events="fill".
+
+-----
+
+Below is a description of the process needed to create a new image element in the Adobe SVG Viewer 3.0.
+
+1. The xlink namespace declaration has to be declared on the <svg> element as part of the original document.
+
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink" ... >
+
+2. Create the image element and set the image's position and size.
+
+    var svgNS    = "http://www.w3.org/2000/svg";
+    var xlinkNS  = "http://www.w3.org/1999/xlink";
+    var newImage = svgDocument.createElementNS(svgNS, "image");
+
+    newImage.setAttributeNS(null, "x", your-x-position);
+    newImage.setAttributeNS(null, "y", your-y-position);
+    newImage.setAttributeNS(null, "height", your-image-height);
+    newImage.setAttributeNS(null, "width", your-image-width);
+
+3. Be sure to use the xlink namespace in setAttributeNS() when defining the xlink:href attribute.
+
+    newImage.setAttributeNS(xlinkNS, "xlink:href", image-url-here);
+
+4. Add the element to the SVG DOM
+
+    svgDocument.rootElement.appendChild(newImage);
+
+-----
+
+http://www.pinkjuice.com/svg/mime.xhtml
+
+Why doesn't my SVG get displayed by Netscape Navigator online?
+
+When SVG is placed on a server, you need to make sure that the MIME type is sent with each SVG. If this is not the case, only buggy browsers like some Internet Explorers (IE) will display the SVG.
+
+Netscape correctly treats only files that have the SVG MIME type sent with them as SVG. Some IExplorers ignore MIME types, and only handle SVGs whose name ends in '.svg' as SVG. (The file extension shouldn't matter to the browser.) When opening files locally, not from a local server, things are different. So, to be sure that everyone can view your SVGs, test it over the web, and always set the correct MIME type. If your SVG files don't have the .svg extension, some IEs may not treat them as SVG. So when referencing/linking those SVGs, it might be necessary to append something like '?IEHack=.svg' to the URL.
+The MIME types need to be listed on the server, so the browser knows what to do with SVG-files. (The browser could also identify SVG via the namespace, no special MIME type required, which would also work when there is no MIME type set, eg locally under certain circumstances. But if you want to get SVG working today, with popular viewers and plugins, you should set image/svg+xml.) My site for example gets served by an Apache on Linux; I just put a file into the directory with the SVGs called nothing than ".htaccess" (note the dot) with nothing in it than
+
+AddType image/svg+xml svg
+AddType image/svg+xml svgz
+AddEncoding gzip svgz
+
+or add those lines to the existing .htaccess file. It can also be placed in the toplevel web directory; check the Apache server documentation for details and options, and for other ways to set the MIME type. (.htaccess files are not allowed in all ISP accounts)
+
+Here's some info about Apache's AddEncoding directive.
+
+Alternatively, programs that generate SVGs can send the MIME type in the header.
+
+For more info, visit svg-wiki/OnTheServer and svg-wiki/MimeType,
+
+-----
+
+Jim Ley wrote:
+
+>> "Ben" <crane_ba@yahoo.com> wrote in message news:cklrr2+4fnq@eGroups.com...
+>
+>>>> Can anyone explain to me how to GZIP my SVG files? I haven't ever had
+>>>> the need to do this before, but I'm starting to get SVG files greater
+>>>> than a couple MB's and I want to reduce the size.
+>
+>>
+>> Go to http://www.gzip.org/  and get a copy.
+>>
+>> then go to a command line and go:
+>>
+>> gzip -9 -S z moomin.svg
+>>
+>> and moomin.svg has become moomin.svgz and is gzipped.
+
+
+That's simple and nice.
+For those allergic to command line, you can use some graphical
+compressor supporting the Gzip format.
+
+For example, on Windows, with 7-Zip, right-click on the file, choose
+"Add to archive...", select GZip as "Archive format" (remains default
+format for next zippings), replace the svg.gz with svgz, click OK and
+you are done.
+
+Almost as fast as selecting "Command line here" in the Directory context
+menu... and no need to type (or paste) the filename... Tuerlersee.svg
+(my test file) is a bit hard to type.
+
+Fast uncompressing too: just select "Extract Here..." in the context
+menu, and you have a file, either the .svg one, or named "[Content]" if
+the gz file didn't kept the original filename.
+
+Two remarks:
+- I don't like that the .svg file *becomes* .svgz, I prefer to have both
+side-by-side, so I can easily modify the source and recompress again.
+To avoid this, one has to type:
+gzip -9 -c moonin.svg > moonin.svgz
+or copy original file to a Zip directory.
+
+- Z-Zip (3.13) offers better compression by default (didn't changed
+settings):
+Original Tuerlersee.svg is 459,150 bytes
+7-Zip Tuerlersee.svgz is 117,088 bytes
+Gzip Tuerlersee.svgz is 121,475 bytes
+
+Note 1: I don't advocate 7-Zip usage (this is not an ad...), it is just
+the compressor I use, and of course it is not the only one available.
+To avoid googling for the curious: http://www.7-zip.org/ (Free, LGPL)
+Note 2: Also usable on command line...
+
+-----
+
+Path: getTotalLength, getPointAtLength
+
+<script><![CDATA[
+function GetPathData()
+{
+  var path = document.getElementById("Pa");
+  var tl = path.getTotalLength();
+  var p1, p2, p3, p4;
+  p1 = path.getPointAtLength(0);
+  p2 = path.getPointAtLength(tl/3);
+  p3 = path.getPointAtLength(2*tl/3);
+  p4 = path.getPointAtLength(tl);
+  alert(tl + '\n' +
+    p1.x + ', ' + p1.y + '\n' +
+    p2.x + ', ' + p2.y + '\n' +
+    p3.x + ', ' + p3.y + '\n' +
+    p4.x + ', ' + p4.y);
+}
+]]></script>
+  <path id="Pa" fill="none" stroke="green" stroke-width="2"
+        d="M 50,50 L 150,80 C 200,20 200,20 300,50
+           S 100,200 200,200 S 150,100 100,100 H 50"/>
+  <circle cx="200" cy="100" r="20" fill="darkgreen" onclick="GetPathData()"/>
+
+-----
+
+>> when you say a large amount of SVG content out there is produced
+>> without namespace, do you mean the
+>> 'xmlns="http://www.w3.org/2000/svg"' namespace declaration within
+>> the svg-root element? Or do you mean the link to the DTD in the
+>> doctype declaration or both?
+
+
+With no namespace declaration. The DOCTYPE is totally irrelevant (most
+processors are not validating parsers in any way), maybe harmful, and
+really, really should be avoided. There's no reason to have one, it only
+adds bytes to the document. SVG 1.2 will in fact not have a DOCTYPE at all.
+
+-- Robin Berjon Research Scientist Expway, http://expway.com/
+
+Andreas Neumann wrote:
+>> well, but the DTD is necessary to validate the SVG. If you use a XML
+>> validator you have to reference the DTD.
+
+No you don't. You can validate the SVG using the DTD with an XML
+processor without having to reference the DTD in the DOCTYPE. In fact
+it's better that way as you can choose various DTDs.
+
+Use DTDs for validation if you want (they won't validate much but it's a
+start) but don't use DOCTYPE. It's useless.
+
+Jonathan Watt wrote:
+>> Even if DOCTYPEs don't have clear uses to you, why so strongly
+>> discourage their use unless they are actively harmful?
+
+There's a bunch of issues, but just to pick a few:
+
+  - they'll give false positives. This is true of all schema languages as
+    none of them can express sufficient constraints, but in the case of
+    DTDs they are so ridiculously under-expressive that the content
+    models of some elements are really, really loose compared to what the
+    spec requires. After DTD validation you still don't know that you
+    haven't done something really stupid.
+
+  - they'll give false negatives. This is quite seriously broken. If you
+    rely on DTDs to tell you when something is broken, you might well end
+    up spending hours trying to debug a document that seems perfectly
+    fine only to realize at the end that it's just the DTD being wrong.
+    This is not the fault of the authors of the SVG DTD, it is simply
+    impossible to author a DTD that will not give false negatives.
+
+  - they're namespace-unaware. You know better than I do that the number
+    one mistake is to forget the namespace. DTDs won't catch that because
+    they don't know about namespaces.
+
+  - they don't wildcard. It is perfectly fine in SVG to introduce
+    elements and attributes in other namespaces, and there even are
+    extension points dedicated to that. Unless you modify the DTD, this
+    will always give you a false negative.
+
+So when they say OK they really haven't checked anything, when they say
+NOT OK they might be on crack, and like all namespace-unaware things
+they're a dead branch of the XML tree. But feel free to use them anyway  :)
+
+-----
+
+
+-----
+
+

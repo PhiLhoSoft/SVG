@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="400px" height="400px" viewbox="0 0 400 400"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Dynamic Caption</title>
+  <desc>
+Illustrates how to make a caption appearing dynamically below an element
+on mouse over a bar of a bar chart.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-09-14</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/09/14 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Mostly code from a ToolTips.svg file, unknown origin</dc:source>
+      <dc:type>Interactive Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+<script><![CDATA[
+// Init: code ran on loading document
+var g_svgDoc = document.rootElement;
+var caption = document.getElementById("Caption");
+var captionContent = document.getElementById("CaptionContent");
+var pointedElement, peX, peY;
+
+g_svgDoc.addEventListener("mousemove", ShowData, false);
+g_svgDoc.addEventListener("mouseout", HideData, false);
+
+function Debug(d)
+{
+  var debugText = g_svgDoc.getElementById("Debug");
+  debugText.firstChild.data = d;
+}
+
+function Display()
+{
+  caption.setAttribute("visibility", "visible");
+  caption.setAttribute("transform", "translate(" + peX + "," + peY + ")");
+  captionContent.setAttribute("xlink:href", "#" + pointedElement.id);
+//  captionBack.setAttribute("width", caption.getComputedTextLength() + 8)
+}
+
+function ShowData(evt)
+{
+  // Avoid redisplaying if already displayed
+  if (pointedElement != evt.target)
+  {
+    pointedElement = GetElementWithId(evt);
+    var id = '----';
+    if (pointedElement)
+    {
+      id = pointedElement.getAttribute('id');
+    }
+    // Display caption only for elements whose id starts with 'data_'
+    // (bars of the bar graph).
+    if (id.substring(0, 5) == 'data_')
+    {
+      // If you want caption to be near cursor
+//      peX = evt.clientX + 4;
+//      peY = evt.clientY - 1;
+      // If you prefer to have caption below object
+//      peX = Math.abs(pointedElement.getAttribute('x')); // Math.abs allows to convert from string to decimal
+//      peY = Math.abs(pointedElement.getAttribute('y'));
+//      peY += Math.abs(pointedElement.getAttribute('height')) + 15;
+      // We must use bounding box since <g> doesn't have x/y/height data
+      var bb = pointedElement.getBBox();
+      peX = bb.x;
+      peY = bb.y + bb.height + 20;  // peY is actually constant, in this kind of graphics...
+Debug("ShowData: OK - " + pointedElement.id + ' - ' + peX + ', ' + peY);
+      Display();
+    }
+else Debug("ShowData: no - " + pointedElement.id);
+  }
+}
+
+function HideData(evt)
+{
+Debug("HideData");
+  g_svgDoc.getElementById('Caption').setAttribute('visibility','hidden');
+  pointedElement = null;
+}
+
+// If event is related to an element inside a complex drawing,
+// search the parent element holding the ID.
+function GetElementWithId(evt)
+{
+  // Get element related to event
+  var target = evt.target;
+  // While the element hasn't an ID
+  while (target && !target.getAttribute('id'))
+  {
+    // Go up to find the parent element with the ID
+    target = target.parentNode;
+  }
+  return target;
+}
+]]></script>
+
+  <g id="Title">
+    <rect x="50" y="75" width="200" height="30" fill="lightyellow" stroke="blue"
+          stroke-width="4"/>
+    <text x="90" y="100" font-size="24" fill="darkgreen">A Bar Chart</text>
+    <desc>Title Bar</desc>
+  </g>
+
+  <g id="data_1">
+    <rect x="54" y="266" width="37" height="94" fill="magenta" stroke="black"
+          stroke-width="1"/>
+    <circle cx="72.5" cy="330" r="15" fill="black" fill-opacity="0.4"/>
+    <desc>France</desc>
+  </g>
+  <g id="data_2">
+    <rect x="91" y="220" width="37" height="140" fill="white" stroke="black"
+          stroke-width="1"/>
+    <circle cx="109.5" cy="330" r="15" fill="black" fill-opacity="0.4"/>
+    <desc>Italy</desc>
+  </g>
+  <g id="data_3">
+    <rect x="128" y="212" width="37" height="148" fill="blue" stroke="black"
+          stroke-width="1"/>
+    <circle cx="146.5" cy="330" r="15" fill="black" fill-opacity="0.4"/>
+    <desc>Great Britain</desc>
+  </g>
+  <g id="data_4">
+    <rect x="165" y="230" width="37" height="130" fill="red" stroke="black"
+          stroke-width="1"/>
+    <circle cx="183.5" cy="330" r="15" fill="black" fill-opacity="0.4"/>
+    <desc>Spain</desc>
+  </g>
+  <g id="data_5">
+    <rect x="202" y="173" width="37" height="187" fill="green" stroke="black"
+          stroke-width="1"/>
+    <circle cx="220.5" cy="330" r="15" fill="black" fill-opacity="0.4"/>
+    <desc>Germany</desc>
+  </g>
+
+  <rect id="CaptionZone" x="20" y="365" width="253" height="20" fill="lightblue" stroke="black"
+        stroke-width="2">
+    <desc>Caption Zone</desc>
+  </rect>
+
+  <text id="Caption" x="0" y="0" font-size="12" visibility="hidden" text-rendering="optimizeLegibility">
+    |<tref id="CaptionContent" xlink:href="#active"/>|
+  </text>
+
+  <text id="Debug" x="20" y="20" font-size="14" fill="grey">Debug</text>
+</svg>

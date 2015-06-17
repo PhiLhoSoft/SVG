@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>SVG Display</title>
+</head>
+<body>
+This is a mix of HTML (this line) and SVG (the image below).<br />
+<iframe id="Tests" src="Tests.svg" width="640" height="480" frameborder="no"
+        title="A Nice Image">
+  <!-- For old browsers (NN4) -->
+  <embed name="Tests" src="Tests.svg" width="640" height="480" type="image/svg+xml" />
+  <noembed>
+    <!-- If no SVG viewer installed -->
+    <img src="Tests.png" width="640" height="480"
+         alt="Bitmap image for those without SVG plug-in"
+         title="A Nice Image" /><br />
+    Si vous voyez ce texte, l'image ci-dessus est une restitution "bitmap" de l'image SVG.
+    Pour un affichage de qualité, vous devriez aller chercher un
+    <a href="http://www.adobe.com/svg/viewer/install/main.html"
+       title="Adobe SVG Viewer">bon visionneur de SVG</a>...<br />
+    Téléchargez le <a href="Test.svg" title="Fichier SVG originel">fichier SVG file</a>.<br />
+    If you see this text, the above image is a bitmap rendition of the SVG image.
+    To see high quality graphics, you should go fetch a
+    <a href="http://www.adobe.com/svg/viewer/install/main.html"
+       title="Adobe SVG Viewer">good SVG viewer</a>...<br />
+    Get <a href="Test.svg" title="Original SVG file">SVG file</a>.<br />
+  </noembed>
+</iframe>
+<br />
+It is nice, isn't it?
+<!--
+Note: For security reasons, Adobe desactivates scripting in IE for SVG files included
+in HTML pages with the more conformant <object> tag...
+http://www.adobe.com/svg/viewer/install/main.html
+
+So alas it is better to use only <embed> tag, even if it makes Web pages non conformant
+to XHTML (or HTML 4.0) and to the SVG spec.:
+http://www.w3.org/TR/SVG11/concepts.html#UsageOptions
+-->
+</body>
+</html>

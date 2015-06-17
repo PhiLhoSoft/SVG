@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="500"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title><!-- title --></title>
+  <desc>
+<!-- description -->
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-10-05</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.1 -- 2004/12/31 -- Creation de la bannière
+1.0 -- 2004/10/05 -- Creation
+      </pls:history>
+      <dc:contributor>none yet</dc:contributor>
+      <dc:source></dc:source>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+  <style type="text/css">
+    <![CDATA[
+      text { text-anchor: left; font-family: Andale Mono; fill: white; opacity:0.5; }
+      text.Big { font-size: 14px; }
+      text.Small { font-size: 10px; }
+      text.Smaller { font-size: 8px; }
+    ]]>
+  </style>
+
+  <g id="PhiLhoBig" transform="translate(20, 20)">
+    <image xlink:href="Splash.png" width="1094" height="410"
+           transform="scale(0.5, 0.5)"/>
+    <text class="Big" y="35">
+      <!-- PhiLho, mailto:PhiLhoàGMX.net, http://Phi.Lho.free.fr/ (twice) -->
+      <tspan x="10"         >001111 100111 101000 001011 100111 101110 111100 111100 101100</tspan>
+      <tspan x="10" dy="1em">100000 101000 101011 110011 101110 111110 001111 100111 101000</tspan>
+      <tspan x="10" dy="1em">001011 100111 101110 111110 000110 001100 010111 111110 101101</tspan>
+      <tspan x="10" dy="1em">100100 110011 111100 111100 100111 110011 110011 101111 111110</tspan>
+      <tspan x="10" dy="1em">111111 111111 001111 100111 101000 111110 001011 100111 101110</tspan>
+      <tspan x="10" dy="1em">111110 100101 110001 100100 100100 111110 100101 110001 111111</tspan>
+      <tspan x="10" dy="1em">001111 100111 101000 001011 100111 101110 111100 111100 101100</tspan>
+      <tspan x="10" dy="1em">100000 101000 101011 110011 101110 111110 001111 100111 101000</tspan>
+      <tspan x="10" dy="1em">001011 100111 101110 111110 000110 001100 010111 111110 101101</tspan>
+      <tspan x="10" dy="1em">100100 110011 111100 111100 100111 110011 110011 101111 111110</tspan>
+      <tspan x="10" dy="1em">111111 111111 001111 100111 101000 111110 001011 100111 101110</tspan>
+      <tspan x="10" dy="1em">111110 100101 110001 100100 100100 111110 100101 110001 111111</tspan>
+    </text>
+    <image xlink:href="PhiLhoSig_pot.svg" width="262" height="133"
+           transform="scale(1.4, 1.4) translate(20, 0)"/>
+  </g>
+
+  <g id="PhiLhoSmall" transform="translate(150, 250)">
+    <image xlink:href="Splash.png" width="1094" height="410"
+           transform="scale(0.2, 0.2)"/>
+    <text class="Small" y="15">
+      <!-- PhiLho PhiLhoàGMX.net http://Phi.Lho.free.fr/ -->
+      <tspan x="5"         >001111 100111 101000 001011 100111</tspan>
+      <tspan x="5" dy="1em">101110 111100 001111 100111 101000</tspan>
+      <tspan x="5" dy="1em">001011 100111 101110 111110 000110</tspan>
+      <tspan x="5" dy="1em">001100 010111 111110 101101 100100</tspan>
+      <tspan x="5" dy="1em">110011 111100 100111 110011 110011</tspan>
+      <tspan x="5" dy="1em">101111 111110 111111 111111 001111</tspan>
+      <tspan x="5" dy="1em">100111 101000 111110 001011 100111</tspan>
+      <tspan x="5" dy="1em">101110 111110 100101 110001 100100</tspan>
+      <tspan x="5" dy="1em">100100 111110 100101 110001 111111</tspan>
+    </text>
+    <image xlink:href="PhiLhoSig_pot.svg" width="262" height="133"
+           transform="scale(0.55, 0.55) translate(25, 0)"/>
+  </g>
+
+  <g id="PhiLhoBanner" transform="translate(120, 350)">
+    <rect x="-30" y="0" width="469" height="61" fill="#EFFFEF" stroke="none"/>
+    <image xlink:href="Splash.png" width="1094" height="410"
+           transform="scale(0.15, 0.15)"/>
+    <text class="Smaller" y="10">
+      <!-- PhiLho PhiLhoàGMX.net http://Phi.Lho.free.fr/ -->
+      <tspan x="4"         >001111 100111 101000 001011 100111</tspan>
+      <tspan x="4" dy="1em">101110 111100 001111 100111 101000</tspan>
+      <tspan x="4" dy="1em">001011 100111 101110 111110 000110</tspan>
+      <tspan x="4" dy="1em">001100 010111 111110 101101 100100</tspan>
+      <tspan x="4" dy="1em">110011 111100 100111 110011 110011</tspan>
+      <tspan x="4" dy="1em">101111 111110 111111 111111 001111</tspan>
+      <tspan x="4" dy="1em">100111 101000 111110 001011 100111</tspan>
+      <tspan x="4" dy="1em">101110 111110 100101 110001 100100</tspan>
+      <tspan x="4" dy="1em">100100 111110 100101 110001 111111</tspan>
+    </text>
+    <image xlink:href="PhiLhoSig_pot.svg" width="262" height="133"
+           transform="scale(0.42, 0.42) translate(22, 0)"/>
+    <text x="290" y="40"
+          style="font-family: Gatineau; font-size: 30; text-anchor: middle; fill: #406080; opacity: 1;"
+          >Le monde de PhiLho</text><!-- PhiLho's World - Le monde de PhiLho -->
+  </g>
+</svg>
+
+
+
+
+
+
+

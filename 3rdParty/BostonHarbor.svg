@@ -1,0 +1,516 @@
+<svg width="677px " height="581px" viewBox="0 0 677 581" xmlns="http://www.w3.org/2000/svg" version="1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style type="text/css">
+<![CDATA[
+.t32{fill:rgb(0,0,0);font-family:Arial;font-weight:bold;font-size:10px;text-anchor:middle}
+.t48{fill:rgb(0,0,0);font-family:Arial;font-weight:bold;font-size:10px;text-anchor:middle}
+.t64{fill:rgb(0,102,204);font-family:Arial;font-style:italic;font-size:11px;text-anchor:middle}
+.to105{stroke:rgb(255,255,255);stroke-width:2;font-family:Arial;font-size:10px;text-anchor:middle}
+.t105{fill:rgb(0,0,0);font-family:Arial;font-size:10px;text-anchor:middle}
+.t133{fill:rgb(0,0,0);font-family:Arial;font-weight:bold;font-size:12px;text-anchor:middle}
+.t135{fill:rgb(0,0,0);font-family:Arial;font-weight:bold;font-size:12px;text-anchor:middle}
+.t136{fill:rgb(255,255,255);font-size:9px;text-anchor:middle}
+]]>
+</style>
+<title>ESRI Map Server</title>
+<defs>
+<g id='L5-0'>
+<path d='M0 111l24 6 59 -9 2 13 -7 1 5 29 5 8 2 6 1 1 29 -19 7 -4v-2l-6 -2 2 -4 10 -6 7 -3 20 -1 5 -9 12 -9 2 -7 10 -9 19 -7 36 -6 12 4 2 -5 5 -1 10 5v2l33 9 7 -9 3 2v2l4 3h1v-3l5 3 -1 2 2 2 25 -43 11 7 -15 25 15 9 16 -27 8 5 -27 46 1 1 3 -5 14 8 29 -35 8 7 20 10 -46 50 -4 6h3l21 -21 10 -8h2l15 33 -33 9 1 7 31 -8 5 2 2 11 -33 3 -2 -1 -1 6 9 8 -2 -4v-4l16 -1 15 2 -1 8 -6 5 -22 -1 -1 8 3 5 6 2 -1 13 15 4 1 -5 15 3v18l-35 -8h-28l-2 3 1 9 39 4v5l10 3 -5 31h-7l-1 8 39 1 2 2 3 15 -8 -1 -1 -5 -9 -1 -1 -4h-5l-2 24 2 3 -1 11 -28 -11v-1l-16 -7v2l-10 -3 1 17 51 21 33 -7 3 8 -24 6 2 7 21 -4 4 7v4l-20 6 -3 -1 -1 -3 -24 7 -3 -12 -31 -13 -2 7h-2l-4 -3 -2 2 3 51 8 -3 1 4 23 -5 4 3 8 1 2 3 1 6 3 -1v1l24 -7 20 -3 1 11 -1 5 2 9 -2 2 -74 11 -18 4v18l34 -7 17 -5 18 -3 3 13 -4 1 2 12 -10 2 2 9 -20 4 -3 -13 -6 -1 -21 5 2 12 9 1 7 7 9 -1 2 10h-4l3 10 -4 1 2 9 -8 3 2 10 17 -7 6 7 1 7 -12 4l-438 0 z
+M677 206l-1 3 -2 1 -3 -4 2 -3 -3 -3 -18 -9 -1 -4 18 -30 -1 -4 -6 -4h-3l-2 4 -6 4 1 5 -15 16h-2l-10 -15 -1 -8 36 -54 -1 -4 -9 -4 -3 1 -4 6 -9 -4 4 -8 3 -3 -10 -7 -3 3 -1 -2 7 -7 -30 -20 -11 1 -3 -2v-3l12 -20v-2l-11 -6 -4 -4 -7 7 -10 -5 7 -18l100 0 z
+M677 280l-7 -4 -2 -2l9 -15 z
+M0 0h111l2 1 7 11 -9 6 -6 -6 -6 4 3 5 -1 3 -4 2 -1 2 -4 2 2 5 -9 3 -1 2 -5 2 -2 -3 -1 6 -5 5 -5 7v4l-5 -2 -2 6 -12 2 -5 1 -11 -4l-31 11 z
+M198 0l-8 5 -11 7l-19 -12 z
+'/>
+</g>
+<g id='L7-0'>
+<path d='M677 206l-1 3 -2 1 -3 -4 2 -3 -3 -3 -18 -9 -1 -4 18 -30 -1 -4 -6 -4h-3l-2 4 -6 4 1 5 -15 16h-2l-10 -15 -1 -8 36 -54 -1 -4 -9 -4 -3 1 -4 6 -9 -4 4 -8 3 -3 -10 -7 -3 3 -1 -2 7 -7 -30 -20 -11 1 -3 -2v-3l12 -20v-2l-11 -6 -4 -4 -7 7 -10 -5 7 -18l100 0 z
+M677 280l-7 -4 -2 -2l9 -15 z
+M0 0h111l2 1 7 11 -9 6 -6 -6 -6 4 3 5 -1 3 -4 2 -1 2 -4 2 2 5 -9 3 -1 2 -5 2 -2 -3 -1 6 -5 5 -5 7v4l-5 -2 -2 6 -12 2 -5 1 -11 -4l-31 11 z
+M198 0l-8 5 -11 7l-19 -12 z
+M0 111l24 6 59 -9 2 13 -7 1 5 29 5 8 2 6 1 1 29 -19 7 -4v-2l-6 -2 2 -4 10 -6 7 -3 20 -1 5 -9 12 -9 2 -7 10 -9 19 -7 36 -6 12 4 2 -5 5 -1 10 5v2l33 9 7 -9 3 2v2l4 3h1v-3l5 3 -1 2 2 2 25 -43 11 7 -15 25 15 9 16 -27 8 5 -27 46 1 1 3 -5 14 8 29 -35 8 7 20 10 -46 50 -4 6h3l21 -21 10 -8h2l15 33 -33 9 1 7 31 -8 5 2 2 11 -33 3 -2 -1 -1 6 9 8 -2 -4v-4l16 -1 15 2 -1 8 -6 5 -22 -1 -1 8 3 5 6 2 -1 13 15 4 1 -5 15 3v18l-35 -8h-28l-2 3 1 9 39 4v5l10 3 -5 31h-7l-1 8 39 1 2 2 3 15 -8 -1 -1 -5 -9 -1 -1 -4h-5l-2 24 2 3 -1 11 -28 -11v-1l-16 -7v2l-10 -3 1 17 51 21 33 -7 3 8 -24 6 2 7 21 -4 4 7v4l-20 6 -3 -1 -1 -3 -24 7 -3 -12 -31 -13 -2 7h-2l-4 -3 -2 2 3 51 8 -3 1 4 23 -5 4 3 8 1 2 3 1 6 3 -1v1l24 -7 20 -3 1 11 -1 5 2 9 -2 2 -74 11 -18 4v18l34 -7 17 -5 18 -3 3 13 -4 1 2 12 -10 2 2 9 -20 4 -3 -13 -6 -1 -21 5 2 12 9 1 7 7 9 -1 2 10h-4l3 10 -4 1 2 9 -8 3 2 10 17 -7 6 7 1 7 -12 4l-438 0 z
+'/>
+</g>
+<g id='L11-2'>
+<path d='M275 262l-6 -4 -2 -3 7 -10l9 7 z
+M354 388l11 -7 7 -4 9 -10 1 -3h4l4 2v14l-1 1 3 51 -11 2 -44 -6 -3 -4l4 -12 z
+M0 556l7 -3 7 13 11 15l-25 0 z
+M207 443l-2 1 -12 4 -3 -18l13 -5 z
+M214 158v55l-14 -12 -9 -10 -7 -11l21 -13 z
+M232 113l3 1 13 5 14 4 -9 17l-20 -11 z
+M232 113l-5 -2 -9 -1 -19 -23 16 -5 29 -4 12 4 2 -5 5 -1 10 5v2l33 9 -24 38 -31 -11l-3 0 z
+'/>
+</g>
+<g id='L13-0'>
+<path d='M339 156v-2l11 -30 10 -8 1 1 3 -5 14 8 29 -35 8 7 -26 31 -13 18 -2 1 10 13 1 3 -2 4 -21 14l-12 -12 z
+'/>
+</g>
+<g id='L13-3'>
+<path d='M7 196l-3 -5 41 -30 7 -3h7l11 8 19 21 7 20 -21 14 -24 18 -3 -4l-11 7 z
+'/>
+</g>
+<g id='L13-4'>
+<path d='M0 482l9 -1 7 -1 2 35 5 28l-23 13 z
+'/>
+</g>
+<g id='L13-6'>
+<path d='M214 158l1 -13 3 -24 32 18 -6 17 7 4 6 1l-9 15 z
+M45 581l-13 -18 14 -14 4 -2 23 10 -1 5 4 2l-14 17 z
+'/>
+</g>
+<g id='L20-0'>
+<path d='M76 40l-1 -3 -10 -15l-9 -9
+M102 14l-9 -14
+M56 13l-3 -3l-3 -2
+'/>
+</g>
+<g id='L25-0'>
+<path d='M160 0l4 2 15 10 19 -12h379l-6 15 -1 3 11 5 6 -7 4 4 11 6v3l-12 20 1 3 6 1 7 -1 30 20 -7 7 2 2 2 -3 10 7 -7 9v2l9 4 6 -7 5 1 6 4 -1 5 -24 37 -11 15 2 10 9 13 4 -1 13 -15 -1 -5 7 -5 2 -3 4 1 5 5 -3 7 -15 25 1 4 20 10 1 2 -2 4 4 3 2 -4v53l-9 15 9 6v301h-239l12 -4 -2 -9 -5 -5 -17 7 -2 -10 8 -3 -2 -9 4 -1 -3 -10h4l-2 -10 -9 1 -7 -7 -9 -1 -2 -12 21 -5 6 1 3 13 20 -4 -2 -9 10 -2 -2 -12 4 -1 -3 -13 -18 3 -25 7 -26 5v-18l18 -4 74 -11 2 -2 -2 -9 1 -13 -1 -3 -20 3 -24 7v-1l-3 1 -2 -8 -4 -2 -7 -1 -3 -2 -22 5 -1 -4 -8 3 -3 -51 2 -2 6 3 2 -7 31 13 3 12 24 -7 1 3 3 1 20 -6v-4l-5 -7 -20 4 -2 -7 24 -6 -3 -8 -33 7 -51 -21 -1 -17 10 3v-2l16 7v1l28 11 1 -12 -2 -3 2 -23h5l1 4 9 1 1 5 8 1 -4 -16 -1 -1 -39 -1 1 -8h7l5 -31 -10 -3v-5l-39 -4 -1 -9 3 -3h27l35 8v-18l-15 -3 -1 5 -15 -4 1 -13 -6 -2 -3 -7v-5l3 -1 21 1 5 -5 1 -8 -15 -2 -16 1v4l2 4 -9 -8 1 -6 7 1 28 -3 -3 -12 -4 -1 -31 8 -1 -7 32 -8 1 -3 -15 -31h-2l-10 8 -22 21h-2l-3 -7 -8 -9 2 -1 13 -18 26 -31 -8 -7 -29 35 -14 -8 -3 5 -1 -1 27 -46 -8 -5 -16 27 -15 -9 15 -25 -11 -7 -25 43 -2 -2 1 -2 -5 -3v3h-2l-3 -3v-2l-3 -2 -7 9 -33 -9v-2l-10 -5 -5 1 -2 5 -12 -4 -36 6 -19 7 -11 11 -1 5 -14 11 -3 7h-15l-15 5 -46 -90 1 -2 9 -3 -2 -5 4 -2 4 -4 2 -1v-3l-3 -4 6 -4 6 6 9 -6 -7 -11l-2 -1 z
+M0 75l31 -11 11 4 12 -2 6 -2 1 -5 5 2v-4l8 -10 2 -3 1 -5 2 3 5 -2 46 90 -9 7v2l6 2v2l-10 5 -26 18 -3 -5 -2 -5 -4 -7 -4 -27 7 -1 -2 -13 -59 9l-24 -6 z
+'/>
+</g>
+<g id='L27-0'>
+<path d='M12 176l-3 -4
+M9 172l-4 -5
+M15 154l-6 -7
+M15 148l-8 -10
+M11 167l-4 -5
+M5 167l-5 -8
+M7 138l-7 -10
+M7 162l-7 -11
+M9 147l-9 -12
+M27 165l-12 -17
+M23 168l-8 -14
+M16 174l-5 -7
+'/>
+</g>
+<g id='L35-0'>
+<path d='M58 528l0 12
+M210 532l27 -8
+M345 539l1 -6l-3 -18
+M199 410l3 -3l10 -5
+M53 354l14 13l17 16
+M226 322l-5 -3 -21 -12l-9 0
+M288 220l-10 11
+M219 216l7 -10l10 -15
+M322 189l9 2
+M311 187l6 -8
+M264 148l-7 13
+M52 15l6 5 3 2 3 11v9l-5 10l-5 5
+M291 242l-7 9
+M188 262l10 -1
+M247 247l-5 -1 -19 -1l-2 7
+M307 179l12 -19
+M293 194l-8 -6
+M233 129l-1 -16
+M245 283l-3 1 -22 -5l-3 6
+M219 270l1 4l0 5
+M58 507l22 -3
+M604 9l6 -9
+M272 135l-4 8l-4 5
+M199 146l10 -10l8 -6
+M262 183l-7 13
+M232 225l14 -28
+M264 216l-6 6
+M309 285l-1 5l-6 19
+M255 327l-3 -2 -4 -5l-5 -3
+M294 323l10 10
+M394 503l18 -3
+M224 163l-5 9
+M316 554l7 -12l7 -11
+M290 141l-3 -2
+M381 283l-21 -7
+M253 287l12 -16
+M126 554l-18 27
+M381 283l44 0
+M270 233l-7 -5 -4 -2 -2 1l-4 -4
+M662 85l15 8
+M329 202l27 -2l19 -3
+M327 212l3 3 8 3 14 1l14 5
+M246 496l-5 -18
+M272 304l-14 -14l-13 -7
+M251 240l6 -6l22 -23
+M180 577l-1 4
+M14 566l16 -11
+M135 535h11l5 1
+M149 498l3 -3 3 -12 1 -21l-1 -15
+M166 484h-6l-5 -1
+M240 209l-3 -2l-23 -14
+M253 140l9 -17
+M186 244l10 -1
+M183 211l8 0
+M117 193l-11 -17l-14 -7
+M179 174h-1l-5 3
+M49 58l5 -1l12 -3
+M266 519l14 -5l17 -7
+M305 224l-5 6
+M70 197l17 15
+M26 518l-7 1
+M382 304l27 9
+M318 293l2 3l9 14
+M305 486l-3 -17
+M394 498l-2 -2 -5 -6l-1 -22
+M363 330l3 3l18 19
+M360 472l26 -4
+M16 480l-7 1l-9 1
+M76 564l9 6 16 9l7 2
+M111 577l8 4
+M201 523l2 7l6 -1
+M244 544l-29 8
+M269 479l-10 3
+M294 425l2 4 5 35l1 5
+M195 403l4 -13l2 -12
+M275 354l3 3
+M296 320l2 -3 4 -8l16 -16
+M282 291l-14 -11
+M246 264l-18 -2 -7 -1l-2 9
+M235 243l7 -10
+M326 251l1 -2 2 -1 3 1l3 -8
+M219 216l-7 7l-5 4
+M179 205l-14 1
+M169 190l7 -4l8 -6
+M310 142l-16 24
+M72 0l2 2l14 26
+M339 156v-2l11 -30
+M321 203l-5 4
+M317 261l-8 24
+M247 258l-23 -3h-2l-1 -3
+M284 289l6 6
+M291 308l1 3l6 6
+M372 210l-22 1
+M248 320h1l1 -2l-6 -5
+M291 197l6 4
+M288 202l-10 -5l-10 -6
+M290 134l-2 4l-11 18
+M257 325l7 6
+M282 338l10 8
+M258 341l-3 -2l-5 -4
+M281 490l-3 -10l-3 -8
+M316 508l-5 -23
+M6 456l-4 1l-2 1
+M166 502l-3 9
+M346 571l-1 4l-4 6
+M18 515l-18 5
+M118 551l-6 9l-11 19
+M294 565l10 -7l8 -6
+M173 504l-7 -12l0 -8
+M273 581l-9 -11
+M201 415l15 -4
+M626 22l8 -13
+M59 473l7 -1
+M135 535l-9 19
+M155 447l-23 0
+M309 183l6 -7
+M361 174l-3 4l-17 4
+M190 524l11 -1l7 -2
+M241 533l4 1 5 1l5 -1
+M269 479l-1 -6
+M318 293l6 -4l19 -17
+M328 238l-6 14
+M344 570l6 -12
+M102 304l19 -17
+M270 187l7 4
+M215 142l-6 -6l-10 -9
+M179 297l-12 -15l-4 -9
+M173 235l-3 -13
+M259 181l5 -7
+M380 234l17 1l25 0
+M240 295l-3 -2 -20 -8l-6 -1
+M312 408l25 -37 29 -45l16 -31
+M81 317l-1 -4 -45 -58l-2 -2
+M120 329l-9 -12 -9 -13 -48 -61l-3 -4
+M67 313l2 -4 42 -36l44 -35
+M174 272l-1 -37
+M149 498l-2 7 -5 15 -7 15 -13 -6l15 -34
+M214 213v-11l1 -60l3 -21
+M158 273h3l13 -1 3 1 42 -3l26 3
+M194 314l-2 -3 -6 -77 -1 -20 -24 -37l-8 -3
+M38 363l17 15l24 26
+M212 223l23 20 -7 1l-5 -1
+M243 540l12 5 24 11 15 9 5 5l7 11
+M313 523l3 -1 27 -7 19 -4l32 -8
+M38 407l2 -4 5 -11 10 -14l12 -11
+M209 294h1l2 -1 -3 -23 -2 -46 -3 -5 -13 -8l-15 -25
+M262 204l-10 -5 -6 -2l-32 -18
+M226 481l15 -3 34 -6l27 -3
+M366 326l-10 -15 -19 -29l-3 -2
+M255 373l3 -4 7 -7 2 -3 6 -2 12 -23 11 -14 4 -3 22 -6 18 -3 11 -5 7 -12 2 -15 -1 -4 3 -39l14 -32
+M229 500l2 5 17 48 5 8l11 9
+M386 468l39 -7l61 -14
+M604 9l12 7 39 25l22 12
+M356 341l20 20 6 3h4l54 23
+M234 307l-25 -13 -18 3l-12 0
+M220 332l3 -5 17 -32 5 -12 2 -42 1 -7l35 -74
+M321 236l7 2 32 13l21 4
+M330 194l20 -2l23 -3
+M327 212l-6 -9 -12 -20 -5 -8 -5 -6 -44 -27l-47 -27
+M308 257l-17 -15 -13 -11 -8 -10l-12 -10
+M216 556l30 -7 21 -11l18 -11
+M208 233l-22 1 -24 2l-7 2
+M264 200l10 8 11 8 15 14 9 9l8 5
+M324 224l6 3 24 9l7 1
+M308 257l9 4 50 21l14 6
+M154 223h-2l-4 -1l-25 -34
+M199 390l3 2 10 10 4 9 11 -3l8 -5
+M323 542l16 10l11 6
+M232 429l4 2 8 1 50 -7l1 -2
+M87 212l3 4 31 49 19 36v5l-2 3
+M78 344l25 25l-19 14
+M307 179l-14 15 -5 8l-9 9
+M194 314l3 2 43 31 9 10 3 8 25 18 17 10 4 5 24 18 8 10l4 2
+M354 388l-17 -17 -18 -15 -35 -33l-12 -19
+M294 393l1 -2 15 -23l46 -57
+M303 513l2 -2 11 -3 15 -2l17 -5
+M394 498v5l4 4 4 3 6 29l-31 8
+M270 187l-8 -4 -53 -28l-23 -22
+M47 308l-14 -18l-20 -23
+M19 55l6 -4 6 -9 2 -12 3 -5 8 -7 16 -7l17 -11
+M677 96l-26 43l-22 31
+M318 293l-9 -8 -15 -8 -25 -19 -22 -21 -43 -32 -13 -14 -25 -38l-11 -20
+'/>
+</g>
+<g id='L38-0'>
+<path d='M388 581l-16 -32 -12 -37 -11 -43 -10 -19 -13 -16 -73 -56 -48 -44 -39 -46 -57 -84 -2 -4l-107 -122
+M375 581l-3 -6 -9 -30 -15 -71 -12 -22 -18 -18 -26 -19 -47 -38 -9 -8 -14 -11 -36 -35 -43 -60 -33 -47 -8 -13 -46 -53 -51 -54l-5 -6
+'/>
+</g>
+<g id='L38-6'>
+<path d='M263 342l7 -6 14 -13 113 -88 47 -38 84 -73l143 -124
+M19 16l3 -3l15 -13
+M277 377l1 -3 6 -10 18 -25 10 -10 37 -29 20 -21 20 -23 87 -75 30 -24 67 -59 46 -36 36 -21l22 -18
+M177 299l-11 -14 -8 -10 -16 -27 -14 -18 -10 -21 -7 -12 -36 -41 -9 -3 -6 -1 -7 2 -43 29l-10 8
+'/>
+</g>
+<g id='L38-12'>
+<path d='M16 492h16l26 -3
+M7 553l5 10l13 18
+M2 289l-2 -3
+M180 339l-8 -11l-13 -15
+M77 581l-10 -6
+M0 295l1 -2l1 -4
+M0 277l2 2l2 5
+M322 581l5 -10 12 -19l6 -13
+M81 317l5 6l12 13
+M221 567l10 14
+M382 295v9l2 49 -3 14 -9 10 -18 11 -16 24 -4 12 19 25 7 23 14 65 7 19 12 20l1 5
+M44 0l1 1 18 13 7 8 61 115 18 31 3 1 -1 -7 -79 -148l-16 -14
+M190 505v6l-2 70
+M159 313l1 -1 1 -8 -3 -34 -4 -47l-2 -54
+M62 581l5 -6 18 -23 17 -25 6 -11 6 -19l0 -9
+M160 565l-17 -5l-51 -19
+M16 405l-1 5 1 45v37l3 27l4 24
+M245 409l-1 -1 -9 -5 -52 -59l-3 -5
+M173 504v5l-1 28 -5 17 -17 24l-3 3
+M180 339l32 31 17 15 18 19 54 21 10 9 6 4 15 17 10 19 6 27 4 13 8 35l10 32
+M288 488l1 5 8 14 16 16 35 18 18 4 7 -2l3 1
+M58 528v-21l1 -51 3 -29l5 -10
+M207 443l-4 -18 -4 -15l-11 -24
+M180 339l-5 2 -39 24 -22 16 -20 12 -22 16l-5 8
+M334 424v2l1 6 14 18 5 10 9 45 8 29 2 9 4 13l15 25
+M117 330l-10 -4 -40 -13 -25 -7l-40 -17
+M92 541l-27 -10 -7 -3 -35 15l-23 13
+M143 319l-5 -10 -5 -5 -22 -31 -38 -40l-5 -7
+M272 491l1 5 19 46 6 5 18 7 30 17 24 10h10l10 -4
+M382 295l-1 -7 -1 -54 -2 -5 1 -16 -6 -24 -20 -23 -17 -11 -26 -13 -25 -10 -34 -13h-3l-25 -9 -9 1 -12 9 -21 17l-15 16
+M250 581l4 -3 21 -17 17 -19l21 -19
+M255 373l-8 20 1 9 -10 20 -6 7 -27 15l-16 6
+M173 504l-7 -2l-52 -14
+M0 410h4l26 1 18 4 10 4 26 16 9 9 8 11 7 17 3 11 3 5 1 -6 -3 -18 -8 -15 -12 -15 -12 -9 -22 -12 -20 -6l-38 -2
+M178 393l10 -7 29 -20 7 -6 3 -1 13 -12 14 -18 37 -49 17 -23 13 -21 10 -45 2 -17l5 -18
+M2 289l2 -5 7 -11 43 -30 17 -14 55 -37 24 -19 13 -17l3 -3
+M0 282l2 -3 11 -12 38 -28 43 -31 13 -8 41 -30l4 -1
+M16 405l2 -7 4 -12 10 -17 15 -13 57 -22 16 -5l39 -16
+M204 505l1 -3 -15 -72 -8 -29 -20 -39 -9 -8 3 11 18 31 6 16 20 91 4 2 6 27 6 24 5 11l-1 14
+M173 504h6l25 1 84 -17 23 -3 24 -6 7 -1 15 -6l3 0
+M167 554l5 1 16 2l28 -1
+'/>
+</g>
+<g id='L38-18'>
+<path d='M255 373l10 5 8 5 4 -6 -1 16 -9 7 -33 -18 -17 -16 -9 -11 -21 -14l-7 -2
+M315 436l3 -2l16 -10
+M7 0l-4 3l-3 1
+M0 27l2 -1 17 -10 -14 15l-5 3
+M175 308l2 4 12 23 21 30 2 5 21 26 14 8 16 -2 4 -2l13 5
+M105 202l2 3 11 18 1 13 4 10 35 44l12 11
+M208 355l5 4 18 14 6 3 8 1 23 8 5 -2 20 18 15 11 21 20l-12 6
+M163 156l-5 1 -8 -2l-4 -3
+M295 423l3 -3 -1 -4 -6 -6 -46 -5l-12 -9
+M13 267l-3 1 -9 1l-1 -1
+M263 342l-4 6 -14 6 -5 -1 -32 -23 -31 -31l18 24
+M260 370l9 -7 21 -11l6 -5
+M148 317l4 -5 3 -6 -4 -9 -27 -34 -21 -29 -5 -17 -5 -20l-4 -10
+M337 428l-3 1 -5 3 13 17 12 24l12 60
+M25 0l-2 1l1 -1
+M175 341l-8 7 -5 6 -1 5l1 3
+M70 166l-11 -8 -33 -27 -8 -3 -10 -1 -5 1 3 4 3 15v8l-9 22
+M0 128h3l-3 -4
+M79 404l-2 6l-1 13
+M0 184l2 -2 9 -15 3 -6 1 -13 -4 -14 -3 -7l-8 -9
+M58 0l2 3
+M200 500l-5 5
+M380 581l-10 -23 -6 -21l-3 -22
+M258 349l-3 4 -8 6 -12 2 -7 -1 -32 -31 -15 -19l-2 -6
+M23 1l-22 3l-1 0
+'/>
+</g>
+<symbol id='istate_shield' viewBox='53 30 114 114' preserveAspectRatio='none'>
+<path d='M 55 58 C 57.0 48 62 39 67.0 32.0 L 67.0 32 C 85.0 43.0 103 40.0 110.0 31.0 L 110.0 31 C 130 44 141 40.0 151 31 L 151.0 31.0 C 159 40 163 51 165 58 L 55 58'
+style='fill:rgb(255,0,0);stroke:rgb(255,0,0);stroke-width:1'/>
+ <path  d='M 55 58.0 C 50 84 61 135.0 112 142 L 112 142 C 172 123 168 68 165 58 L 55 58'
+style='fill:rgb(0,0,255);stroke:rgb(0,0,255);stroke-width:1'/>
+</symbol>
+</defs>
+<g id='U.S. Counties'>
+<use xlink:href='#L5-0' fill-rule='evenodd' fill='rgb(255,255,230)' stroke='rgb(204,204,204)' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Populated Places'>
+<use xlink:href='#L7-0' fill-rule='evenodd' fill='rgb(228,221,203)' stroke='none'/>
+</g>
+<g id='Parks'>
+<g id='Local Parks'>
+<use xlink:href='#L11-2' fill-rule='evenodd' fill='rgb(0,130,65)' stroke='none'/>
+</g>
+</g>
+<g id='Landmark Areas'>
+<g id='Military Installations'>
+<use xlink:href='#L13-0' fill-rule='evenodd' fill='rgb(153,153,102)' stroke='none'/>
+</g>
+<g id='Recreation Areas'>
+<use xlink:href='#L13-3' fill-rule='evenodd' fill='rgb(255,204,102)' stroke='none'/>
+</g>
+<g id='State Capitols'>
+<use xlink:href='#L13-4' fill-rule='evenodd' fill='rgb(255,255,51)' stroke='none'/>
+</g>
+<g id='Cemeteries'>
+<use xlink:href='#L13-6' fill-rule='evenodd' fill='rgb(102,153,102)' stroke='none'/>
+</g>
+</g>
+<g id='Rivers and Streams'>
+<use xlink:href='#L20-0' fill='none' stroke='rgb(102,153,204)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Water Bodies'>
+<use xlink:href='#L25-0' fill-rule='evenodd' fill='rgb(153,204,255)' stroke='rgb(102,153,204)' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Railroads'>
+<use xlink:href='#L27-0' fill='none' stroke='rgb(0,0,0)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/>
+<use xlink:href='#L27-0' fill='none' stroke='rgb(255,255,255)' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Streets'>
+<use xlink:href='#L35-0' fill='none' stroke='rgb(180,180,180)' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/>
+<use xlink:href='#L35-0' fill='none' stroke='rgb(255,255,255)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Highways'>
+<g id='Interstates'>
+<use xlink:href='#L38-0' fill='none' stroke='rgb(255,0,0)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>
+<use xlink:href='#L38-0' fill='none' stroke='rgb(255,255,130)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Highways'>
+<use xlink:href='#L38-6' fill='none' stroke='rgb(102,153,153)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>
+<use xlink:href='#L38-6' fill='none' stroke='rgb(255,255,130)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Major Streets'>
+<use xlink:href='#L38-12' fill='none' stroke='rgb(180,180,180)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>
+<use xlink:href='#L38-12' fill='none' stroke='rgb(255,255,102)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+<g id='Ramps'>
+<use xlink:href='#L38-18' fill='none' stroke='rgb(255,255,102)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/>
+</g>
+</g>
+<g id='TEXT-U.S. Counties'>
+</g>
+<g id='TEXT-Populated Places'>
+</g>
+<g id='TEXT-Parks'>
+<g id='TEXT-Local Parks'>
+</g>
+<text x='255' y='104' class='t32'>North End Playground</text>
+</g>
+<g id='TEXT-Landmark Areas'>
+<g id='TEXT-Military Installations'>
+</g>
+<g id='TEXT-Recreation Areas'>
+</g>
+<g id='TEXT-State Capitols'>
+</g>
+<g id='TEXT-Cemeteries'>
+</g>
+<text x='370' y='140' class='t48'>Boston Support Center</text>
+</g>
+<g id='TEXT-Rivers and Streams'>
+</g>
+<g id='TEXT-Water Bodies'>
+<text x='491' y='261' class='t64'>Boston Inner Harbor</text>
+</g>
+<g id='TEXT-Railroads'>
+</g>
+<g id='TEXT-Streets'>
+<text x='0' y='0' transform='translate(75,276), rotate(51.8)' class='to105'>Friend St</text>
+<text x='0' y='0' transform='translate(75,276), rotate(51.8)' class='t105'>Friend St</text>
+<text x='0' y='0' transform='translate(344,299), rotate(56.77)' class='to105'>Lewis St</text>
+<text x='0' y='0' transform='translate(344,299), rotate(56.77)' class='t105'>Lewis St</text>
+<text x='0' y='0' transform='translate(275,159), rotate(31.53)' class='to105'>Charter St</text>
+<text x='0' y='0' transform='translate(275,159), rotate(31.53)' class='t105'>Charter St</text>
+<text x='0' y='0' transform='translate(218,172), rotate(-89.05)' class='to105'>Snow Hill St</text>
+<text x='0' y='0' transform='translate(218,172), rotate(-89.05)' class='t105'>Snow Hill St</text>
+<text x='0' y='0' transform='translate(373,219), rotate(-66.37)' class='to105'>North St</text>
+<text x='0' y='0' transform='translate(373,219), rotate(-66.37)' class='t105'>North St</text>
+<text x='0' y='0' transform='translate(354,351), rotate(-57.2)' class='to105'>Commercial St</text>
+<text x='0' y='0' transform='translate(354,351), rotate(-57.2)' class='t105'>Commercial St</text>
+<text x='0' y='0' transform='translate(170,198), rotate(57.03)' class='to105'>Endicott St</text>
+<text x='0' y='0' transform='translate(170,198), rotate(57.03)' class='t105'>Endicott St</text>
+<text x='0' y='0' transform='translate(342,248), rotate(22.11)' class='to105'>Clark St</text>
+<text x='0' y='0' transform='translate(342,248), rotate(22.11)' class='t105'>Clark St</text>
+<text x='0' y='0' transform='translate(255,251), rotate(43.67)' class='to105'>Prince St</text>
+<text x='0' y='0' transform='translate(255,251), rotate(43.67)' class='t105'>Prince St</text>
+<text x='0' y='0' transform='translate(299,343), rotate(43.32)' class='to105'>Richmond St</text>
+<text x='0' y='0' transform='translate(299,343), rotate(43.32)' class='t105'>Richmond St</text>
+<text x='0' y='0' transform='translate(196,275), rotate(-2.54)' class='to105'>Cooper St</text>
+<text x='0' y='0' transform='translate(196,275), rotate(-2.54)' class='t105'>Cooper St</text>
+<text x='0' y='0' transform='translate(87,359), rotate(45.0)' class='to105'>Bowker St</text>
+<text x='0' y='0' transform='translate(87,359), rotate(45.0)' class='t105'>Bowker St</text>
+<text x='0' y='0' transform='translate(308,410), rotate(36.87)' class='to105'>Cross St</text>
+<text x='0' y='0' transform='translate(308,410), rotate(36.87)' class='t105'>Cross St</text>
+<text x='0' y='0' transform='translate(235,313), rotate(-62.02)' class='to105'>Salem St</text>
+<text x='0' y='0' transform='translate(235,313), rotate(-62.02)' class='t105'>Salem St</text>
+<text x='0' y='0' transform='translate(633,31), rotate(32.66)' class='to105'>Sumner St</text>
+<text x='0' y='0' transform='translate(633,31), rotate(32.66)' class='t105'>Sumner St</text>
+<text x='0' y='0' transform='translate(235,530), rotate(70.5)' class='to105'>Kilby St</text>
+<text x='0' y='0' transform='translate(235,530), rotate(70.5)' class='t105'>Kilby St</text>
+<text x='0' y='0' transform='translate(64,394), rotate(47.29)' class='to105'>Bulfinch Pl</text>
+<text x='0' y='0' transform='translate(64,394), rotate(47.29)' class='t105'>Bulfinch Pl</text>
+<text x='0' y='0' transform='translate(220,236), rotate(41.01)' class='to105'>Alley</text>
+<text x='0' y='0' transform='translate(220,236), rotate(41.01)' class='t105'>Alley</text>
+<text x='0' y='0' transform='translate(456,458), rotate(-12.93)' class='to105'>Long Wharf</text>
+<text x='0' y='0' transform='translate(456,458), rotate(-12.93)' class='t105'>Long Wharf</text>
+<text x='0' y='0' transform='translate(126,285), rotate(62.18)' class='to105'>Haverhill St</text>
+<text x='0' y='0' transform='translate(126,285), rotate(62.18)' class='t105'>Haverhill St</text>
+<text x='0' y='0' transform='translate(55,286), rotate(52.19)' class='to105'>Portland St</text>
+<text x='0' y='0' transform='translate(55,286), rotate(52.19)' class='t105'>Portland St</text>
+</g>
+<g id='TEXT-Highways'>
+<g id='TEXT-Interstates'>
+</g>
+<g id='TEXT-Highways'>
+</g>
+<g id='TEXT-Major Streets'>
+</g>
+<g id='TEXT-Ramps'>
+</g>
+<use x='213' y='353' width='32' height='22' xlink:href='#istate_shield'/>
+<text x='229' y='368' class='t136'>93</text>
+<text x='0' y='0' transform='translate(270,304), rotate(-52.94)' class='t133'>Hanover St</text>
+<text x='0' y='0' transform='translate(194,567), rotate(1.3)' class='t133'>Water St</text>
+<text x='0' y='0' transform='translate(325,542), rotate(27.22)' class='t133'>India St</text>
+<text x='0' y='0' transform='translate(137,507), rotate(15.07)' class='t133'>Court St</text>
+<text x='0' y='0' transform='translate(430,218), rotate(-40.76)' class='t135'>William F Mcclellan Hwy</text>
+<text x='0' y='0' transform='translate(178,460), rotate(77.6)' class='t133'>Congress St</text>
+<text x='0' y='0' transform='translate(355,506), rotate(77.85)' class='t133'>Atlantic Ave</text>
+<text x='0' y='0' transform='translate(97,209), rotate(-33.93)' class='t133'>Causeway St</text>
+<text x='0' y='0' transform='translate(112,296), rotate(54.64)' class='t133'>Canal St</text>
+<text x='0' y='0' transform='translate(5,487), rotate(87.32)' class='t133'>Bowdoin St</text>
+<text x='0' y='0' transform='translate(56,482), rotate(-88.88)' class='t133'>Somerset St</text>
+<text x='0' y='0' transform='translate(114,563), rotate(20.43)' class='t133'>School St</text>
+<text x='0' y='0' transform='translate(269,426), rotate(21.25)' class='t133'>Purchase St</text>
+<text x='0' y='0' transform='translate(90,84), rotate(62.06)' class='t133'>Charlestown Brg</text>
+<text x='0' y='0' transform='translate(246,495), rotate(-11.44)' class='t133'>State St</text>
+</g>
+<text x='0' y='580' style='font-size:9px;text-anchor:start;fill:rgb(0,0,0)'>(c)2005 ESRI, TANA Inc.</text>
+</svg>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+    "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
+    <!ATTLIST svg
+              xmlns:a3 CDATA #IMPLIED
+              a3:scriptImplementation CDATA #IMPLIED>
+    <!ATTLIST script
+              a3:scriptImplementation CDATA #IMPLIED>
+]>
+<svg onload="init(evt)"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:a3="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+     a3:scriptImplementation="Adobe">
+    <script type="text/ecmascript" a3:scriptImplementation="Adobe"
+            xlink:href="../../gui/2D.js.gz"/>
+    <script type="text/ecmascript" a3:scriptImplementation="Adobe"><![CDATA[
+        var svgns  = "http://www.w3.org/2000/svg";
+        var azap   = new AntiZoomAndPan();
+        var mouser = new Mouser();
+        
+        var circle;
+        var point1, point2, point3;
+        
+        function init(evt) {
+            build_scene();
+            find_circle();
+        }
+
+        function find_circle() {
+            var p1, p2, p3;
+
+            if ( point1.point.x == point2.point.x ) {
+                //svgDocument.getElementById("t").firstChild.data = "case 1";
+                p1 = point1.point;
+                p2 = point3.point;
+                p3 = point2.point;
+            } else if ( point2.point.x == point3.point.x ) {
+                //svgDocument.getElementById("t").firstChild.data = "case 2";
+                p1 = point3.point;
+                p2 = point1.point;
+                p3 = point2.point;
+            } else {
+                //svgDocument.getElementById("t").firstChild.data = "case 3&4";
+                p1 = point1.point;
+                p2 = point2.point;
+                p3 = point3.point;
+            }
+
+            var ma = (p2.y - p1.y) / (p2.x - p1.x);
+            var mb = (p3.y - p2.y) / (p3.x - p2.x);
+
+            // NOTE: should check (mb - ma) == 0...points are co-linear
+            var x =
+                (ma * mb * (p1.y - p3.y) +
+                      mb * (p1.x + p2.x) -
+                      ma * (p2.x + p3.x)   ) / (2 * (mb - ma));
+            var y = (-1 / ma) * (x - (p1.x + p2.x)/2) + (p1.y + p2.y)/2;
+
+            circle.center.point.setXY(x, y);
+            circle.radius.point.setFromPoint(p1);
+            circle.radius.update();
+        }
+        
+        function build_scene() {
+            var circles = svgDocument.getElementsByTagNameNS(svgns, "circle");
+
+            circle = new Circle( circles.item(0) );
+            circle.realize();
+            circle.locked = true;
+            
+            point1 = new Handle(82, 83, null);
+            point1.realize();
+            point1.svgNode.setAttributeNS(null, "stroke", "red");
+            point1.callback = find_circle;
+
+            point2 = new Handle(18, 52, null);
+            point2.realize();
+            point2.svgNode.setAttributeNS(null, "stroke", "green");
+            point2.callback = find_circle;
+            
+            point3 = new Handle(61, 21, null);
+            point3.realize();
+            point3.svgNode.setAttributeNS(null, "stroke", "blue");
+            point3.callback = find_circle;
+
+            azap.appendNode(mouser.svgNode);
+        }
+    ]]></script>
+    <circle cx="50" cy="50" r="10" fill="blue" opacity="0.5"/>
+</svg>

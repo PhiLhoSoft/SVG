@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Markers: parameters</title>
+  <desc>
+Experiments with markers: playing with parameters.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-09-17</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/09/17 -- Original release
+      </pls:history>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+  <style type="text/css">
+    <![CDATA[
+      text { text-anchor: right; font-size: 10px; font-family: Verdana, Helvetica, Arial; }
+    ]]>
+  </style>
+
+  <defs>
+<!--
+The viewBox provides the space where the path coordinates take place.
+The markerWidth & markerHeight scale the marker.
+If preserveAspectRatio is omitted, the marker is scaled proportionnaly,
+even if markerWidth & markerHeight are different.
+If preserveAspectRatio is set to none, markerWidth & markerHeight
+can be used to stretch (or squish) the marker.
+Note that markerWidth & markerHeight must not be omitted to avoid
+strange side effect...
+viewBox can be omitted, in this case markerWidth & markerHeight are used
+to define the view box.
+-->
+    <marker id="Arrow1"
+            viewBox="0 0 10 10" refX="0" refY="5"
+            markerUnits="strokeWidth"
+            markerWidth="5" markerHeight="5" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="Arrow2"
+            viewBox="0 0 10 10" refX="0" refY="5"
+            markerUnits="userSpaceOnUse"
+            markerWidth="10" markerHeight="20" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="Arrow3"
+            viewBox="0 0 10 10" refX="-2" refY="5"
+            markerUnits="strokeWidth"
+            markerWidth="15" markerHeight="5" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="Arrow4"
+            viewBox="0 0 10 10" refX="-2" refY="5"
+            markerUnits="userSpaceOnUse"
+            markerWidth="3" markerHeight="10" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="Arrow5"
+            refX="0" refY="5"
+            markerUnits="userSpaceOnUse"
+            markerWidth="10" markerHeight="10"
+            orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+
+    <marker id="Leaf1"
+            viewBox="0 0 30 20" refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="30" markerHeight="20"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf2"
+            viewBox="0 0 30 20" refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="25" markerHeight="7"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf3"
+            viewBox="0 0 30 20" refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="25" markerHeight="7" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf4"
+            viewBox="0 0 30 20" refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="35" markerHeight="35"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf5"
+            viewBox="0 0 30 20" refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="35" markerHeight="35" preserveAspectRatio="none"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf6"
+            refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="30" markerHeight="20"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf7"
+            refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="40" markerHeight="30"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+    <marker id="Leaf8"
+            refX="0" refY="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="20" markerHeight="10"
+            orient="auto">
+      <path d="M 0 5 L 0,5 L 15,0 L 30,10 L 15,20 L 0,15 z"/>
+    </marker>
+
+    <g id="Lines" fill="none" stroke="black">
+      <line x1="0" x2="30" y1="0" y2="10"
+           stroke-width="1"/>
+      <line x1="0" x2="30" y1="50" y2="60"
+            stroke-width="5"/>
+      <line x1="0" x2="30" y1="100" y2="110"
+            stroke-width="10"/>
+    </g>
+    <g id="LineBox">
+      <rect x="30" y="-10" width="30" height="20" stroke="#F80" stroke-width="1" fill="none"/>
+      <line x1="0" x2="30" y1="0" y2="0"
+            stroke="black" stroke-width="4"/>
+    </g>
+  </defs>
+
+  <text x="10" y="20">markerUnits:</text>
+  <text x="10" y="40">refX:</text>
+  <text x="10" y="60">markerWidth:</text>
+  <text x="10" y="80">markerHeight:</text>
+
+  <text x="90" y="20">strokeWidth</text>
+  <text x="90" y="40">0</text>
+  <text x="90" y="60">5</text>
+  <text x="90" y="80">5</text>
+  <use xlink:href="#Lines"
+       transform="translate(90, 100)"
+       marker-end="url(#Arrow1)"/>
+  <text x="190" y="20">userSpaceOnUse</text>
+  <text x="190" y="40">0</text>
+  <text x="190" y="60">10</text>
+  <text x="190" y="80">20</text>
+  <use xlink:href="#Lines"
+       transform="translate(190, 100)"
+       marker-end="url(#Arrow2)"/>
+  <text x="290" y="20">strokeWidth</text>
+  <text x="290" y="40">-2</text>
+  <text x="290" y="60">15</text>
+  <text x="290" y="80">5</text>
+  <use xlink:href="#Lines"
+       transform="translate(290, 100)"
+       marker-end="url(#Arrow3)"/>
+  <text x="390" y="20">userSpaceOnUse</text>
+  <text x="390" y="40">-2</text>
+  <text x="390" y="60">3</text>
+  <text x="390" y="80">10</text>
+  <use xlink:href="#Lines"
+       transform="translate(390, 100)"
+       marker-end="url(#Arrow4)"/>
+  <text x="490" y="20">userSpaceOnUse</text>
+  <text x="490" y="40">0</text>
+  <text x="490" y="60">10</text>
+  <text x="490" y="80">10</text>
+  <use xlink:href="#Lines"
+       transform="translate(490, 100)"
+       marker-end="url(#Arrow5)"/>
+  <text x="490" y="230">No viewBox</text>
+
+  <text x="10" y="290">viewBox="0 0 30 20"</text>
+  <use xlink:href="#LineBox"
+       transform="translate(20, 350)"
+       marker-end="url(#Leaf1)"/>
+  <text x="20" y="380">30,20,-</text>
+  <text x="10" y="420">No viewBox</text>
+
+  <use xlink:href="#LineBox"
+       transform="translate(100, 300)"
+       marker-end="url(#Leaf2)"/>
+  <text x="100" y="330">25,7,-</text>
+  <use xlink:href="#LineBox"
+       transform="translate(200, 300)"
+       marker-end="url(#Leaf3)"/>
+  <text x="200" y="330">25,7,none</text>
+  <use xlink:href="#LineBox"
+       transform="translate(300, 300)"
+       marker-end="url(#Leaf4)"/>
+  <text x="300" y="330">35,35,-</text>
+  <use xlink:href="#LineBox"
+       transform="translate(400, 300)"
+       marker-end="url(#Leaf5)"/>
+  <text x="400" y="330">35,35,none</text>
+
+  <use xlink:href="#LineBox"
+       transform="translate(100, 400)"
+       marker-end="url(#Leaf6)"/>
+  <text x="100" y="430">30,20,-</text>
+  <use xlink:href="#LineBox"
+       transform="translate(200, 400)"
+       marker-end="url(#Leaf7)"/>
+  <text x="200" y="430">40,30,-</text>
+  <use xlink:href="#LineBox"
+       transform="translate(300, 400)"
+       marker-end="url(#Leaf8)"/>
+  <text x="300" y="430">20,10,-</text>
+
+  <text x="500" y="335">markerWidth,</text>
+  <text x="500" y="350">markerHeight,</text>
+  <text x="500" y="365">preserveAspectRatio</text>
+
+  <text x="320" y="470" style="text-anchor: middle; font-size: 20; fill: blue;">marker parameters</text>
+</svg>

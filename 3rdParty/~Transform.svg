@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+    "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="600" height="600"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="-20 -20 580 580">
+
+  <defs>
+    <symbol id="axis" stroke-width="2"
+            viewBox="0 0 100 100" overflow="visible"
+            stroke-linecap="round" >
+      <line x1="0" y1="0" x2="90" y2="0"/>
+      <line x1="0" y1="0" x2="0"  y2="90"/>
+      <path d="M0 100 l3-10 h-6z" stroke="none"/>
+      <path d="M100 0 l-10,3 v-6z" stroke="none"/>
+    </symbol>
+  </defs>
+
+<!--
+Thomas DeWeese wrote on SVG-www:
+>     The basic problem is that the transform attribute describes the
+> transformation from one coordinate system to another not the
+> transformation of the geometry (this would be problematic as it
+> wouldn't work for groups).
+-->
+
+<!-- Take an inital coordinate system (C1) -->
+  <g stroke="black" fill="black">
+    <use x="0" y="0" width="300" height="300"
+         xlink:href="#axis"/>
+    <text x="10" y="30" font-size="20" stroke="none">C1</text>
+  </g>
+
+<!-- Create a new coordinate system (C2) translated by 200,0.  We now
+have a coordinate system with it's origin at location 200,0 in
+the original coordinate system (C1). -->
+  <g transform="translate(200, 0)" stroke="blue" fill="blue">
+    <use x="0" y="0" width="300" height="300"
+         xlink:href="#axis"/>
+    <text x="50" y="30" font-size="20" stroke="none">C2</text>
+  </g>
+
+<!-- Now create another new coordinate system (C3) by rotating the
+cooridinate system (C2) by 45 degrees around it's origin, which is
+at location 200,0 in the original coordinate system (C1). -->
+  <g transform="translate(200, 0) rotate(45)"
+     stroke="green" fill="green">
+    <use x="0" y="0" width="300" height="300"
+         xlink:href="#axis"/>
+    <text x="50" y="30" font-size="20" stroke="none">C3</text>
+
+<!-- Now define a rectangle in the final coordinate system (C3), such
+that it starts at 0,0 and has a width/height of 30. -->
+    <rect x="0" y="0" width="30" height="30"
+          fill="purple" fill-opacity="0.5"/>
+  </g>
+
+  <g transform="rotate(45) translate(200, 0)"
+     stroke="yellow" fill="yellow">
+    <use x="0" y="0" width="300" height="300"
+         xlink:href="#axis"/>
+    <text x="50" y="30" font-size="20" stroke="none">C4</text>
+  </g>
+</svg>

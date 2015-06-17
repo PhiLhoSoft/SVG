@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+    "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
+    <!ATTLIST svg
+              xmlns:a3 CDATA #IMPLIED
+              a3:scriptImplementation CDATA #IMPLIED>
+    <!ATTLIST script
+              a3:scriptImplementation CDATA #IMPLIED>
+]>
+<svg onload="init(evt)"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:a3="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+     a3:scriptImplementation="Adobe">
+    <script type="text/ecmascript" a3:scriptImplementation="Adobe"
+            xlink:href="~KLD_pathData.js"/>
+    <script type="text/ecmascript" a3:scriptImplementation="Adobe"><![CDATA[
+        var height;
+        var pathData;
+        var linetos;
+
+        var speed = 30;
+        var g = 0.5;
+        var threshold = 0.1;
+        var damper = 0.75;
+
+        function init(e) {
+            if ( window.svgDocument == null )
+                svgDocument = e.target.ownerDocument;
+
+            path = svgDocument.getElementById("path");
+
+            pathData = new PathData();
+            pathData.loadDataFrom(path);
+            linetos = pathData.getSegmentsByCommandName("L");
+            linetos = linetos.concat(pathData.getSegmentsByCommandName("M"));
+
+            for (var i = 0; i < linetos.length; i++) {
+                linetos[i].moving = true;
+                linetos[i].speed = 0.0;
+            }
+
+            if ( window.getSVGViewerVersion != null ) {
+                height = innerHeight;
+                setTimeout("advance()", 1000);
+            } else {
+                height = 500;
+                setTimeout(advance, 1000);
+            }
+        }
+
+        function advance() {
+            var offScreen = true;
+
+            for (var i = 0; i < linetos.length; i++) {
+                var segment = linetos[i];
+
+                if ( segment.moving ) {
+                    segment.speed += g;
+                    segment.y += segment.speed;
+                    if ( segment.y < height ) {
+                        offScreen = false;
+                    } else {
+                        segment.y = height;
+                        segment.speed = -segment.speed * damper;
+
+                        if ( Math.abs(segment.speed) < threshold ) {
+                            segment.moving = false;
+                        } else {
+                            offScreen = false;
+                        }
+                    }
+                }
+            }
+            pathData.applySegments();
+
+            if ( ! offScreen ) {
+                if ( window.getSVGViewerVersion != null ) {
+                    window.setTimeout("advance()", speed);
+                } else {
+                    setTimeout(advance, speed);
+                }
+            }
+        }
+    ]]></script>
+    <path id="path" fill="rgb(128,128,0)" stroke="black" stroke-width="5pt" stroke-linejoin="round"
+        d="M159.38,117.82 199.1,155.4 145.36,145.36 155.4,199.1 117.82,159.38 94.36,208.77 87.3,154.55 39.29,180.71 65.45,132.7 11.23,125.64 60.62,102.18 20.9,64.6 74.64,74.64 64.6,20.9 102.18,60.62 125.64,11.23 132.7,65.45 180.71,39.29 154.55,87.3 208.77,94.36z M225,10 350,10 325,110 250,110z"/>
+</svg>

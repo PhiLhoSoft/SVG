@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000802//EN"    "http://www.w3.org/TR/2000/CR-SVG-20000802/DTD/svg-20000802.dtd">
+<svg  id="V73f6134" xmlns:a="http://www.adobe.com/svg10-extensions" a:timeline="independent" width="140" height="140" viewBox="0 0 140 140" preserveAspectRatio="xMinYMin" xml:space="preserve">
+	<animate id="D73f6134" xlink:href="#V73f6134"  dur="indefinite"/>
+	<defs>
+		<rect id="B73f6134" width="140" height="140"/> 
+	</defs>
+	<use xlink:href="#B73f6134"  id="U73f6134" style="fill:#FFFFFF;"/>
+	<g id="G73f8af4" transform="matrix(1 0 0 1 70 70)">
+		<svg  id="V73f8af4" a:timeline="independent" style="overflow:visible;" xml:space="preserve">
+			<animate id="D73f8af4" xlink:href="#V73f8af4"  dur="indefinite" repeatDur="indefinite"/>
+			<g id="S73f8b54">
+				<g id="P7418fc4" transform="matrix(1 0 0 1 2 0)" style="display:none;opacity:0.12;">
+					<defs>
+						<image style="display:inline;" width="140" height="140" id="B7419024" xlink:href="images/B7419024.png"  transform="matrix(0.9071 0 0 0.9071 -63.5 -63.5)"/>
+					</defs>
+					<use xlink:href="#B7419024"  id="U73b9a14" style="display:inline;fill:none;"/>
+					<animate xlink:href="#P7418fc4" attributeName="display" attributeType="CSS"  begin="P73f7b84.mouseover+1.6667s" dur="1.3333s" fill="freeze" calcMode="discrete" values="inline;inline;inline"  keyTimes="0;
+						0.9999;0.9999" />
+					<animate xlink:href="#P7418fc4" attributeName="opacity" attributeType="CSS"  begin="P73f7b84.mouseover+1.6667s" dur="1.3333s" fill="freeze" values="0.12;1;0;0"  keyTimes="0;0.375;0.6875;1" />
+				</g>
+				<g id="P73b85e4" transform="matrix(1 0 0 1 -3 -8)">
+					<defs>
+						<image width="140" height="140" id="B73b8644" xlink:href="images/B73b8644.png"  transform="matrix(1 0 0 1 -70 -70)"/>
+					</defs>
+					<use xlink:href="#B73b8644"  id="U7418d84" style="fill:none;"/>
+					<animate xlink:href="#P73b85e4" attributeName="opacity" attributeType="CSS"  begin="P73f7b84.mouseover" dur="3s" fill="freeze" values="1;1;1;0;0.11;0.2;1"  keyTimes="0;0.0556;0.1111;0.3056;0.8333;0.9167;1" />
+				</g>
+				<g id="P73f9294" transform="matrix(1 0 0 1 9 9)" style="display:none;opacity:0.06;">
+					<defs>
+						<image style="display:inline;" width="140" height="140" id="B73f92f4" xlink:href="images/B73f92f4.png"  transform="matrix(1 0 0 1 -70 -70)"/>
+					</defs>
+					<use xlink:href="#B73f92f4"  id="U73b83a4" style="display:inline;fill:none;"/>
+					<animate xlink:href="#P73f9294" attributeName="display" attributeType="CSS"  begin="P73f7b84.mouseover+0.8333s" dur="2.1667s" fill="freeze" calcMode="discrete" values="inline;inline;inline"  keyTimes="0;0.9999;0.9999" />
+					<animate xlink:href="#P73f9294" attributeName="opacity" attributeType="CSS"  begin="P73f7b84.mouseover+0.8333s" dur="2.1667s" fill="freeze" values="0.06;0.99;0;0"  keyTimes="0;0.2308;0.3846;1" />
+				</g>
+				<g id="P73f8de4">
+					<defs>
+						<path id="B73f8e44" d="M0,75q-31.07,0-53.04-21.96Q-75,31.07-75,0q0-31.07,21.96-53.04Q-31.07-75,0-75q31.07,0,53.04,21.96Q75-31.07,75,0q0,31.07-21.96,53.04Q31.07,75,0,75z M5.44-67.23q-27.85,0-47.54,19.69Q-61.79-27.85-61.79,0q0,27.85,19.69,47.54
+							q19.69,19.69,47.54,19.69q27.85,0,47.54-19.69Q72.67,27.85,72.67,0q0-27.85-19.69-47.54Q33.29-67.23,5.44-67.23z"/>
+					</defs>
+					<use xlink:href="#B73f8e44"  id="U73f9054" style="fill:#009999;"/>
+					<animate xlink:href="#U73f9054" attributeName="fill" attributeType="CSS"  begin="P73f7b84.mouseover" dur="1.9167s" fill="freeze" values="#009999;#FFFFFF;#9F002E;#0066CC;#CC9900;#009933"  keyTimes="0;0.0435;0.5217;0.913;0.9565;1" />
+				</g>
+			</g>
+		</svg>
+	</g>
+	<g id="P73f84e4" transform="matrix(1 0 0 1 70 69)">
+		<svg  id="V73f84e4" a:timeline="independent" style="overflow:visible;" xml:space="preserve">
+			<defs>
+				<path id="B73f8544" d="M-73,73q0-146,0-146q146,0,146,0q0,146,0,146q-146,0-146,0z M4.74-62.78q-26.16,0-44.65,18.49Q-58.4-25.8-58.4,0.37q0,26.16,18.49,44.65q18.49,18.49,44.65,18.49q26.16,0,44.65-18.49Q67.89,26.53,67.89,0.37q0-26.16-18.49-44.65
+					Q30.91-62.78,4.74-62.78z"/>
+			</defs>
+			<defs>
+				<filter id="F73f88b4" filterUnits="objectBoundingBox" x="-4.0816%" y="-4.0816%" width="109.1837%" height="109.1837%">
+					<feOffset  id="F73f88b4_3000" in="SourceGraphic" dx="0" dy="1" result="a73f88b4"/>
+					<feGaussianBlur  id="F73f88b4_4000" in="a73f88b4" stdDeviation="3" result="a73f88b4"/>
+				</filter>
+			</defs>
+			<use xlink:href="#B73f8544"  id="U73f88b4" style="fill-opacity:0.75;filter:url(#F73f88b4);"/>
+			<use xlink:href="#B73f8544"  id="U73f8754" style="fill:#FFFFFF;"/>
+		</svg>
+	</g>
+	<g id="P73f8034" transform="matrix(1 0 0 1 70 70)">
+		<defs>
+			<path id="B73f8094" d="M0,68q-28.17,0-48.09-19.91Q-68,28.17-68,0q0-28.17,19.91-48.09Q-28.17-68,0-68q28.17,0,48.09,19.91Q68-28.17,68,0q0,28.17-19.91,48.09Q28.17,68,0,68z M4.93-60.95q-25.25,0-43.1,17.85Q-56.02-25.25-56.02,0q0,25.25,17.85,43.1
+				q17.85,17.85,43.1,17.85q25.25,0,43.1-17.85Q65.89,25.25,65.89,0q0-25.25-17.85-43.1Q30.19-60.95,4.93-60.95z"/>
+		</defs>
+		<use xlink:href="#B73f8094"  id="U73f82a4" style="fill:#009933;"/>
+		<animate xlink:href="#U73f82a4" attributeName="fill" attributeType="CSS"  dur="3s" fill="freeze" values="#009933;#009933" />
+	</g>
+	<a xlink:href="javascript:OpenWindow('http://64.84.21.10:8080/AD14001/TheaterSVG',800,630,'scrollbars=no,menubar=no,toolbar=no,location=no,status=no,resizable=no');">
+	<g id="P73f7b84" transform="matrix(1 0 0 1 70 70)" style="opacity:0;">
+		<svg  id="V73f7b84" a:timeline="independent" style="overflow:visible;" xml:space="preserve">
+			<defs>
+				<ellipse id="B73f7be4" pointer-events="visible" transform="matrix(1 0 0 1 -68 -68)" cx="68.5" cy="68.5" rx="68.5" ry="68.5"/> 
+			</defs>
+			<use xlink:href="#B73f7be4"  id="U73f7df4" style="fill:#FFFFBF;"/>
+		</svg>
+	</g>
+	</a>
+	<g id="G73f65d4" transform="matrix(1 0 0 1 91 84)">
+		<g id="S73f6634">
+			<g id="P73f76d4" transform="matrix(1 0 0 1 -108 -5)">
+				<defs>
+					<rect id="B73f7734" transform="matrix(1 0 0 1 -15 -112)" width="31" height="225"/> 
+				</defs>
+				<use xlink:href="#B73f7734"  id="U73f7944" style="fill:#FFFFFF;"/>
+			</g>
+			<g id="P73f7224" transform="matrix(1 0 0 1 0 -117)">
+				<defs>
+					<rect id="B73f7284" transform="matrix(1 0 0 1 -138 -29)" width="276" height="59"/> 
+				</defs>
+				<use xlink:href="#B73f7284"  id="U73f7494" style="fill:#FFFFFF;"/>
+			</g>
+			<g id="P73f6d74" transform="matrix(1 0 0 1 94 0)">
+				<defs>
+					<rect id="B73f6dd4" transform="matrix(1 0 0 1 -21 -110)" width="43" height="220"/> 
+				</defs>
+				<use xlink:href="#B73f6dd4"  id="U73f6fe4" style="fill:#FFFFFF;"/>
+			</g>
+			<g id="P73f68c4" transform="matrix(1 0 0 1 9 113)">
+				<defs>
+					<rect id="B73f6924" transform="matrix(1 0 0 1 -121 -32)" width="242" height="65"/> 
+				</defs>
+				<use xlink:href="#B73f6924"  id="U73f6b34" style="fill:#FFFFFF;"/>
+			</g>
+		</g>
+	</g>
+</svg>

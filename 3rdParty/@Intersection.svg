@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Intersection of two circles</title>
+<text x="10" y="20" font-familly="Verdana" font-size="12" fill="red">Intersection (two distinct points)</text>
+<circle cx="130" cy="200" r="30" stroke="none" fill="blue" fill-opacity="0.3"/>
+<circle cx="200" cy="200" r="50" stroke="none" fill="green" fill-opacity="0.3"/>
+<circle cx="153.57" cy="218.56" r="1" stroke="red" strokeWidth="0.1" fill="none"/>
+<circle cx="153.57" cy="181.44" r="1" stroke="red" strokeWidth="0.1" fill="none"/>
+</svg>

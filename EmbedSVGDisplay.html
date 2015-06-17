@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>SVG Display</title>
+</head>
+<body>
+This is a mix of HTML (this line) and SVG (the image below).<br />
+<!-- Embed isn't nice (deprecated in HTML4/XHTML) but necessary for
+     old browsers (Netscape 4) or IE/Win with ASV3 (Adobe desactivates
+     scripting if using object, for security reasons), or some other browsers (Safari 1.0).
+-->
+<embed name="Tests" src="Tests3.svg" width="640" height="480" type="image/svg+xml" />
+<noembed>
+<!-- I still use object for some browsers snobbing embed... -->
+<object data="Tests3.svg" width="640" height="480" type="image/svg+xml">
+<!-- If no SVG viewer installed -->
+<img src="Tests3.png" width="640" height="480"
+     alt="Bitmap image for those without SVG plug-in"
+     title="A Nice Image" /><br />
+Si vous voyez ce texte, l'image ci-dessus est une bitmap.
+Pour un affichage de qualité, vous devriez aller chercher
+un bon visionneur de SVG...<br />
+If you see this text, the above image is a simple bitmap.
+To see high quality graphics, you should go fetch a
+<a href="http://www.adobe.com/svg/viewer/install/main.html"
+title="Adobe SVG Viewer">good SVG viewer</a>...
+</object>
+</noembed>
+<br />
+It is nice, isn't it?
+<!--
+Note: For security reasons, Adobe desactivates scripting in IE for SVG files included
+in HTML pages with the more conformant <object> tag...
+http://www.adobe.com/svg/viewer/install/main.html
+
+So alas it is better to use only <embed> tag, even if it makes Web pages non conformant
+to XHTML (or HTML 4.0) and to the SVG spec.:
+http://www.w3.org/TR/SVG11/concepts.html#UsageOptions
+-->
+</body>
+</html>

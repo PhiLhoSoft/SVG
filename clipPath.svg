@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="400" height="400"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+  <clipPath id="ovaleClip" shape-rendering="optimizeSpeed">
+    <ellipse cx="200" cy="220" rx="80" ry="120"/>
+  </clipPath>
+</defs>
+
+<text x="5" y="25" font-size="24">Clipping an image with an ellipse</text>
+<ellipse cx="200" cy="220" rx="90" ry="130" fill="#087"/>
+<!--<image x="100" y="80" width="256" height="358" xlink:href="file:///C:/Documents/_PhiLho/Images/monalisa.jpg" clip-path="url(#ovaleClip)"/>-->
+<image x="100" y="80" width="256" height="358" xlink:href="monalisa.jpg" clip-path="url(#ovaleClip)"/>
+</svg>

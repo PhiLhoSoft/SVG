@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="500"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+  <mask id="Mask">
+    <image xlink:href="mask.png" x="20" y="20" width="256" height="358"/>
+  </mask>
+</defs>
+
+ <image mask="url(#Mask)" xlink:href="monalisa.jpg"
+        x="20" y="20" width="256" height="358"/>
+</svg>

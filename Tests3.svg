@@ -1,0 +1,14 @@
+<svg id="root" width="700" height="400">
+<g id="xBtn">
+<rect x="544" y="0" width="32" height="32" style="stroke-width:1;stroke:navy;fill:white"/>
+<rect x="552" y="6" width="12" height="20" style="stroke-width:1;stroke:silver;fill:#FFFFFF"/>
+<rect x="552" y="6" width="12" height="20" transform="skewX(20)" style="stroke-width:1;stroke:navy;fill:#FFFFFF"/>
+</g>
+<g id="yBtn">
+<rect x="580" y="0" width="32" height="32" style="stroke-width:1;stroke:navy;fill:white"/>
+<rect x="588" y="6" width="12" height="20" style="stroke-width:1;stroke:silver;fill:#FFFFFF"/>
+<rect x="588" y="6" width="12" height="20" transform="skewY(20)" style="stroke-width:1;stroke:navy;fill:#FFFFFF"/>
+</g>
+
+</svg>
+

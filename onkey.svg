@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="100%" height="100%"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     onload="Init(evt)"
+     onkeydown="ShowKey('KD', evt)"
+     onkeypress="ShowKey('KP', evt)"
+     onkeyup="ShowKey('KU', evt)"
+     >
+  <title>onkey* Tests</title>
+  <desc>
+Test ASV specific events: onkey*
+  </desc>
+
+<script><![CDATA[
+// Init: code ran on loading document
+var g_svgDoc = null;
+var g_svgRoot = null;
+
+function Init(evt)
+{
+   g_svgDoc = evt.target.ownerDocument;
+//   g_svgDoc = evt.getTarget().getOwnerDocument();
+   g_svgRoot = g_svgDoc.documentElement;
+}
+
+function Debug(d)
+{
+  var debugText = g_svgDoc.getElementById("Debug");
+  debugText.firstChild.data = d;
+}
+
+function ShowClick(evt)
+{
+  Debug("Click on circle");
+  ShowKey("KD", null);
+  ShowKey("KP", null);
+  ShowKey("KU", null);
+}
+
+function ShowKey(id, evt)
+{
+  var showText = g_svgDoc.getElementById(id);
+  if (evt == null)
+  {
+    showText.firstChild.data = id;
+  }
+  else
+  {
+    showText.firstChild.data = id + ': ' + evt.keyCode + '/' + evt.charCode;
+  }
+}
+]]></script>
+
+  <rect x="0" y="0" width="500" height="500" fill="#8CF"/>
+  <text id="KD" x="20" y="20" font-size="14" fill="red">KD</text>
+  <text id="KP" x="20" y="35" font-size="14" fill="green">KP</text>
+  <text id="KU" x="20" y="50" font-size="14" fill="blue">KU</text>
+  <text id="Debug" x="20" y="75" font-size="14" fill="grey">Debug</text>
+  <circle cx="50" cy="150" r="20" fill="blue" onclick="ShowClick(evt)"/>
+</svg>

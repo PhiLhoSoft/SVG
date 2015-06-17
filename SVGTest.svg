@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentScriptType="text/ecmascript" contentStyleType="text/css"  width="6cm" height="5cm" viewBox="0 0 600 500" zoomAndPan="magnify">
+	<a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:actuate="onRequest"
+		xlink:href="SVGTest.html#MyJump" xlink:show="replace" xlink:type="simple">
+		<rect 	fill="red"
+				fill-opacity="0.2"
+				height="100"
+				width="100"
+				x="100"
+				y="100"	/>
+	</a>
+</svg>

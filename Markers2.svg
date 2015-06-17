@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Markers 2: start, middle, end</title>
+  <desc>
+Experiments with markers: uncommon markers and exploring paths.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-09-17</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/09/18 -- Original release
+      </pls:history>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+  <style type="text/css">
+    <![CDATA[
+      text { text-anchor: right; font-size: 10px; font-family: Verdana, Helvetica, Arial; }
+    ]]>
+  </style>
+
+  <defs>
+    <g id="Circles">
+      <circle cx="5" cy="5" r="5" fill="#01F"/>
+      <circle cx="5" cy="15" r="5" fill="#02C"/>
+      <circle cx="5" cy="25" r="5" fill="#01F"/>
+      <circle cx="15" cy="10" r="5" fill="#048"/>
+      <circle cx="15" cy="20" r="5" fill="#048"/>
+      <circle cx="25" cy="15" r="5" fill="#086"/>
+    </g>
+    <!-- Who said we are limited to path and black for markers? -->
+    <!-- Note: I found a bug in ASV3: you have to use either (or none...)
+         stroke* parameters or opacity. If using both, the marker will appear
+         only once in the whole SVG (at the last occurence).
+    -->
+    <marker id="Star"
+            viewBox="0 0 160 160" refX="76" refY="71"
+            markerWidth="20" markerHeight="20"
+            markerUnits="strokeWidth"
+            orient="auto">
+      <circle cx="155" cy="71" r="5" fill="red"/>
+      <polygon points="76,0 93,54 153,54 106,87 123,141 76,107 29,139 46,87 0,54 57,54"
+               fill="yellow" stroke="black" stroke-width="2" fill-opacity="0.5"/>
+    </marker>
+    <marker id="ArrowCircles"
+            viewBox="0 0 30 30" refX="0" refY="15"
+            markerWidth="10" markerHeight="10"
+            markerUnits="strokeWidth"
+            orient="auto">
+      <use xlink:href="#Circles"/>
+    </marker>
+    <marker id="OArrowCircles"
+            viewBox="0 0 30 30" refX="0" refY="15"
+            markerWidth="10" markerHeight="10"
+            markerUnits="strokeWidth"
+            orient="90">
+      <use xlink:href="#Circles"/>
+    </marker>
+    <marker id="Arrow"
+            viewBox="0 0 10 10" refX="0" refY="5"
+            markerWidth="15" markerHeight="10" preserveAspectRatio="none"
+            markerUnits="strokeWidth"
+            orient="auto">
+      <path fill="#0A8" fill-opacity="0.5" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="150">mid: orient="auto"</text>
+  <path fill="none" stroke="green" stroke-width="2"
+        marker-start="url(#Star)"
+        marker-mid="url(#ArrowCircles)"
+        marker-end="url(#Arrow)"
+        d="M 50,50 L 150,80 C 200,20 200,20 300,50
+           S 100,200 200,200 S 150,100 100,100 H 50"/>
+  <text x="20" y="350">mid: orient="90"</text>
+  <path fill="#8FA" opacity="0.2" stroke="green" stroke-width="2"
+        marker-start="url(#Star)"
+        marker-mid="url(#OArrowCircles)"
+        marker-end="url(#Arrow)"
+        d="M 50,250 L 150,220 C 180,220 220,200 350,250
+           S 50,400 200,400 S 220,300 150,300 H 50 Z"/>
+  <text x="400" y="150">moveto commands</text>
+  <text x="400" y="160">doesn't reset markers</text>
+  <path fill="none" stroke="blue" stroke-width="3"
+        marker-start="url(#Star)"
+        marker-mid="url(#ArrowCircles)"
+        marker-end="url(#Arrow)"
+        d="M 400,100 h 150 v 150
+           M 450,200 h 150 v -150"/>
+  <!-- It doesn't work in ASV3... -->
+  <text x="400" y="300">marker="url()" fails on ASV3</text>
+  <path fill="none" stroke="yellow" stroke-width="2"
+        marker="url(#ArrowCircles)"
+        d="M 400,320 c 50,50 50,50 100,0
+           s -50,50 100,0 v 50"/>
+  <!-- This work in ASV3! -->
+  <text x="400" y="380">style="marker:url()" works</text>
+  <path fill="none" stroke="yellow" stroke-width="2"
+        style="marker: url(#ArrowCircles);"
+        d="M 400,400 c 50,50 50,50 100,0
+           s -50,50 100,0 v 50"/>
+
+  <text x="320" y="470" style="text-anchor: middle; font-size: 20; fill: blue;">marker use</text>
+</svg>

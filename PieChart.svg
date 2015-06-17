@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<svg width="400" height="400" onload="initPie()"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+<script type="text/ecmascript"><![CDATA[
+var svgDocument;
+
+var centerX = 200;
+var centerY = 200;
+var radius = 180;
+
+basePathData = 'M' + centerX + ',' + centerY +
+         ' h' + radius +
+         ' A' + radius + ',' + radius + ' 0 ';
+
+
+var fullCircleRad = 2 * Math.PI;
+var fullCircleDeg = 360;
+
+function initPie() {
+
+    svgDocument = evt.getTarget().getOwnerDocument();
+
+    //later to come from XML data request with getURL()
+//    var portions = [8000,6000,6000,4000];
+    var portions = [5000,1000];
+    var total = 0;
+    var perc = [];
+    var angle = 0;
+    var rot = 0;
+    var x = 0;
+    var y = 0;
+
+    for (i = 0; i < portions.length; i++) {
+        total = total + portions[i];
+    }
+    //alert(total)
+
+    for (i = 0; i < portions.length; i++) {
+        perc[i] = portions[i] / total;
+    }
+
+    for (i = 0; i < perc.length; i++) {
+        //alert(perc[i])
+        angle = fullCircleRad * perc[i];
+        //alert(angle)
+        x = centerX + radius * Math.cos(angle);
+        y = centerY + radius * Math.sin(angle);
+
+        bakePie(x, y, rot, i, Math.round(perc[i]));
+
+        rot += fullCircleDeg * perc[i];
+    }
+}
+
+function bakePie(x, y, rot, k, largeArcFlag) {
+    pathData = basePathData + largeArcFlag + ',1 ' +
+               x + ',' + y + ' Z';
+
+    //alert(pathData)
+
+    var pathElement = svgDocument.createElement("path");
+    var pie = svgDocument.getElementById("pie");
+
+    pathElement.setAttribute("d", pathData);
+
+    var r = k * 8;
+    var g = k * 31;
+    var b = k * 16;
+    var style = 'fill: rgb(' + r + ',' + g + ',' + b + '); ' +
+        'fill-opacity: 0.25; stroke: black; stroke-width: 2';
+
+    //alert(pathElement.getAttribute("d"))
+    pathElement.setAttribute("transform",
+        "rotate(" + rot + "," + centerX + "," + centerY + ")");
+    pathElement.setAttribute("id", k);
+    pathElement.setAttribute("onclick",
+        "alert(evt.target.getAttribute('d'))");
+    pathElement.setAttribute("style", style);
+
+    pie.appendChild(pathElement);
+}
+]]></script>
+<path style="fill: red; stroke: white;"
+      d="m200, 200 L200,20 A180,180 0 0,1 377,231 z"
+      transform="matrix(0.190473,0,0,0.186043,308.242,15.1443)"
+      onclick="initPie()" />
+<g id="pie" />
+</svg>

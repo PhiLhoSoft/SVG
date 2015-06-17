@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="400"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+  <clipPath id="ovaleClip" shape-rendering="optimizeSpeed">
+    <ellipse cx="200" cy="220" rx="80" ry="120"/>
+  </clipPath>
+</defs>
+
+<ellipse cx="200" cy="220" rx="90" ry="130" fill="#8CC"/>
+<text x="5" y="200" fill="#8C0" font-family="Arial Black" font-size="48">Clipping an image</text>
+<text x="5" y="280" fill="#0C8" font-family="Arial Black" font-size="48">with an ellipse</text>
+<image x="130" y="150" width="162" height="150" xlink:href="toucan.png" clip-path="url(#ovaleClip)"/>
+</svg>

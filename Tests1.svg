@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:a3="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+     a3:scriptImplementation="Adobe" onload='Init(evt)'>
+
+    <script xlink:href="KLD_pathData.js"/>
+    <script><![CDATA[
+  var SVGDocument = null;
+  var pd = null;
+  var points = null;
+
+  function Init(evt)
+  {
+    SVGDocument = evt.target.ownerDocument;
+
+    pd = new PathData();
+    var allPath = SVGDocument.getElementById('path');
+    pd.loadDataFrom(allPath);      // use path data 2 extract the x y value
+
+    points = pd.getSegmentsByCommandName('M');
+    points = points.concat(pd.getSegmentsByCommandName('L'));
+  }
+
+  function test(evt)
+  {
+alert(pd.toString());
+    for (var i = 0; i < points.length; i++)    //extract the path coordinates
+    {
+      var point = points[i];
+      point.x = point.x * .5;
+      point.y = point.y * .3;
+    }
+
+    pd.applySegments();
+  }
+]]></script>
+
+  <path id='path' stroke-width='1' stroke='blue' fill='none'
+        stroke-linecap='round'
+        d='M300,25 450,100 250,150 Z'/>
+  <circle cx="20" cy="20" r="10"
+          fill="lightgreen" stroke="blue" stroke-width="5"
+          onclick="test(evt)"/>
+</svg>

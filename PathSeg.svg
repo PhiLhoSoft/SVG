@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg height="500px" width="500px"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Path Segments</title>
+  <desc>
+Shows path segments.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2005-01-22</dc:date>
+      <dc:rights>Copyright © 2005 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2005/01/22 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Mostly code from a ToolTips.svg file, unknown origin</dc:source>
+      <dc:type>Interactive Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+<script><![CDATA[
+// Init: code ran on loading document
+var g_svgDoc = document.rootElement;
+var caption = document.getElementById("Caption");
+var captionContent = document.getElementById("CaptionContent");
+var pointedElement;
+
+g_svgDoc.addEventListener("mousemove", ShowData, false);
+g_svgDoc.addEventListener("mouseout", HideData, false);
+
+function Debug(d)
+{
+  var debugText = g_svgDoc.getElementById("Debug");
+  debugText.firstChild.data = d;
+}
+
+function Display(x, y, text)
+{
+  caption.setAttribute("visibility", "visible");
+  caption.setAttribute("transform", "translate(" + x + "," + y + ")");
+  captionContent.firstChild.data = text;
+//  captionBack.setAttribute("width", caption.getComputedTextLength() + 8)
+}
+
+function GetPathSegs(pathElement)
+{
+  var res = '';
+alert(pathElement);
+  var pathSegList = pathElement.pathSegList;
+alert(pathSegList);
+  for (var i = 0; i < pathSegList.numberOfItems; i++)
+  {
+    var pathSeg = pathSegList.getItem(i);
+    // do something with the pathSeg
+    res += pathSeg + '~';
+  }
+  return res;
+}
+
+function ShowData(evt)
+{
+  // Avoid redisplaying if already displayed
+  if (pointedElement != evt.target)
+  {
+    pointedElement = GetElementWithId(evt);
+    var id = '----';
+    if (pointedElement)
+    {
+      id = pointedElement.getAttribute('id');
+    }
+    if (id.length == 2)
+    {
+      var peX, peY;
+      // If you want caption to be near cursor
+      peX = evt.clientX + 4;
+      peY = evt.clientY - 1;
+      // If you prefer to have caption below object
+//      peX = Math.abs(pointedElement.getAttribute('x')); // Math.abs allows to convert from string to decimal
+//      peY = Math.abs(pointedElement.getAttribute('y'));
+//      peY += Math.abs(pointedElement.getAttribute('height')) + 15;
+      // We must use bounding box since <g> doesn't have x/y/height data
+//      var bb = pointedElement.getBBox();
+//      peX = bb.x;
+//      peY = bb.y + bb.height + 20;
+Debug("ShowData: OK - " + pointedElement.id + ' - ' + peX + ', ' + peY);
+      Display(peX, peY, GetPathSegs(pointedElement));
+    }
+else Debug("ShowData: no - " + pointedElement.id);
+  }
+}
+
+function HideData(evt)
+{
+Debug("HideData");
+  g_svgDoc.getElementById('Caption').setAttribute('visibility','hidden');
+  pointedElement = null;
+}
+
+// If event is related to an element inside a complex drawing,
+// search the parent element holding the ID.
+function GetElementWithId(evt)
+{
+  // Get element related to event
+  var target = evt.target;
+  // While the element hasn't an ID
+  while (target && !target.getAttribute('id'))
+  {
+    // Go up to find the parent element with the ID
+    target = target.parentNode;
+  }
+  return target;
+}
+]]></script>
+
+  <text id="Caption" x="0" y="0" font-size="12" visibility="hidden" text-rendering="optimizeLegibility">
+    |<tspan id="CaptionContent">tspan</tspan>|
+  </text>
+
+
+<g fill="none" stroke="green" transform="translate(-50,-90) scale(3)">
+<rect id="BoBo" x="20" y="40" width="110" height="135"
+      stroke="blue"/>
+<path id="aw" d="M59,164h-1l-2,-2v-1l2,1l1,1Z"/>
+<path id="ag" d="M89,82h-2v-3l1,1l1,1ZM89,91h-2v-1l-1,-1h1v-1h1l1,1l1,1v1Z"/>
+<path id="ai" d="M66,72l2,-1h1l-1,1h-1Z"/>
+<path id="bb" d="M124,154h-1v-1h-1v-3h1h1v1l1,1h1v1h-1v1Z"/>
+<path id="bm" d="M40,47l1,-1l1,-1v1h-1v1Z"/>
+<path id="dm" d="M95,120v-1l-1,-2v-1h-1v-3h1l2,1v1l1,1v2l-1,1Z"/>
+<path id="gd" d="M91,167v3h-1v1h-2l1,-3l1,-1Z"/>
+<path id="mq" d="M103,132v-1h-3l-2,-3l-1,-2v-1h2l1,1l2,1v1l1,1v1l1,1v1Z"/>
+<path id="ms" d="M82,96h-1v-2h1v1l1,1Z"/>
+<path id="tt" d="M77,170h-1l-3,-1l-1,-1l-1,-2h-1v-1h2v2h1v1h3ZM85,171v-1h-1v-3h-2v-1h1l3,1v2l-1,1Z"/>
+<path id="pm" d="M126,61h1l-1,1v1v1h1l-2,1h-1v-1h1v-2l-1,-1v-1h1Z"/>
+<path id="kn" d="M74,88v-1l-1,-1h-2v-1l1,-1l1,1l1,1l1,1Z"/>
+<path id="lc" d="M101,144v-1h-1v-1l-1,-1l1,-2h1l1,-2v2h1v2l-1,1v1Z"/>
+<path id="tc" d="M27,64l-2,-1l-1,-1h2ZM30,65v-1h-1l-1,1v-1h-1v-1l3,1l1,1Z"/>
+<path id="vc" d="M98,153l-1,-1h-1v-2l1,-1h1l1,1v1l-1,1Z"/>
+<path id="vg" d="M46,68v-1h1ZM42,69v-1h2Z"/>
+<path id="vi" d="M38,80h1v-1h1v-1l1,1h1v1h-3Z"/>
+</g>
+
+  <text id="Debug" x="20" y="20" font-size="14" fill="grey">Debug</text>
+</svg>

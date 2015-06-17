@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>SVG Display</title>
+</head>
+<body>
+This is a mix of HTML (this line) and SVG (the image below).<br />
+<object data="Tests3.svg" width="640" height="480" type="image/svg+xml">
+<!-- embed shouldn't be necessary, but is here for old Netscape Nav. support -->
+<embed name="Tests" src="Tests3.svg" width="640" height="480" type="image/svg+xml" />
+<noembed>If you see this text instead of an image,
+you should go fetch a good SVG viewer...</noembed>
+</object><br />
+It is nice, isn't it?
+<!--
+Note: you can use only the <embed> tag:
+It is Netscape specific, and it is not a regular HTML tag,
+that's why I don't use it alone.
+<object> is the way to go, but it is not understood by
+Netscape Communicator 4.x...
+while <embed> is actually understood by Internet Explorer.
+The way I use these tags: If <object> is understood, it is used,
+and the alternative code given up to the </object> tag is ignored.
+Otherwise, the tag is ignored and <embed> is used instead.
+If not understood (some alternate browser? or no plug-in),
+the <noembed> code is displayed instead, giving a warning.
+You can even put a static image of the SVG in the <noembed> zone.
+-->
+</body>
+</html>

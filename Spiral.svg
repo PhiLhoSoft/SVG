@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Spiral</title>
+  <desc>
+Spiral-like pattern (Spirograph?)
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-11-08</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/11/08 -- Creation
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>http://labs.insert-title.com/labs/article.aspx?ID=821
+Swish Fun With Spirals by Joe Maddalone</dc:source>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+<script><![CDATA[
+// Init: code ran on loading document
+var g_svgDoc = null;
+var g_svgRoot = null;
+var g_timer = null;
+var g_startTime = null;
+
+function Init(evt)
+{
+  g_svgDoc = evt.target.ownerDocument;
+  g_svgRoot = g_svgDoc.documentElement;
+  g_startTime = new Date();
+}
+
+function startAnim(e)
+{
+  if (!g_timer)
+  {
+    g_timer = setInterval('createAnim()', 300);
+  }
+}
+
+function stopInterval()
+{
+  if (g_timer)
+  {
+    window.clearInterval(g_timer);
+    g_timer = 0;
+  }
+}
+
+function createElem(type, a)
+{
+  var elem = g_svgDoc.createElement(type);
+  var i = 0;
+  while (i < a.length)
+  {
+    elem.setAttribute(a[i++], a[i++]);
+  }
+  return elem;
+}
+
+function Debug(d)
+{
+  var debugText = g_svgDoc.getElementById("Debug");
+  debugText.firstChild.data = d;
+}
+
+/*
+function settings(){
+    angle=45;
+    x=150;
+    r=1;
+    y=150;
+    _root.createEmptyMovieClip("holder",0);
+    holder.lineStyle(0, 0x000000, 100);
+    holder.moveTo(x+r, y);
+    a = Math.tan(22.5 * Math.PI/180);
+
+    }
+onLoad() {
+settings();
+
+}
+onframe(1){
+        var endx = r*Math.cos(angle*Math.PI/180);
+        var endy = r*Math.sin(angle*Math.PI/180);
+        var cx =endx + r*a*Math.cos((angle-90)*Math.PI/180);
+        var cy =endy + r*a*Math.sin((angle-90)*Math.PI/180);
+        holder.curveTo(cx+x, cy+y, endx+x, endy+y);
+}
+onframe(2){
+angle+=45;
+r++;
+if(r>200){holder.clear();settings();}
+gotoandplayPrev();
+}
+*/
+//]]></script>
+
+</svg>

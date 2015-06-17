@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Test of miterlimit parameter</title>
+  <desc>
+Test of stroke-miterlimit parameter for various values and various angles.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-07-12</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/07/12 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Based on W3C linejoin SVG example</dc:source>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+  <style type="text/css">
+    <![CDATA[
+.thick { stroke: black; stroke-width: 15; fill: none; stroke-linejoin: miter;  }
+.thin { stroke: #DD0; stroke-width: 2; stroke-dasharray: 5; fill: none; stroke-linejoin: miter; }
+text { text-anchor: middle; font-size: 14; font-family: Verdana, Arial, Helvetica, sans-serif; }
+circle { fill: #DD0; stroke: none; }
+rect { fill: none; stroke: #FF0; stroke-width: 2; }
+    ]]>
+  </style>
+
+  <defs>
+    <path id="P1" d="M -10,50 L 0,0 L 10,50"/>
+    <path id="P2" d="M -25,50 L 0,0 L 25,50"/>
+    <path id="P3" d="M -50,50 L 0,0 L 50,50"/>
+    <path id="P4" d="M  -1,50 L 0,0 L  1,50"/>
+    <circle id="JoinCircle" cx="0" cy="0" r="3"/>
+  </defs>
+
+  <rect x="5" y="5" width="100" height="450"/>
+  <text x="50" y="20">
+    <tspan>stroke-</tspan>
+    <tspan x="50" dy="1em">miterlimit</tspan>
+    <tspan x="50" dy="1em">value</tspan>
+  </text>
+  <rect x="110" y="5" width="300" height="50"/>
+  <text x="150" y="40">22.6</text>
+  <text x="250" y="20">Angle</text>
+  <text x="250" y="40">53.2</text>
+  <text x="350" y="40">90.0</text>
+
+  <text x="50" y="100">1 (min.)</text>
+  <g transform="translate(150,75)">
+    <use class="thick" xlink:href="#P1" stroke-miterlimit="1"/>
+    <use class="thin" xlink:href="#P1"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(250,75)">
+    <use class="thick" xlink:href="#P2" stroke-miterlimit="1"/>
+    <use class="thin" xlink:href="#P2"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(350,75)">
+    <use class="thick" xlink:href="#P3" stroke-miterlimit="1"/>
+    <use class="thin" xlink:href="#P3"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+
+  <text x="50" y="200">2</text>
+  <g transform="translate(150,175)">
+    <use class="thick" xlink:href="#P1" stroke-miterlimit="2"/>
+    <use class="thin" xlink:href="#P1"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(250,175)">
+    <use class="thick" xlink:href="#P2" stroke-miterlimit="2"/>
+    <use class="thin" xlink:href="#P2"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(350,175)">
+    <use class="thick" xlink:href="#P3" stroke-miterlimit="2"/>
+    <use class="thin" xlink:href="#P3"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+
+  <text x="50" y="300">none (=4)</text>
+  <g transform="translate(150,275)">
+    <use class="thick" xlink:href="#P1"/>
+    <use class="thin" xlink:href="#P1"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(250,275)">
+    <use class="thick" xlink:href="#P2"/>
+    <use class="thin" xlink:href="#P2"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(350,275)">
+    <use class="thick" xlink:href="#P3"/>
+    <use class="thin" xlink:href="#P3"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+
+  <text x="50" y="400">8</text>
+  <g transform="translate(150,375)">
+    <use class="thick" xlink:href="#P1" stroke-miterlimit="8"/>
+    <use class="thin" xlink:href="#P1"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(250,375)">
+    <use class="thick" xlink:href="#P2" stroke-miterlimit="8"/>
+    <use class="thin" xlink:href="#P2"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <g transform="translate(350,375)">
+    <use class="thick" xlink:href="#P3" stroke-miterlimit="8"/>
+    <use class="thin" xlink:href="#P3"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+
+  <text y="50" style="text-anchor: left; font-size: 10;">
+    <tspan x="460">If there was no miter limit,</tspan>
+    <tspan x="460" dy="1em">angle tips can go</tspan>
+    <tspan x="460" dy="1em">very far from the axis...</tspan>
+    <tspan x="460" dy="1em">(actual value: 64)</tspan>
+  </text>
+  <g transform="translate(450,375)">
+    <use class="thick" xlink:href="#P4" stroke-miterlimit="64"/>
+    <use class="thin" xlink:href="#P4"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+  <text y="330" style="text-anchor: left; font-size: 10;">
+    <tspan x="500">Default miter limit (4)</tspan>
+    <tspan x="500" dy="1em">avoids this by</tspan>
+    <tspan x="500" dy="1em">switching to bevel style.</tspan>
+  </text>
+  <g transform="translate(550,375)">
+    <use class="thick" xlink:href="#P4"/>
+    <use class="thin" xlink:href="#P4"/>
+    <use xlink:href="#JoinCircle"/>
+  </g>
+</svg>

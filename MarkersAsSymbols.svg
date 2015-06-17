@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width='100%' height='100%'>
+  <defs>
+    <g id="Circles">
+      <circle cx="5"  cy="5"  r="4.5"/>
+      <circle cx="5"  cy="15" r="4.5"/>
+      <circle cx="5"  cy="25" r="4.5"/>
+      <circle cx="15" cy="10" r="4.5"/>
+      <circle cx="15" cy="20" r="4.5"/>
+      <circle cx="25" cy="15" r="4.5"/>
+    </g>
+    <marker id="ArrowCirclesB"
+            viewBox="0 0 30 30" refX="0" refY="15"
+            markerWidth="10" markerHeight="10"
+            markerUnits="userSpaceOnUse"
+            orient="-90">
+      <use xlink:href="#Circles" fill="blue" stroke="green"/>
+    </marker>
+    <marker id="ArrowCirclesG"
+            viewBox="0 0 30 30" refX="0" refY="15"
+            markerWidth="10" markerHeight="10"
+            markerUnits="userSpaceOnUse"
+            orient="-90">
+      <use xlink:href="#Circles" fill="green" stroke="blue"/>
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="400" height="400" fill="mediumspringgreen"/>
+  <path d="M 150,150 l -20,-15 15,-17 18,-20 15,14 17,25 z"
+        fill="none" stroke="white" stroke-opacity="0"
+        marker-mid="url(#ArrowCirclesB)"/>
+  <path d="M 140,70 l 30,15 15,17 -15,24 -18,20 -17,-25 z"
+        fill="none" stroke="white" stroke-opacity="0"
+        marker-mid="url(#ArrowCirclesG)"/>
+  <path d="M 250,150 l -20,-15 15,-17 18,-20 15,14 17,25 z"
+        fill="none" stroke="none" stroke-width="10"
+        marker-mid="url(#ArrowCirclesB)"/>
+  <path d="M 240,70 30,15 15,17 -15,24 -18,20 -17,-25 z"
+        fill="none" stroke="none" stroke-width="10"
+        marker-mid="url(#ArrowCirclesG)"/>
+
+  <path d="M 150,250 m -20,-15 m 15,-17 m 18,-20 m 15,14 m 17,25 z"
+        fill="none" stroke="white"
+        marker-mid="url(#ArrowCirclesB)"/>
+</svg>

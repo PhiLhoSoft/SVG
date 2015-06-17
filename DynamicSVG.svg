@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Dynamic SVG Samples</title>
+  <desc>
+Some examples of creating dynamically SVG elements.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-10-26</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/10/26 -- Original release
+      </pls:history>
+      <dc:contributor>Foo Bar, typos fixing</dc:contributor>
+      <dc:source>http://first.idea.fr/was/found/there/</dc:source>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+<script><![CDATA[
+function CreateCircle(evt)
+{
+  var doc  = evt.target.ownerDocument;
+  var root = doc.documentElement;
+
+  var shape = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  shape.setAttribute("cx", 200);
+  shape.setAttribute("cy", 200);
+  shape.setAttribute("r",  50);
+  shape.setAttribute("style", "fill: lightgreen; stroke: orange; stroke-width: 8");
+  root.appendChild(shape);
+}
+
+function CreateImage(evt)
+{
+  var doc  = evt.target.ownerDocument;
+  var root = doc.documentElement;
+
+  var newElement = doc.createElementNS("http://www.w3.org/2000/svg", "image");
+  newElement.setAttributeNS("http://www.w3.org/1999/xlink", "href","toucan.png");
+  newElement.setAttributeNS(null, "x", "125");
+  newElement.setAttributeNS(null, "y", "125");
+  newElement.setAttributeNS(null, "width", "162");
+  newElement.setAttributeNS(null, "height", "150");
+  root.appendChild(newElement);
+}
+]]></script>
+
+  <circle cx="50" cy="50" r="20"
+          fill="lightblue" stroke="blue" stroke-width="5"
+          onclick="CreateCircle(evt)"/>
+  <circle cx="100" cy="50" r="20"
+          fill="lightgreen" stroke="blue" stroke-width="5"
+          onclick="CreateImage(evt)"/>
+
+</svg>

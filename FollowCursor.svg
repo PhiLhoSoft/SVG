@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="400" height="400" viewbox="0 0 400 400"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     onload="Init(evt)">
+  <title>Simple "follow the cursor" effects</title>
+  <desc>
+Illustrates how a shape can follow the cursor, with various effects.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-09-16</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/09/16 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>None</dc:source>
+      <dc:type>Interactive Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+  <defs>
+    <path id="Star" stroke-width="1" transform="scale(0.02, 0.02)"
+          d="M 1446 686 L 2003 545 L 1446 401 Q 1438 378 1422 349 T 1382 283 L 1561 8
+L 1286 186 Q 1265 170 1236 154 T 1167 123 L 1024 -434 L 881 125 Q 849 134 820 149
+T 762 186 L 487 8 L 666 283 Q 647 306 632 335 T 604 401 L 45 545 L 602 686
+Q 613 719 628 749 T 666 807 L 487 1081 L 760 903 Q 793 925 823 941 T 883 967 L 913 1096
+L 1024 1524 L 1135 1096 L 1167 967 Q 1196 956 1226 940 T 1288 903 L 1561 1081 L 1384 807
+Q 1402 783 1417 753 T 1446 686 Z
+M 1917 545 L 1327 686 L 1079 545 H 1917 Z
+M 1022 543 L 553 70 L 823 260 L 1022 543 Z
+M 1165 242 L 1024 483 V -348 L 1165 242 Z
+M 969 545 H 131 L 721 403 L 969 545 Z
+M 1022 547 L 549 1016 L 737 745 L 1022 547 Z
+M 1026 543 L 1225 260 L 1495 70 L 1026 543 Z
+M 1026 547 L 1495 1020 L 1225 829 L 1026 547 Z
+M 883 848 L 1024 606 V 1438 L 883 848 Z"/>
+  </defs>
+
+<script><![CDATA[
+// Init: code ran on loading document
+var svgdoc;
+var doc = document.rootElement;
+var cX, cY, mX = 0, mY = 0;
+const speed = 0.2;
+var count = 0;
+
+function Init(evt)
+{
+  svgdoc = evt.target.ownerDocument;
+  var node = evt.target;
+  node.addEventListener("mousemove", FollowCursor, false);
+//  node.addEventListener("mouseout", Something, false);
+}
+
+function Debug(d)
+{
+  var debugText = document.getElementById("Debug");
+//  debugText.getFirstChild().setData(d);
+  debugText.textContent = d;
+}
+
+function Trunc(v)
+{
+  return v - v % 0.01;
+}
+
+function FollowCursor(evt)
+{
+  count++;
+  // Get image position
+  var image1 = svgdoc.getElementById("Image1");
+  var image2 = svgdoc.getElementById("Image2");
+  var image3 = svgdoc.getElementById("Image3");
+  var bb2 = image2.getBBox();
+  var bb3 = image3.getBBox();
+//Debug("x=" + Trunc(bb3.x) + ", y=" + Trunc(bb3.y) + ", w=" + Trunc(bb3.width) + ", h=" + Trunc(bb3.height))
+Debug("c=" + count + " / mx=" + evt.clientX + ", my=" + evt.clientY + " / ix=" + image3.getAttribute('x') + ", iy=" + image3.getAttribute('y'))
+  // Get mouse positions, offset to center on figure
+  cX2 = evt.clientX - bb2.width/2;
+  cY2 = evt.clientY - bb2.height/2;
+  cX3 = evt.clientX - bb3.width/2;
+  cY3 = evt.clientY - bb3.height/2;
+  image1.setAttribute("transform", "translate(" + evt.clientX + "," + evt.clientY  + ")");
+  image2.setAttribute("transform", "translate(" + cX2 + "," + cY2 + ")");
+  if (count % 10 == 0)
+  {
+    // Compute move coordinates
+    mX = (cX3 - bb3.x) * speed;
+    mY = (cY3 - bb3.y) * speed;
+    image3.setAttribute("x", Math.floor(bb3.x + mX));
+    image3.setAttribute("y", Math.floor(bb3.y + mY));
+  }
+}
+//]]></script>
+<!-- Flash code:
+speed = 0.2;
+this.onEnterFrame = function() {
+   xtarget = _xmouse;
+   ytarget = _ymouse;
+   // First subtract the current position from the target to get the distance
+   // then multiply this with speed to decrease the distance so it does not "jump" to the new position
+   // and finally add this to the current position value.
+   mycircle._x += (xtarget - mycircle._x) * speed;
+   mycircle._y += (ytarget - mycircle._y) * speed;
+}
+
+overshoot = 0.9;
+speed = 0.1;
+this.onEnterFrame = function() {
+   xtarget = _xmouse;
+   ytarget = _ymouse;
+   // This is the same from above. A distance is calculated.
+   distx = (xtarget - mycircle._x) * speed;
+   disty = (ytarget - mycircle._y) * speed;
+   // They are first multiplied with the overshoot to slightly modify the value decreasing to zero.
+   newx *= overshoot;
+   newy *= overshoot;
+   // Next the distance from above is added to also move it towards the target position,
+   newx += distx;
+   newy += disty;
+   // and finally the values are added to the current position to move the symbol.
+   mycircle._x += newx;
+   mycircle._y += newy;
+}
+-->
+
+<!--
+  <rect id='Background' x='-1%' y='-1%' width='101%' height='101%'
+        fill='none' pointer-events='all'
+        onmousemove="FollowCursor(evt)">
+    <desc>Background covering the whole SVG surface, providing events on mouse move</desc>
+  </rect>
+-->
+
+  <g id="Image1" transform="translate(100, 100)">
+    <use xlink:href="#Star"/>
+  </g>
+  <g id="Image2" fill="orange" transform="translate(200, 200)">
+    <use xlink:href="#Star"/>
+  </g>
+<!--
+  <g id="Image4" fill="blue" transform="translate(100, 200)">
+    <use xlink:href="#Star"/>
+  </g>
+-->
+  <image id="Image3" xlink:href="LuaLogoSmall.png" x="100" y="200" width="32" height="32"/>
+  <text id="Debug" x="20" y="20" font-size="14" fill="grey">Debug</text>
+</svg>

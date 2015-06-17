@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+          "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" onload="recupereSVGDoc(evt)">
+  <defs>
+<script><![CDATA[
+    var svgdoc;
+    function recupereSVGDoc(evt) {
+      svgdoc  = evt.target.ownerDocument;
+      var node = evt.target;
+      node.addEventListener("mousemove", afficheTooltip, false);
+      node.addEventListener("mouseout", cacheTooltip, false);
+    }
+    function afficheTooltip(evt) {
+      var rectangle, texte;
+      rectangle = svgdoc.getElementById("tooltipRect");
+      texte = svgdoc.getElementById("tooltipText");
+Debug("x=" + texte.getAttribute('x') + ", y=" + texte.getAttribute('y'))
+      texte.setAttribute("style", "visibility: visible");
+      texte.setAttribute("x", evt.clientX+3);
+      texte.setAttribute("y", evt.clientY-8);
+      rectangle.setAttribute("style", "visibility: visible");
+      rectangle.setAttribute("x", evt.clientX);
+      rectangle.setAttribute("y", evt.clientY-20);
+      rectangle.setAttribute("width",texte.getComputedTextLength()+6);
+    }
+    function cacheTooltip() {
+      var rectangle, texte;
+      rectangle = svgdoc.getElementById("tooltipRect");
+      texte = svgdoc.getElementById("tooltipText");
+      rectangle.setAttribute("style","visibility: hidden");
+      texte.setAttribute("style","visibility: hidden");
+    }
+function Debug(d)
+{
+  var debugText = document.getElementById("Debug");
+//  debugText.getFirstChild().setData(d);
+  debugText.textContent = d;
+}
+]]></script>
+
+  </defs>
+  <rect x="50" y="50" width="160" height="160" style="fill: green;"/>
+  <rect id="tooltipRect" x="0" y="0" rx="5" ry="5" width="100" height="16"
+        fill="lime" stroke="orange" stroke-width="0.5px"
+        style="visibility: hidden"/>
+  <text id="tooltipText" x="0" y="0" fill="orange" font-size="11px"
+        style="visibility: hidden">Scalable Vector Graphics</text>
+  <text id="Debug" x="20" y="20" font-size="14" fill="grey">Debug</text>
+</svg>

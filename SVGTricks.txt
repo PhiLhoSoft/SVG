@@ -1,0 +1,596 @@
+Tricks found mostly on the Web and in the mailing lists
+SVG-Developers and WWW-SVG.
+
+-----
+
+No selectable text:
+
+
+-----
+
+JavaScript debugging:
+
+If you are using Adobe SVG Viewer you can put:
+
+<?AdobeSVGViewer save="snapshot"?>
+
+right before the <svg> tag and you'll get the updated DOM in your save file.
+
+The Adobe SVG plugin uses Netscape JavaScript 1.2
+
+-----
+
+function addXML(fileName,where,later){
+   getURL(fileName, fileLoaded);
+   function fileLoaded(data) {
+     var string = '';
+     if(data.success) {
+       string = data.content;
+     } else {
+       return;
+     }
+     var node = parseXML(string,document);
+     document.getElementById(where).appendChild(node);
+     eval(later);
+    }
+}
+
+-----
+
+>> BTW, Jim Ley advocates the <iframe> way, but since I read this mailing
+>> list, which is quite recent (my reading!), I have seen no practical
+>> example of the way of doing this.
+>> I suppose you already gave this way, Jim, but can you repeat it there
+>> for the enlightment of the newbies like me?
+
+Sure it's very simple:
+
+<iframe src="thing.svg" id="chicken" style="height:100px;width:100px">No
+Iframe support, put embed here if you care about NN4!</iframe>
+
+then if you want to do scripting then
+
+chicken.document.embeds[0]
+
+is the same as the normal document.embeds[0], it's standard (if you use a
+frameset DTD) and it's well defined. - if you want links to change the
+parent window (as it would in embed) then you'll need target="top" in them.
+
+Oh and callbacks from the SVG should go via top.  rather than parent (which
+you're gonna want to do with ASV6 preview anyway)
+
+-----
+
+Dotted lines, by Holger Will
+
+<svg>
+  <defs>
+    <pattern id="pat" patternUnits="userSpaceOnUse" x="0" y="0"
+             width="5" height="5" viewBox="0 0 5 5">
+      <g style="fill:none; stroke:black; stroke-width:0.1;
+                stroke-dasharray: 0 1;stroke-linecap:round">
+        <rect x="-0.01" y="-0.01" width="5" height="5"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect fill="url(#pat)" x="0" y="50" width="50" height="50"/>
+  <line x1="0" y1="0" x2="100" y2="100"
+        stroke="black" stroke-linecap="round"
+        stroke-dasharray="0 5" stroke-width="5"/>
+  <line x1="10" y1="0" x2="110" y2="100" fill="none"
+        stroke="blue" stroke-linecap="round"
+        stroke-dasharray="0 5" stroke-width="2"/>
+</svg>
+
+-----
+
+http://www.learnsvg.com/forum/viewtopic.php?t=216&sid=a2ff2d7ecb38f978fd11567be1ee292c
+
+This may be an obvious one as I am still a novice, but
+
+How does one generate a path for dash animation, is this a manual process or is there an easier way. I have an svg base map and wish to animate the path of a hiker along his/her route, so I am able to retrieve coordinate points along the path, however I am not sure how to convert these into the dash animation path.
+
+I have looked at http://www.carto.net/papers/svg/samples/animated_bustrack.shtml and Michel Hirtzler's progressive drawing examples both very useful
+
+Any suggestions tips or assistance would be a great help
+
+
+You can create your animation on load, we use path's length.
+
+function add_anime(your_path)
+{
+// get length of path
+length_path = Math.round(your_path.getTotalLength())
+
+// give values so path is not visible before animation
+your_path.setAttribute('stroke-dasharray',length_path .toString()+","+length_path .toString())
+your_path.setAttribute('stroke-dashoffset',length_path .toString())
+
+// create animate element
+str = "<animate attributeName='stroke-dashoffset' from='" + length_path .toString +
+"' to ='0' dur='10s' 'fil='freeze'/>
+node = parseXML(str, svgdoc)
+your_path.appendChild(node)
+}
+
+You can add this animation to each path of drawing as here
+http://pilat.free.fr/english/animer/pie.htm
+
+You can also begin animation on click of button adding in animate element
+begin='my_button.clcik'
+
+Michel
+
+
+you dont need to calculate the path length, since you can use % in dashoffset.
+so the example from Michel Hirtzler may look like this
+
+<path id="busTrack1" d="M296.614,1678.855l-32.901-20.428" stroke="black" stroke-width="20" stroke-dashoffset ="100%" stroke-dasharray="100% 100%">
+<animate id="dashAnim1" attributeName="stroke-dashoffset" from="100%"
+to="0%" dur="2s" begin="0s" fill="freeze"/>
+</path>
+
+this works for any path so you wont need any script for this kind of effects.
+
+Holger
+
+-----
+
+Scrolling a SVG image in IE/ASV
+
+If the SVG dimensions are bigger than the client area of the browser,
+neither IE nor ASV provide scroll bars to move around the image.
+
+There are several solutions:
+- Draw a SVG scroll bar and add the code to pan the image when moving this scroll bar. Hard to do...
+- Embed the SVG in a HTML page. In this case, IE provides the scroll bars, because the HTML object is bigger than its display, so it sizes the HTML page accordingly.
+- With ASV, scroll the image by holding down the Alt key when dragging the mouse around. The cursor becomes a hand.
+
+-----
+
+SVG-wiki: http://www.protocol7.com/svg-wiki/index.php/CrossUASVGapplications
+
+Cross UASVGapplications
+Cross UA (User Agent) SVG applications
+
+This page is dedicated to help SVG application authors to accomplish cross UA scripting.
+
+Currently we want to mainly cover ASV3, ASV6, CSV2.1 and Batik. Other UA's are welcome to be added.
+Introduction
+
+We strongly encourage people to test their SVG applications in more SVG viewers than just the most popular SVG viewer (currently ASV3). In many cases it appears that the Adobe SVG viewer is more "forgiving" to non-standard DOM methods, than other viewers are - this behaviour encourages SVG application developers to use these non-standard DOM methods. The following guidelines should help to create SVG applications that run across multiple SVG viewers.
+
+We also encourage people to report bugs and missing features to the implementors company or Open Source team. Often, features are implemented on customer's / user's demands.
+Use of namespace aware DOM methods
+
+Use the "... NS" (Namespace) methods instead of their corresponding non Namespace aware versions. Please note that the "null" namespace refers to the host language Namespace (in our case SVG). If you embed SVG in another host language, you would have to exchange "null" with the SVG namespace (currently: "http://www.w3.org/2000/svg")
+
+Currently relevant namespaces:
+
+SVG: http://www.w3.org/2000/svg xlink: http://www.w3.org/1999/xlink
+
+This includes the following DOM methods:
+
+    * .getAttributeNS()
+
+example:
+
+myX = myNode.getAttributeNS(null,"x");
+
+instead of
+
+var myX = myNode.getAttribute("x");
+
+    * .setAttributeNS()
+
+example:
+
+myNode.setAttributeNS(null,"x","100");
+
+instead of
+
+myNode.setAttribute("x","100");
+
+    * .createElementNS()
+
+example:
+
+myNewNode = svdoc.createElementNS("http://www.w3.org/2000/svg","rect");
+
+instead of
+
+myNewNode = svdoc.createElement("rect");
+
+Note:
+
+of course you can replace "http://www.w3.org/2000/svg" with a string variable, in order to avoid retyping this long URL all the time. In Batik the use of the SVGNS is necessary, otherwise the new element will appear in the DOM-tree, but won't be rendered as a SVG element.
+Getting the target of an event
+
+    * event.target in order to get target for triggering event
+
+example:
+
+myElement = event.target;
+
+instead of
+
+myElement = event.getTarget();
+
+    * evt.target.ownerDocument in order to get reference to svg-document
+
+example:
+
+svgdoc = evt.target.ownerDocument;
+
+instead of
+
+svgdoc = evt.getTarget().getOwnerDocument();
+Currently known limitations in ASV 3
+
+    * cursors don't work (resolved in ASV 6)
+    * .getScreenCTM() does not work (resolved in ASV 6)
+
+Currently known limitations in CSV 2.1
+
+    * If you use .getURL() events that are attached to newly included elements, won't work
+    * gzip does not work with .getURL()
+    * SMIL animations don't work
+
+Currently known limitations with Batik 1.5 / Squiggle
+
+    * SMIL animations don't work
+    * window.innerWidth and innerHeight don't work (you can use .getScreenCTM() for most cases)
+
+-----
+
+http://www.mecxpert.de/svg/swap.html
+
+Change Drawing Order
+
+SVG elements are rendered via the painter's algorithm,
+i.e. subsequent elements are painted on top of previously painted elements.
+There were several discussions about the z-index attribute, that would control explicitly,
+which element would be in front of another one.
+There seems to be a good chance, that this attribute will be introduced in a later version of SVG.
+
+Meanwhile the only way to change the drawing order is to change
+the elements position in the DOM.
+
+The implementation uses the method replaceChild of the DOM's Node object.
+
+   function swap(parent, elem1, elem2)
+   {
+      var tmp = elem1.cloneNode(true);
+      parent.replaceChild(tmp, elem2);
+      parent.replaceChild(elem2, elem1);
+   }
+
+This solution requires, that both elements are childs of the same parent.
+Also note, that any assigned event listeners will get lost, when cloneNode is applied.
+
+-----
+
+http://www.mecxpert.de/svg/domtree.html
+
+DOM tree output
+Here is a rather simple ECMAScript code snippet, that let you access the current DOM tree.
+It will help, when you - and you usually will - manipulate the DOM tree.
+Use it as a starting point for your own solution.
+
+var out = "", indent=0;
+function SvgToString(elem)
+{
+   if (elem)
+   {
+      var attrs = elem.attributes;
+      var attr;
+      var i;
+      var childs = elem.childNodes;
+
+      for (i=0; i<indent; i++) out += "  ";
+      out += "<" + elem.nodeName;
+      for (i=attrs.length-1; i>=0; i--)
+      {
+         attr = attrs.item(i);
+         out += " " + attr.nodeName + "=\"" + attr.nodeValue+ "\"";
+      }
+
+      if (elem.hasChildNodes())
+      {
+         out += ">\n";
+         indent++;
+         for (i=0; i<childs.length; i++)
+         {
+            if (childs.item(i).nodeType == 1) // element node ..
+               SvgToString(childs.item(i));
+            else if (childs.item(i).nodeType == 3) // text node ..
+            {
+               for (j=0; j<indent; j++) out += "  ";
+               out += childs.item(i).nodeValue + "\n";
+            }
+         }
+         indent--;
+         for (i=0; i<indent; i++) out += "  ";
+         out += "</" + elem.nodeName + ">\n";
+      }
+      else
+      {
+         out += " />\n";
+      }
+
+   }
+   return out;
+}
+
+-----
+
+To play an audio file after the end of a previous one:
+
+var s2 = document.getElementById("son2");
+s2.setAttribute("begin","son1.end");
+
+-----
+
+Peter Garza:
+I think this is more of a JavaScript/DOM question than an SVG question,
+but I'm having trouble getting child elements.
+
+Here is my file:
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="400" width="400" x="0" y="0"
+xmlns="http://www.w3.org/2000/svg">
+   <script type="text/ecmascript" ><![CDATA[
+     function alertChildren(evt) {
+       var targetElement = evt.target
+       var svgdoc = targetElement.ownerDocument.rootElement;
+       var targetElementNodeType = targetElement.nodeType;
+       var targetElementHasChildren = targetElement.hasChildNodes();
+
+       //This works:
+       var targetElementFirstChild = targetElement.childNodes.item(1);
+
+       //Why does this not work?
+       //var targetElementFirstChild = targetElement.firstChild;
+
+       var DebugAlert = "Target element: "+targetElement.tagName;
+       DebugAlert = DebugAlert+"\nHas children: "+targetElementHasChildren;
+       DebugAlert = DebugAlert+"\nFirst child type:
+"+targetElementFirstChild.tagName;
+
+       alert(DebugAlert);
+     };
+     ]]>
+   </script>
+     <g onload="alertChildren(evt)">
+       <circle id="RedCircle" r="20" cx="50" cy="50" fill="red"
+               stroke="black" stroke-width="2"/>
+       <circle id="BlueCircle" r="20" cx="150" cy="150" fill="blue"
+               stroke="black" stroke-width="2"/>
+     </g>
+</svg>
+
+If I use .firstChild, I get an alert that says
+targetElementFirstChild.tagName is "undefined". If I switch ".tagName"
+to ".nodeType", I get a text node ("3").
+
+---
+Doug Schepers:
+I was confused by this too, the first time I encountered it, so don't feel
+bad.
+
+You problem is that you have pretty-printed your XML file, so the first
+child is not the next element, but is rather the space between them (the
+textNode). You can filter this out in a for loop:
+
+var targetChild = null;
+var children = targetElement.childNodes;
+for ( var c = 0, cLen = children.length; cLen > c; c++ )
+{
+   var eachItem = children.item(c);
+   if ( 1 == eachItem.nodeType )
+   {
+      targetChild = eachItem;
+      break;
+   }
+}
+alert(targetChild.localName); //this will always be an element
+
+By the way, I recommend using 'localName' rather than 'tagName', for
+purposes of namespace-aware documents.
+
+-----
+
+Include external font (or other external SVG content)
+
+<script><![CDATA[
+function init(evt)
+{
+  svgDoc=evt.getTarget().getOwnerDocument();
+}
+function LoadSVG(url,ID)
+{
+  getURL(url, callback);
+  function callback(data)
+  {
+    svgdoc.documentElement.getElementById(ID).appendChild(parseXML(data.content, svgDoc));
+  }
+}
+]]></script>
+
+-----
+
+Move an object and make it disappear at end of move.
+
+<animateTransform id="anim01"
+        attributeName="transform"
+        type="translate"
+        values="0 600;0 0"
+        begin="0s" dur="20s"
+        fill="freeze"/>
+<set attributeName="display" to="none" begin="anim01.end"/>
+
+-----
+
+I want to change my viewbox from the top coordinate of 0 to say 500
+when the user clicks on an arrow.  Then when the user clicks on the
+next arrow, I want to change my top coordinate of 500 to say 1000.
+So on and so forth.  I don't want to pan the SVG.  I want it to act
+like a link to the next section of the document.
+
+<svg id="your_svg" width="..." height="...">
+...
+<path id="arrow1" d="..your arrow.." ... onclick="change_vBox(500)"/>
+<path id="arrow2" d="..your arrow.." ... onclick="change_vBox(1000)"/>
+
+<g clip-path="url(#clp)">
+<svg id="inner_svg" width="600" height="20000" viewBox="0 0 600 20000">
+...
+</svg>
+</g>
+</svg>
+
+script:
+
+function change_vBox(v_offset)
+{
+  svgdoc=evt.getTarget().getOwnerDocument();
+  main_viewbox=svgdoc.getElementById("your_svg").setAttribute("viewBox","0" + v_offset + "600 20000")
+}
+
+-----
+
+Compute area of a polygon
+
+<script>
+<![CDATA[
+	function getPolygonArea(evt)
+  {
+    var coords = evt.target.getAttribute('points').split(/[, ]+/);
+    var cl = coords.length;
+
+		var area = 0;
+    var x1, y1, x2, y2;
+		for (i = 0; i < cl; i += 2)
+    {
+      x1 = coords[i];
+      y1 = coords[i+1];
+      x2 = coords[(i+2) % cl];
+      y2 = coords[(i+3) % cl];
+      area += x1 * y2 - x2 * y1;
+    }
+    area /= 2;
+
+		alert(area);
+	}
+]]>
+</script>
+
+	<polygon onclick="getPolygonArea(evt)"
+           fill="#840" stroke="black" stroke-width="4"
+           points="10 10, 210 10, 210 210, 10 210"/>
+	<polygon onclick="getPolygonArea(evt)"
+           fill="#480" stroke="black" stroke-width="4"
+           points="10 10, 110 60, 210 10, 160 110, 210 210, 110 160, 10 210, 60 110"/>
+
+-----
+
+Barber pole (Rob:  charmquark69 <rbanfield@telair.com>
+
+    <pattern id="GreenStripes" patternUnits="userSpaceOnUse"
+             x="-6" y="6" width="12" height="12"
+             viewBox="-6 -6 6 6">
+      <g>
+       <polygon style="fill:#FFFFFF; stroke-width:0;" points="-6,3 -6,6 -3,6" />
+       <polygon style="fill:#00CC00; stroke-width:0;" points="-6,0 -6,3 -3,6 0,6" />
+       <polygon style="fill:#FFFFFF; stroke-width:0;" points="-6,-3 -6,0 0,6 0,3" />
+       <polygon style="fill:#00CC00; stroke-width:0;" points="-6,-6 -6,-3 3,6 6,6" />
+       <polygon style="fill:#FFFFFF; stroke-width:0;" points="-6,-6 6,6 6,3 -3,-6" />
+       <polygon style="fill:#00CC00; stroke-width:0;" points="-3,-6 6,3 6,0 0,-6" />
+       <polygon style="fill:#FFFFFF; stroke-width:0;" points="0,-6 6,0 6,-3 3,-6" />
+       <polygon style="fill:#00CC00; stroke-width:0;" points="3,-6 6,-3 6,-6" />
+       <animateMotion path="M -6 0 L 0 0"  dur="2s" repeatCount="indefinite"/>
+      </g>
+    </pattern>
+
+    <symbol id="symbolArrowHead" overflow="visible">
+      <polygon  style="fill:url(#GreenStripes); fill-opacity:0.9; stroke:#006600; stroke-width:1px;"
+        points="0,0 5,16 2,16 2,20 -2,20 -2,16 -5,16"/>
+    </symbol>
+
+    <symbol id="symbolArrowBlock" overflow="visible">
+      <polygon  style="fill:url(#GreenStripes); fill-opacity:0.9; stroke:#006600; stroke-width:1px;"
+        points="0,0 2,0 2,8 -2,8 -2,0"/>
+    </symbol>
+
+
+      <g id="ER_1">
+        <use transform="translate(318.625 130.225)" xlink:href="#symbolArrowHead"/>
+        <use transform="translate(318.625 152.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 162.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 172.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 182.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 192.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 202.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 212.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 222.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 232.225)" xlink:href="#symbolArrowBlock"/>
+        <use transform="translate(318.625 242.225)" xlink:href="#symbolArrowBlock"/>
+      </g>
+
+-----
+
+Don't use the object tag with ASV3 on IE...
+
+http://www.adobe.com/svg/viewer/install/main.html
+
+"Adobe SVG Viewer 3.01 addresses one potential security risk by
+disabling SVG scripts if you disable ActiveScripting in Internet
+Explorer. This security risk only affects customers who browse the Web
+on Windows computers in Internet Explorer with ActiveScripting disabled.
+By default, ActiveScripting is enabled, so most users are not currently
+at risk. Because of the way that the HTML OBJECT tag is implemented in
+Internet Explorer, Adobe SVG Viewer 3.01 cannot determine the URL of a
+file embedded with the OBJECT tag. The URL is required to determine the
+security zone, which is required to determine the state of the
+ActiveScripting setting. Therefore, to fail safe against this potential
+security flaw Adobe SVG Viewer 3.01 always disables scripting when it
+determines that the SVG file is embedded using the OBJECT tag. When
+authoring in SVG, Adobe recommends that you not use the OBJECT tag and
+instead use the EMBED tag when embedding SVG in HTML pages."
+
+Already answered that to "event in <object>" and "Scripting: Using html and native .svgz" messages some time ago...
+(That's a FAQ)
+
+-----
+
+
+-----
+
+
+-----
+
+
+-----
+
+
+-----
+
+
+-----
+
+-----
+
+
+-----
+
+
+-----
+
+
+-----
+
+
+

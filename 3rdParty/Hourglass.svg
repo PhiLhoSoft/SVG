@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="100%" height="100%" viewBox="0 0 1000 750"
+   preserveAspectRatio="none" >
+<!-- From http://svg-whiz.com/svg/text/flowTextHourglass.svg -->
+   <title>Hourglass</title>
+
+   <desc>A simple animated textFlow example, with words in an hourglass flowing into the lower part of the glass. Written by Doug Schepers, and copywrite the same. Anyone can use it, you know, but don't claim you wrote it, since that's just rude. This example uses the experimental syntax of ASV6pr1.</desc>
+
+
+   <path id='hourglass' d='M20,30 Q10,120 80,140 100,150 80,160 10,180 20,270 H180 Q190,180 120,160 100,150 120,140 190,120 180,30 Z' style="fill:none; stroke:#000000; stroke-width:2px;"/>
+
+   <path id='hourglass2'
+      d='M20,30 Q10,120 80,140 100,150 80,160 10,180 20,270 H180 Q190,180 120,160 100,150 120,140 190,120 180,30 Z'
+      style="fill:blue;">
+      <title>Shrinking Hourglass</title>
+      <animate dur='5s' fill='freeze' repeatCount='1' attributeName='d'
+         begin='1s'
+         to='M100,160 Q100,160 100,160 100,160 80,160 10,180 20,270 H180 Q190,180 120,160 100,160 100,160 100,160 100,160 Z'/>
+   </path>
+</svg>
+
+

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="400px" height="400px" viewbox="0 0 400 400"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     onload="Init(evt)"
+     >
+  <title>Get Data</title>
+  <desc>
+Shows how to get parameters from the invocation of the SVG file
+(URL parsing).
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-12-27</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/12/27 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Code from Jan-Klaas Kollhof (parsing of URL data)</dc:source>
+      <dc:type>Dynamic Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+
+<script><![CDATA[
+// Init: code ran on loading document
+var g_svgDoc, g_root;
+var g_svgNS = "http://www.w3.org/2000/svg";
+var g_baseX = 50;
+var g_baseY = 350;
+
+function Debug(d)
+{
+  var debugText = g_svgDoc.getElementById("Debug");
+  debugText.firstChild.data = d;
+}
+
+function Display()
+{
+  caption.setAttribute("visibility", "visible");
+  caption.setAttribute("transform", "translate(" + peX + "," + peY + ")");
+  captionContent.setAttribute("xlink:href", "#" + pointedElement.id);
+//  captionBack.setAttribute("width", caption.getComputedTextLength() + 8)
+}
+
+function Init(evt)
+{
+  g_svgDoc = evt.target.ownerDocument;
+  g_root = g_svgDoc.rootElement;
+
+  output = [];
+  Debug("Start");
+  try
+  {
+//    alert(document.URL);
+    var str = decodeURIComponent(document.URL + '?');
+    var urlData = (str.split('?'))[1]
+    output = urlData.split(';');
+  }
+  catch (e)
+  {
+    alert("Catch for URL parsing");
+  }
+  if (output.length <= 1)
+  {
+    output = [ "10", "40", "150", "100" ];  // Dummy test
+  }
+  var d = "";
+  for (var j = 0; j < output.length; j++)
+  {
+    try
+    {
+      var lc = output[j];
+      d = d + lc + ";"
+      CreateBar(j, lc);
+      Debug(d);
+    }
+    catch (e)
+    {
+      alert("Catch for CreateBar");
+    }
+  }
+}
+
+function CreateBar(pos, height)
+{
+  var shape = g_svgDoc.createElementNS(g_svgNS, "rect");
+  shape.setAttributeNS(null, "x", '' + (g_baseX + pos * 50));
+  shape.setAttributeNS(null, "y", '' + (g_baseY - height));
+  shape.setAttributeNS(null, "width",  "50");
+  shape.setAttributeNS(null, "height",  '' + height);
+  shape.setAttributeNS(null, "fill",  "lightgreen");
+  shape.setAttributeNS(null, "stroke",  "orange");
+  shape.setAttributeNS(null, "stroke-width",  "8");
+  g_root.appendChild(shape);
+}
+]]></script>
+
+  <g id="Title">
+    <rect x="50" y="75" width="200" height="30" fill="lightyellow" stroke="blue"
+          stroke-width="4"/>
+    <text x="90" y="100" font-size="24" fill="darkgreen">A Bar Chart</text>
+    <desc>Title Bar</desc>
+  </g>
+
+
+  <text id="Debug" x="20" y="20" font-size="14" fill="grey">Debug</text>
+</svg>

@@ -1,0 +1,833 @@
+Meaning of the Panose-1 Digits
+
+http://www.panose.com/printer/pan1.asp
+
+The PANOSE Typeface Matching System is used to classify a
+Latin text, display, handwritten, or decorative face or symbolic fonts.
+
+PANOSE is a classification system for visual attributes of type only.
+There is no information contained within a PANOSE Classification Number
+that pertains to the character widths, spacing metrics, or advance widths.
+
+PANOSE Classification Numbers used in static outline fonts consist of ten digits.
+The first digit defines what type of font is being classified (Latin Text, Symbolic,
+Japanese Decorative, etc.) and the following 9 provide classification within that type.
+Thus digits 2 through 10 change meaning depending on what the first digit is.
+There is always a digit that expresses weight, one that expresses aspect ratio,
+and a monospace / proportional flag but their position may change depending on the type of font.
+The order of the digits is roughly the order in which they are useful
+in maximizing the separation of closely related faces.
+Thus the position of digits expressing the same quantity (for example aspect ratio)
+will not always be the same (it is digit 4 in Latin Text and 5 in Latin Handwritten).
+
+The reader will notice that the value 0 and 1 are defined as Any and No Fit for every digit
+in the PANOSE system. These have specific meanings to the mapper.
+0 means match that digit with any available digit.
+This allows the mapper to handle distortable typefaces such as multiple master fonts in which,
+for example, weights may be variable or serifs may change.
+1 means that the item being classified does not fit within the present system,
+either because no work was done on that family of faces,
+for example an Arabic cursive, or because within the classification scheme
+there is nothing that fits the particular case that is being classified,
+for example a completely new shape of serif in a Latin Text font
+that does not fit the existing design space.
+
+Below is a summary of all the digits in all the presently defined font types:
+
+Latin Text:
+
+1. Family Kind (= 2 for Latin Text)
+2. Serif Style
+3. Weight
+4. Proportion
+5. Contrast
+6. Stroke Variation
+7. Arm Style
+8. Letterform
+9. Midline
+10. X-height
+
+Latin Hand Written:
+
+1. Family Kind (= 3 for Latin Hand Written)
+2. Tool Kind
+3. Weight
+4. Spacing
+5. Aspect Ratio
+6. Contrast
+7. Topology
+8. Form
+9. Finials
+10. X-ascent
+
+Latin Decorative:
+
+1. Family Kind (= 4 for Latin Decorative)
+2. Class
+3. Weight
+4. Aspect
+5. Contrast
+6. Serif Variant
+7. Treatment
+8. Lining
+9. Topology
+10. Range of Characters
+
+Latin Symbol / Pictoral:
+
+1. Family Kind (= 5 for Latin Symbol)
+2. Kind
+3. Weight
+4. Spacing
+5. Aspect Ratio & Contrast
+6. Aspect Ratio of Character 94
+7. Aspect Ratio of Character 119
+8. Aspect Ratio of Character 157
+9. Aspect Ratio of Character 163
+10. Aspect Ratio of Character 211
+
+
+The meaning of the digits:
+
+Family
+
+0 - Any
+1 - No Fit
+2 - Latin Text (W3C: Latin Text and Display)
+3 - Latin Hand Written (W3C: Latin Script)
+4 - Latin Decorative
+5 - Latin Symbol (W3C: Latin Pictorial)
+
+
+Serif Style / Variant
+(Latin Text / Latin Decorative)
+
+The most sophisticated digit in the PANOSE classification system is the Serif Style digit.
+This digit describes the appearance of the serifs used in a font design and
+groups them into one of fourteen general categories.
+Serif and sans serif faces are classified within this digit,
+though less description is given to the stem terminators of sans serif styles.
+
+0 - Any
+1 - No Fit
+2 - Cove
+3 - Obtuse Cove
+4 - Square Cove
+5 - Obtuse Square Cove
+6 - Square
+7 - Thin
+8 - Oval
+9 - Exaggerated
+10 - Triangle
+11 - Normal Sans
+12 - Obtuse Sans
+13 - Perpendicular Sans
+14 - Flared
+15 - Rounded
+-- For Decorative fonts
+16 - Script
+
+
+Weight
+(Latin Text, Latin Hand Written, Latin Decorative, Latin Symbol)
+
+The Weight digit classifies the appearance of a fonts’ stroke thickness in relation to its height.
+This is expressed as a ratio taken from two measurements on the uppercase E glyph and
+the Upper H used before.
+
+0 - Any
+1 - No Fit -- Sole value for Latin Symbol
+2 - Very Light [100]
+3 - Light [200]
+4 - Thin [300]
+5 - Book [400] same as CSS1 'normal'
+6 - Medium [500]
+7 - Demi [600]
+8 - Bold [700] same as CSS1 'bold'
+9 - Heavy [800]
+10 - Black [900]
+11 - Extra Black [900] force mapping to CSS1 100-900 scale
+
+
+Proportion
+(Latin Text)
+
+Three different proportion schemes are considered:
+normal, distorted, and monospaced.
+Within these different schemes several alternatives are listed.
+There are three variants on proportion that fall under the general normal class.
+These are Old Style, Modern, and Even Width.
+And there are four variants of distorted:
+Extended, Condensed, Very Extended, and Very Condensed.
+
+0 - Any
+1 - No fit
+2 - Old Style
+3 - Modern
+4 - Even Width
+5 - Extended
+6 - Condensed
+7 - Very Extended
+8 - Very Condensed
+9 - Monospaced
+
+
+Contrast
+(Latin Text, Latin Hand Written, Latin Decorative, Latin Symbol)
+
+The Contrast digit describes the ratio between the thickest point on the stroke of the letter O
+and the narrowest point on the letter O.
+
+0 - Any
+1 - No Fit -- Sole value for Latin Symbol
+2 - None
+3 - Very Low
+4 - Low
+5 - Medium Low
+6 - Medium
+7 - Medium High
+8 - High
+9 - Very High
+
+
+Stroke Variation
+(Latin Text)
+
+The contrast classification of a given font specifies the relationship between
+the thicknesses of the thin stems and the wide stems.
+The Stroke Variation category further details the contrast trait by describing
+the kind of transition that occurs as the stem thickness changes on rounded glyph shapes.
+Two attributes of transition are classified, the angle of the transition and
+the speed of the transition.
+
+0 - Any
+1 - No Fit
+2 - No Variation
+3 - Gradual/Diagonal
+4 - Gradual/Transitional
+5 - Gradual/Vertical
+6 - Gradual/Horizontal
+7 - Rapid/Vertical
+8 - Rapid/Horizontal
+9 - Instant/Vertical
+10 - Instant/Horizontal
+
+
+Arm Style
+(Latin Text)
+
+The Arm Style category classifies two attributes of a glyph design:
+special treatment of diagonal stems and termination of open rounded letterforms.
+Most font designs will classify as Straight Arms/Wedge or Straight Arms/Single Serif.
+The uppercase A and C are used extensively for this classification.
+Other letters which determine the Arm Style setting are uppercase G, M, S, V, W, and Y.
+
+0 - Any
+1 - No Fit
+2 - Straight Arms/Horizontal
+3 - Straight Arms/Wedge
+4 - Straight Arms/Vertical
+5 - Straight Arms/Single Serif
+6 - Straight Arms/Double Serif
+7 - Non-Straight/Horizontal
+8 - Non-Straight/Wedge
+9 - Non-Straight/Vertical
+10 - Non-Straight/Single Serif
+11 - Non-Straight/Double Serif
+
+
+Letterform
+(Latin Text)
+
+Most sophisticated typeface designs alter the roundness of the character shapes
+in order to give the font a distinctive appearance or balance of white-space.
+This roundness is classified in the Letterform category.
+In addition to the glyph roundness, the predominant skewing of the character forms
+is also recorded and used to isolate oblique characters.
+
+0 - Any
+1 - No Fit
+2 - Normal/Contact
+3 - Normal/Weighted
+4 - Normal/Boxed
+5 - Normal/Flattened
+6 - Normal/Rounded
+7 - Normal/Off Center
+8 - Normal/Square
+9 - Oblique/Contact
+10 - Oblique/Weighted
+11 - Oblique/Boxed
+12 - Oblique/Flattened
+13 - Oblique/Rounded
+14 - Oblique/Off Center
+5 - Oblique/Square
+
+
+Midline
+(Latin Text)
+
+This analyzes two traits, the placement of the midline across the uppercase characters and
+the treatment of diagonal stem apexes.
+The midline classification falls into one of four sub-categories:
+Standard, High, Constant, and Low.
+The apex treatment has only three variants: Trimmed, Pointed, and Serifed.
+
+0 - Any
+1 - No Fit
+2 - Standard/Trimmed
+3 - Standard/Pointed
+4 - Standard/Serifed
+5 - High/Trimmed
+6 - High/Pointed
+7 - High/Serifed
+8 - Constant/Trimmed
+9 - Constant/Pointed
+10 - Constant/Serifed
+11 - Low/Trimmed
+12 - Low/Pointed
+13 - Low/Serifed
+
+
+X-height
+(Latin Text)
+
+Two different traits are represented in the X-height digit:
+the treatment of uppercase glyphs with diacritical marks and
+the relative size of the lowercase characters.
+Note: If a face does not have lowercase glyphs, it is a Decorative.
+
+0 - Any
+1 - No Fit
+2 - Constant/Small
+3 - Constant/Standard
+4 - Constant/Large
+5 - Ducking/Small
+6 - Ducking/Standard
+7 - Ducking/Large
+
+
+Tool kind
+(Latin Hand Written)
+
+Kind of implement predominately used to create character forms.
+A flat nib is an inflexible rectangular nib, like a standard calligraphy pen nib,
+whose line width is dependent only on the angle of the edge of the nib
+with respect to the line.
+A pressure point is a flexible point, like those used to do copperplate lettering,
+which spreads when pressed down upon and forms a wider line.
+Engraved cursive lettering has many of the characteristics of pressure point,
+but it also has fine added lines that could only be made with a graver.
+Ball is the type of line produced by a ball point pen or similar round nib.
+It has a single line weight and convexly rounded stem caps.
+Brush means a rectangular brush.
+It looks superficially like a flat nib but has more fluid stroke endings and
+gentle swellings along strokes as a brush would make responding to pressure.
+Rough looks like the lettering was done with a rough edged nib or
+a nib that was too dry or on a rough surface.
+It is characterized by unpredictable starts and stops within the letter.
+Felt tip or brush tip looks somewhat like the Ball nib but has the characteristic swellings
+within the line of a more flexible instrument.
+Wild brush looks hastily or sloppily done with drips and
+splatters of ink in unpredictable places.
+The difference between this and a decorative lettering is often minimal and
+based on readability and whether there is a full family of letter forms
+(book, italic, bold, and bold italic).
+
+0 - Any
+1 - No Fit
+2 - Flat Nib
+3 - Pressure Point
+4 - Engraved
+5 - Ball (Round Cap)
+6 - Brush
+7 - Rough
+8 - Felt Pen/Brush Tip
+9 - Wild Brush - Drips a lot
+
+
+Spacing
+(Latin Hand Written, Latin Symbol)
+
+This digit allows monospaced and proportional fonts to be distinguished.
+
+0 - Any
+1 - No fit
+2 - Proportional Spaced
+3 - Monospaced
+
+
+Aspect Ratio
+(Latin Hand Written, Latin Symbol)
+
+This is the ratio between the width and the height of the face measured using the Upper O.
+
+0 - Any
+1 - No Fit -- Sole value for Latin Symbol
+2 - Very Condensed
+3 - Condensed
+4 - Normal
+5 - Expanded
+6 - Very Expanded
+
+
+Topology
+(Latin Hand Written)
+
+The topology classification is a two step process.
+First the cursive face is separated into Roman, Cursive, and Blackletter
+based on the letterforms and then the connections between the letters are classified.
+Roman means that the letterforms are still similar to upright faces,
+but have been slanted to from a cursive.
+These faces tend to look like hand printing.
+Cursive means that some characters, such as the lower a and g,
+have been modified to look more like hand written forms.
+These faces tend to look like flowing script handwriting.
+Blackletter implies that there have been major modifications to many of the letterforms.
+These faces tend to be very black and condensed and often feel angry or aggressive.
+Disconnected means that each letter is distinct and there is no connection from one to the next.
+Trailing means that the trailing serifs of the letters, usually along the baseline,
+have been extended so that they may overlap with the following character.
+Connected means that the letterforms have been constructed
+so that they connect to their neighbors explicitly.
+
+0 - Any
+1 - No Fit
+2 - Roman Disconnected
+3 - Roman Trailing
+4 - Roman Connected
+5 - Cursive Disconnected
+6 - Cursive Trailing
+7 - Cursive Connected
+8 - Blackletter Disconnected
+9 - Blackletter Trailing
+10 - Blackletter Connected
+
+
+Form
+(Latin Hand Written)
+
+The form digit tries to measure the general look of the face.
+It combines two measures, the slope of the verticals and
+the wrap of the tails of connecting strokes, such as the curving stroke in the Upper D.
+
+0 - Any
+1 - No Fit
+2 - Upright / No Wrapping
+3 - Upright / Some Wrapping
+4 - Upright / More Wrapping
+5 - Upright / Extreme Wrapping
+6 - Oblique / No Wrapping
+7 - Oblique / Some Wrapping
+8 - Oblique / More Wrapping
+9 - Oblique / Extreme Wrapping
+10 - Exaggerated / No Wrapping
+11 - Exaggerated / Some Wrapping
+12 - Exaggerated / More Wrapping
+13 - Exaggerated / Extreme Wrapping
+
+
+Finials
+(Latin Hand Written)
+
+Finials combines the treatment of the ends of characters,
+like the foot at the right bottom of the upper a,
+with the treatment of the ascenders of the lower case characters.
+If there is no extra treatment of the stroke end,
+other than what the lettering nib would naturally do, that is a none.
+If has been chopped off abruptly, that is a sharp,
+if it has been tapered to a narrower width than the nib would naturally create, that is a tapered.
+If it has been made bulbous that is rounded.
+The classification of ascenders into no loops, open loops and closed loops is usually unambiguous.
+
+0 - Any
+1 - No Fit
+2 - None / No loops
+3 - None / Closed loops
+4 - None / Open loops
+5 - Sharp / No loops
+6 - Sharp / Closed loops
+7 - Sharp / Open loops
+8 - Tapered / No loops
+9 - Tapered / Closed loops
+10 - Tapered / Open loops
+11 - Round / No loops
+12 - Round / Closed loops
+13 - Round / Open loops
+
+
+X-Ascent
+(Latin Hand Written)
+
+The X-ascent digit measures the relative size of the lowercase characters.
+
+0 - Any
+1 - No Fit
+2 - Very Low
+3 - Low
+4 - Medium
+5 - High
+6 - Very High
+
+
+Class
+(Latin Decorative)
+
+The class is the general look and feel of the face.
+Faces should be classed with as low a digit as is reasonable.
+Derivative is Decoratives that are closely derived standard text forms.
+Non-standard Topology has unusual forms for entire letters but still uses standard stems.
+Non-standard Elements has usual forms but unusual treatments of parts of them,
+such as serifs or ascenders.
+Non-standard Aspect has the usual letter forms but unusual proportions
+such as very high or very low waists.
+Initials is for faces that only have majuscule characters, no minuscules.
+Often these characters are highly ornamented.
+Cartoon faces have the entire letter made up of a single picture
+that form the outline of the character.
+Picture Stem faces have each stem made up of a picture or pictures and
+the letters made from groups of these elements.
+Ornamented faces have additional flourishes and details added to the character.
+Text and Background faces have the characters displayed as the absence of pattern
+on a patterned background.
+In Collage faces the characters are made up of repeating nonstandard elements.
+In Montage faces the characters are made up of nonrepeating nonstandard elements.
+
+0 - Any
+1 - No Fit
+2 - Derivative
+3 - Non-standard Topology
+4 - Non-standard Elements
+5 -  Non-standard Aspect
+6 - Initials
+7 - Cartoon
+8 - Picture Stems
+9 - Ornamented
+10 - Text and Background
+11 - Collage
+12 - Montage
+
+
+Treatment
+(Latin Decorative)
+
+This digit describes the treatment of the total letters.
+For the sake of this digit it is assumed that the character actually consists of two parts,
+the outline and the fill within the outline.
+None is the standard solid fill that is used in text fonts.
+White or No Fill means that just the outline of the character shows.
+Pattern fill indicates that all the letters are filled with the same repeating pattern.
+Complex fill indicates that different letters are filled with different repeating patterns.
+Shaped fill indicates that the fill patterns are recognizable forms from other contexts.
+Drawn or Distressed fill indicates that the fill of each letter is unique and individual.
+
+0 - Any
+1 - No Fit
+2 - None - Standard Solid Fill
+3 - White / No Fill
+4 - Patterned Fill
+5 - Complex Fill
+6 - Shaped Fill
+7 - Drawn / Distressed
+
+
+Lining
+(Latin Decorative)
+
+Lining refers to how the outlines of the characters are handled.
+None is just a simple line. Inline is a line that is shaded on the inside.
+Outline is shaded on the outside.
+Often in the outline case, the letter is indicated as white space on the background pattern.
+Engraved is used to indicate that the outlines have been multiplied
+(not necessarily the same number of times on all edges).
+Shadow indicates there is an offset copy of the outline to one side simulating a shadow.
+Relief has this offset copy attached and perspective rules
+applied to make the letter look three dimensional.
+Backdrop is for letters that look to be floating above a background.
+
+0 - Any
+1 - No Fit
+2 - None
+3 - Inline
+4 - Outline
+5 - Engraved (Multiple Lines)
+6 - Shadow
+7 - Relief
+8 - Backdrop
+
+
+Topology
+(Latin Decorative)
+
+This digit attempts to encapsulate unusual characteristics inherent in the topology of the font.
+Sometimes faces have more than one of these characteristics and
+the classifier must make a judgment call.
+Remember that the reason for PANOSE numbers is to make distinctions,
+so choose what seems to best characterize the unique features of the font.
+Standard is for fonts that have normal looking character topologies.
+Square means that the font has an exaggerated square or angular character.
+Multiple segments reflect fonts where the strokes have been broken into multiple pieces.
+Deco refers to Art Deco style faces where the midlines are very high or low.
+Often characters like the E, M, and S have changed their forms markedly in these faces.
+Uneven Weighting implies that different elements within the font
+have consistently different weights.
+For example vertical stems are consistently very heavy relative to horizontal stems.
+Diverse Arms mean that the arms on different characters are dissimilar.
+Diverse Forms means that characters that would be similar in a text face,
+such as the b, d, g, q, are dissimilar. Lombardic Forms have exaggerated, manipulated stems.
+Upper Case in Lower Case means that there are variant caps or small caps
+in the positions in the character map that would usually be occupied by lower case forms.
+Implied Topology means that there are pieces of the characters missing,
+such as ascending diagonals, which the reader’s eye must interpolate.
+Horseshoe E and A means that even the most angular letters, like the E and A,
+have been rounded. Cursive means that the letter forms follow cursive models.
+Blackletter means that the letter forms follow German fraktur models.
+Swash Variance means that there are multiple variant swash capitals.
+
+0 - Any
+1 - No Fit
+2 - Standard
+3 - Square
+4 - Multiple Segment
+5 - Deco (E,M,S) Waco midlines
+6 - Uneven Weighting
+7 - Diverse Arms
+8 - Diverse Forms
+9 - Lombardic Forms
+10 - Upper Case in Lower Case
+11 - Implied Topology
+12 - Horseshoe E and A
+13 - Cursive
+14 - Blackletter
+15 - Swash Variance
+
+
+Range of Characters
+(Latin Decorative)
+
+This digit quantifies the range of characters available in the decorative font.
+Extended Collection means that the full font range is available.
+Literals means that only the alphanumerics are available.
+No Lower Case means just that.
+Small Caps means that only small caps are available in the font, no upper or lower case.
+
+0 - Any
+1 - No Fit
+2 - Extended Collection
+3 - Litterals
+4 - No Lower Case
+5 - Small Caps
+
+
+Kind
+(Latin Symbol)
+
+Montages are symbol sets in which no single type of symbol is more that 50% of the total set.
+Picture sets are made up of pictures like hands, feet, religious symbols, hardware, flowers,
+buildings, clocks etc.
+Shape sets are made up of abstract shapes like arrows, boxes, squares, dots, stars, etc.
+Scientific sets contains specialized scientific symbols like math Greek letters,
+differential segments, etc.
+Music sets contain notes and specialized music symbols like clefs, sharps, flats, trills, etc.
+Expert sets are extensions to text fonts containing groups of specialized ligatures,
+groups of small caps, etc.
+Pattern sets contain line fill symbols, textures, etc.
+Boarder sets contain various kinds of simple or fancy boarder sections and corners.
+Icon sets contain block illustrations, symbolic shapes, etc.
+Logo sets contain copyrighted logos, registered artwork, etc.
+Industry Specific sets contain symbols specific to different fields, like medicine, law,
+engineering, etc.
+
+0 - Any
+1 - No Fit
+2 - Montages
+3 - Pictures
+4 - Shapes
+5 - Scientific
+6 - Music
+7 - Expert
+8 - Patterns
+9 - Boarders
+10 - Icons
+11 - Logos
+12 - Industry specific
+
+
+Aspect ratio of character #
+(Latin Symbol)
+
+The Aspect Ratio is taken to be the height of character # (94, 119, 157, 163, 211)
+divided by the black width.
+Character 94 was chosen to be in the Lower ASCII range and thus usually used.
+Character 119 was chosen to be in the Lower ASCII range and thus usually used.
+Character 157 was chosen because it lies in the printer control area of the
+standard ASCII table and is thus often not used.
+Character 163 was chosen to be in the Upper ASCII (8-bit ASCII) range and
+thus will likely be used only in an extended symbol set.
+Character 211 was chosen to be in the Upper ASCII (8-bit ASCII) range and
+thus will likely be used only in an extended symbol set.
+
+0 - Any
+1 - No Fit
+2 - No Width
+3 - Exceptionally Wide
+4 - Super Wide
+5 - Very Wide
+6 - Wide
+7 - Normal
+8 - Narrow
+9 - Very Narrow
+
+-----
+
+La signification des nombres Panose
+
+On donne ci-après la signification des dix nombres avec leurs valeurs admises
+(entre parenthèses), pour le cas le plus courant où le chiffre pour la "famille" est 2 -
+texte et affichage (quand le premier nombre a une valeur différente,
+les neufs nombres restants prennent un autre sens).
+Pour des détails supplémentaires sur Panose-1, voir [PANOSE]<http://www.panose.com/printer/pan1.asp>.
+
+Famille
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Texte et affichage latins (2)
+        * Écriture latine (3)
+        * Décoratif latin (4)
+        * Pictural latin (5)
+
+Style des sérifs
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Anse (2)
+        * Anse obtuse(3)
+        * Anse carrée (4)
+        * Anse obtuse carrée (5)
+        * Carré (6)
+        * Mince (7)
+        * Arête (8)
+        * Exagérée (9)
+        * Triangulaire (10)
+        * Normal Sans (11)
+        * Obtus Sans (12)
+        * Perpendiculaire Sans (13)
+        * Évasé (14)
+        * Arrondi (15)
+
+Graisse
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Very Light (2) [100]
+        * Light (3) [200]
+        * Thin (4) [300]
+        * Book (5) [400] même chose que pour 'font-weight: normal;' en CSS1
+        * Medium (6) [500]
+        * Demi (7) [600]
+        * Bold (8) [700] même chose que pour 'font-weight: bold;' en CSS1
+        * Heavy (9) [800]
+        * Black (10) [900]
+        * Extra Black / Nord (11) [900] force une correspondance avec l'échelle 100-900 de CSS1
+
+Proportion
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Ancienne mode (2)
+        * Moderne (3)
+        * Largeur égalisée (4)
+        * Élargie (5)
+        * Étroite (6)
+        * Très élargie (7)
+        * Très étroite (8)
+        * Monospace (9)
+
+Contraste
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Aucun (2)
+        * Très faible (3)
+        * Faible (4)
+        * Moyen faible (5)
+        * Moyen (6)
+        * Moyen grand (7)
+        * Grand (8)
+        * Très grand (9)
+
+Variation du trait
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Aucune variation (2)
+        * Graduelle/Diagonale (3)
+        * Graduelle/Transitionnelle (4)
+        * Graduelle/Verticale (5)
+        * Graduelle/Horizontale (6)
+        * Rapide/Verticale (7)
+        * Rapide/Horizontale (8)
+        * Instantanée/Horizontale (9)
+        * Instantanée/Verticale (10)
+
+Style des branches
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Branches droites/Horizontal (2)
+        * Branches droites/Calé (3)
+        * Branches droites/Vertical (4)
+        * Branches droites/Serif simple (5)
+        * Branches droites/Serif double (6)
+        * Branches non droites/Horizontal (7)
+        * Branches non droites/Calé (8)
+        * Branches non droites/Vertical (9)
+        * Branches non droites/Serif simple (10)
+        * Branches non droites/Serif double (11)
+
+Forme de la lettre
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Normale/Touchante (2)
+        * Normale/Équilibrée (3)
+        * Normale/Encadrée (4)
+        * Normale/Aplatie (5)
+        * Normale/Arrondie (6)
+        * Normale/Décentrée (7)
+        * Normale/Carrée (8)
+        * Oblique/Touchante (9)
+        * Oblique/Équilibrée (10)
+        * Oblique/Encadrée (11)
+        * Oblique/Aplatie (12)
+        * Oblique/Arrondie (13)
+        * Oblique/Décentrée (14)
+        * Oblique/Carrée (15)
+
+Traits du milieu
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Standard/Coupé (2)
+        * Standard/Pointu (3)
+        * Standard/Serif (4)
+        * Haut/Coupé (5)
+        * Haut/Pointu (6)
+        * Haut/Serif (7)
+        * Constant/Coupé (8)
+        * Constant/Pointu (9)
+        * Constant/Serif (10)
+        * Bas/Coupé (11)
+        * Bas/Pointu (12)
+        * Bas/Serif (13)
+
+Hauteur-x
+
+        * Tous (0)
+        * Pas de correspondance (1)
+        * Constante/Petite (2)
+        * Constante/Standard (3)
+        * Constante/Grande (4)
+        * Plongeante/Petite (5)
+        * Plongeante/Standard (6)
+        * Plongeante/Grande (7)

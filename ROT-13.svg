@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>ROT-13 Mysterious Message</title>
+
+<script><![CDATA[
+// Change the text to rotate
+function ChangeText()
+{
+	var text = document.getElementById("MM");
+//  DebugObject(text);
+	var t = text.textContent;
+	text.textContent = Rotate13(t);
+}
+
+// JavaScript 1.2 ROT-13 function with RE
+function Rotate13(tIn)
+{
+	var c, offset, b;
+	var byte_A = 'A'.charCodeAt();
+	var byte_a = 'a'.charCodeAt();
+
+	var tOut = tIn.replace(/[a-zA-Z]/g,
+		function (c, o, s)
+		{
+			offset = (c < 'a') ? byte_A : byte_a;
+			b = c.charCodeAt() - offset; // 0 to 25
+			b = (b + 13) % 26 + offset; // Rotate
+			return String.fromCharCode(b);
+		}
+		)
+	return tOut;
+}
+
+// JavaScript 1.2 ROT-13 function
+function Rotate13_1(tIn)
+{
+	var tOut = '';
+	var c, offset, b;
+	var byte_A = 'A'.charCodeAt();
+	var byte_a = 'a'.charCodeAt();
+
+	for (var i = 0; i < tIn.length; i++)
+	{
+		c = tIn.charAt(i);
+		if (c.search(/[A-Za-z]/) >= 0)
+		{
+			offset = (c < 'a') ? byte_A : byte_a;
+			b = c.charCodeAt() - offset; // 0 to 25
+			b = (b + 13) % 26 + offset; // Rotate
+			tOut += String.fromCharCode(b);
+		}
+		else
+		{
+			tOut += c;
+		}
+	}
+	return tOut;
+}
+
+// JavaScript 1.0 (classical) ROT-13 function
+function Rotate13_2(tIn)
+{
+	var alpha = "abcdefghijklmnopqrstuvwxyzabcdefghijklm";
+	var tOut = '';
+	var c, bIsCap, pos;
+
+	for (var i = 0; i < tIn.length; i++)
+	{
+		c = tIn.charAt(i);
+		bIsCap = (c < 'a') ? 1 : 0;
+		c = c.toLowerCase();
+		pos = alpha.indexOf(c);
+		if (pos < 0)
+		{
+			tOut += c;
+		}
+		else
+		{
+			c = alpha.charAt(pos + 13);
+			tOut += bIsCap ? c.toUpperCase() : c;
+		}
+	}
+	return tOut;
+}
+
+// Debug tool
+var bDebugMode = true;
+var DebugInfo = alert;
+function DebugObject(obj)
+{
+	if (bDebugMode)
+	{
+		var o = DumpObject(obj, 25);
+		DebugInfo(o.dump);
+	}
+}
+function DumpObject(obj, truncate)
+{
+	if (truncate == null) truncate = 0;
+	var od = new Object;
+	var result = "";
+	var len = 0;
+
+	for (var property in obj)
+	{
+		var value = obj[property];
+		if (typeof value == 'string')
+		{
+			if (truncate > 0)
+			{
+				value = "'" + value.substring(0, truncate) + "'";
+			}
+			else
+			{
+				value = "'" + value + "'";
+			}
+		}
+		if (typeof value == 'object')
+		{
+			if (value instanceof Array)
+			{
+				value = "[ " + value + " ]";
+			}
+			else
+			{
+				var ood = DumpObject(value);
+				value = "{ " + ood.dump + " }";
+			}
+		}
+		result += "'" + property + "' : " + value + ", ";
+		len++;
+	}
+	od.dump = result.replace(/, $/, "");
+	od.len = len;
+
+	return od;
+}
+
+]]></script>
+
+  <text id="MM" x="20" y="50" font-size="18" fill="darkblue">Guvf negvpyr unir orra jevggra ba Ncevy svefg!</text>
+  <circle cx="200" cy="100" r="20" fill="darkgreen" onclick="ChangeText()"/>
+</svg>

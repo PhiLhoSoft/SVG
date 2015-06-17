@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="350" height="350"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Olympic Rings</title>
+  <desc>
+An SVG rendition of the olympic rings.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-08-21</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/08/21 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+  <image x="10" y="150" width="324" height="216" xlink:href="OlympicRings.gif" transform="scale(1.03)"/>
+  <!-- Circles that allowed me to calculate coordinates and sizes
+  <g stroke-width="5" fill="none">
+    <circle cx="75"  cy="100" r="40" stroke="blue"/>
+    <circle cx="125" cy="143" r="40" stroke="yellow"/>
+    <circle cx="175" cy="100" r="40" stroke="black"/>
+    <circle cx="225" cy="143" r="40" stroke="green"/>
+    <circle cx="275" cy="100" r="40" stroke="red"/>
+  </g>
+  -->
+  <!-- Transform the circles to arcs, to allow interlacing -->
+  <g stroke-width="1" stroke="black" fill="none">
+    <path id="blue"
+          d="M  81,142 a 42.5,42.5 0 1,1  8.00,-1.90 a 36,36 0 0,1 0.95,-5.6
+                       a 37.5,37.5 0 1,0 -8.55,2.50  A 44,44 0 0,0   81,142 z"/>
+    <path id="yellow"
+          d="M 119,101 a 42.5,42.5 0 0,1 12.00,0     a 44,44 0 0,0 0.50,5.1
+                       a 37.5,37.5 0 0,0 -13.0,0     A 44,44 0 0,0  119,101 z"/>
+  </g>
+  <!-- Skeletons, for debug purpose -->
+  <g stroke-width="0.1" stroke="red" fill="none">
+    <use xlink:href="#blue"/>
+    <use xlink:href="#yellow"/>
+  </g>
+  <path stroke-width="0.1" stroke="yellow" fill="none"
+        d="M 81,142 m 8.00,-1.90 m 0.95,-5.6 m -8.55,2.50 A 44,44 0 1,1 81,142"/>
+  <g stroke-width="0.1" stroke="orange" fill="none">
+    <circle cx="75"  cy="100" r="36"/>
+    <circle cx="75"  cy="100" r="44"/>
+    <circle cx="125" cy="143" r="36"/>
+    <circle cx="125" cy="143" r="44"/>
+    <circle cx="175" cy="100" r="36"/>
+    <circle cx="175" cy="100" r="44"/>
+    <circle cx="225" cy="143" r="36"/>
+    <circle cx="225" cy="143" r="44"/>
+    <circle cx="275" cy="100" r="36"/>
+    <circle cx="275" cy="100" r="44"/>
+  </g>
+  <!-- Ghost circles to check correct settings -->
+  <g stroke-width="5" stroke="#999" stroke-opacity="0.5" fill="none">
+    <circle cx="75"  cy="100" r="40"/>
+    <circle cx="125" cy="143" r="40"/>
+    <circle cx="175" cy="100" r="40"/>
+    <circle cx="225" cy="143" r="40"/>
+    <circle cx="275" cy="100" r="40"/>
+  </g>
+</svg>

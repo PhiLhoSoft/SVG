@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg version="1.1" baseProfile="full"
+     width="600" height="300"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Lua logo</title>
+  <desc>
+An SVG rendition of the Lua logo.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2006-06-12</dc:date>
+      <dc:rights>Copyright © 2004-2006 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0.01 -- 2006/06/12 -- Small changes to make it work (except textPath) on Firefox 1.5
+1.0.00 -- 2004/07/12 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Graphic design by A. Nakonechny.
+                 Copyright © 1998. All rights reserved.
+                 http://www.lua.org/</dc:source>
+      <dc:type>Still Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+  <defs>
+    <!-- Path of text on the orbit.
+         A simple arc, based on Orbit: radius=2-sqrt(2)/2
+         start=radius*cos(190),radius*sin(190)
+         end=radius*cos(59),radius*sin(59)
+    -->
+    <path id="TextPath" d="M -1.273,0.224 A 1.293,1.293 0 0,1 0.666,-1.108"/>
+  </defs>
+
+  <!-- Simple Lua Logo -->
+  <g transform="translate(150,150) scale(100)">
+    <!-- Orbit -->
+    <!-- radius=2-sqrt(2)/2, dash=10*radius*pi/360
+         start=radius*cos(28),radius*sin(28)
+         end=radius*cos(59),radius*sin(59)
+    -->
+    <path id="Orbit" d="M 1.142,-0.607 A 1.293,1.293 0 1,1 0.666,-1.108"
+          fill="none"
+          stroke="#888" stroke-width="0.03px" stroke-dasharray="0.115"/>
+    <!-- Planet -->
+    <circle id="Planet" cx="0" cy="0" r="1" fill="#000080"/>
+    <!-- Hole -->
+    <!-- radius=1-sqrt(2)/2, cx/cy=1-2*radius=sqrt(2)-1 -->
+    <circle id="Hole" cx="0.414" cy="-0.414" r="0.293" fill="white"/>
+    <!-- Moon -->
+    <!-- same radius -->
+    <circle id="Moon" cx="1" cy="-1" r="0.293" fill="#000080"/>
+    <!-- Text -->
+    <text id="LuaText" x="0" y="0.5" text-anchor="middle"
+          style="font-family: Helvetica, Arial, sans-serif;
+                 font-size: 0.9px; fill: white;">Lua</text>
+  </g>
+
+  <!-- Lua Logo with text on orbit -->
+  <g transform="translate(450,150) scale(100)">
+    <!-- Orbit with text -->
+    <!-- radius=2-sqrt(2)/2, dash=10*radius*pi/360
+         start=radius*cos(28),radius*sin(28)
+         end=radius*cos(190),radius*sin(190)
+    -->
+    <path id="Orbit" d="M 1.142,-0.607 A 1.293,1.293 0 1,1 -1.273,0.224"
+          fill="none"
+          stroke="#808080" stroke-width="0.03px" stroke-dasharray="0.115"/>
+    <text style="font-family: Helvetica, Arial, sans-serif;
+                 font-size: 0.23px; fill: #808080;">
+      <textPath xlink:href="#TextPath"
+                startOffset="0.08"
+                baseline-shift="-30%">the programming language</textPath>
+    </text>
+    <use xlink:href="#Planet"/>
+    <use xlink:href="#Hole"/>
+    <use xlink:href="#Moon"/>
+    <use xlink:href="#LuaText"/>
+  </g>
+</svg>

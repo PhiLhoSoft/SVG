@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg version="1.1" baseProfile="full"
+     width="500" height="500"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     onload="SetTime(evt)"
+     >
+  <title>A Nice Analog Clock</title>
+  <desc>
+A nice analog clock drawn along the model created by Marc Clifton and shown on CodeProject.
+  </desc>
+  <metadata><!-- I use the Dublin Core, completed by private tags for stuff not covered by DC -->
+    <pls:PLS
+         xmlns:pls="http://Phi.Lho.free.fr/xmlns/pls/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:creator>
+        <pls:name>Philippe Lhoste</pls:name>
+        <pls:e-mail>PhiLho(a)GMX.net</pls:e-mail>
+        <pls:url>http://Phi.Lho.free.fr/</pls:url>
+      </dc:creator>
+      <dc:publisher>PhiLhoSoft</dc:publisher>
+      <dc:date>2004-07-12</dc:date>
+      <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+      <pls:history>
+1.0 -- 2004/07/12 -- Original release
+      </pls:history>
+      <dc:contributor>None yet</dc:contributor>
+      <dc:source>Marc Clifton -- http://www.codeproject.com/dotnet/vgclock.asp</dc:source>
+      <dc:source>Animation (declarative and JS initialization) taken from Adobe clock sample. http://www.adobe.com/svg/demos/clock.html
+<!--  NOTICE:  © [1999-2001] Adobe Systems Incorporated.  Adobe hereby grants you the rights to reproduce, modify and distribute this file and its contents, not including any fonts, audio files or raster images included or embedded in or linked to this file, (the "Software"), and to grant such rights to other parties subject to the following:  This notice shall be included in any copy of the Software or any portion thereof.  THE SOFTWARE IS PROVIDED TO YOU AS-IS, WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.  IN NO EVENT SHALL ADOBE BE LIABLE TO YOU OR ANY OTHER PARTY FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE.
+--></dc:source>
+      <dc:type>Animated Image</dc:type>
+      <dc:format>image/svg+xml</dc:format>
+      <dc:language>en</dc:language>
+    </pls:PLS>
+  </metadata>
+  <defs>
+    <!-- Initialization of the clock: the start position of the hands
+         is computed using the current time from the client's system.
+         The following animation is purely declarative. -->
+    <script type="text/javascript">
+      <![CDATA[
+        function SetTime(loadEvent)
+        {
+          var now = new Date();
+
+          var seconds = now.getSeconds();
+          var minutes = now.getMinutes() + seconds / 60;
+          var hours = now.getHours() + minutes / 60;
+
+          var svgDoc = loadEvent.target.ownerDocument;
+
+          svgDoc.getElementById("SecondHand").setAttributeNS(null, 'transform', 'rotate(' + (seconds * 6) + ')');
+          svgDoc.getElementById("MinuteHand").setAttributeNS(null, 'transform', 'rotate(' + (minutes * 6) + ')');
+          svgDoc.getElementById("HourHand").setAttributeNS(null, 'transform', 'rotate(' + (hours * 30) + ')');
+        }
+      ]]>
+    </script>
+
+    <!-- Gradient definitions -->
+    <linearGradient id="ClockGrad">
+      <stop offset="0%"   stop-color="#CCF"/>
+      <stop offset="100%" stop-color="#224"/>
+    </linearGradient>
+
+    <linearGradient id="LinGradO" xlink:href="#ClockGrad"
+                    x1="0" y1="0" x2="1" y2="1"/>
+    <linearGradient id="LinGradI" xlink:href="#ClockGrad"
+                    x1="1" y1="1" x2="0" y2="0"/>
+    <linearGradient id="LinGradF"
+                    x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#88A"/>
+      <stop offset="100%" stop-color="#112"/>
+    </linearGradient>
+
+    <linearGradient id="HandGrad" x1="0" y1="0" x2="1" y2="0.1">
+      <stop offset="0%"   stop-color="#CDF"/>
+      <stop offset="100%" stop-color="#67F"/>
+    </linearGradient>
+
+    <!-- The Shadow -->
+    <filter id="Blur" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="R" />
+    </filter>
+
+    <!-- The Hands -->
+    <path id="BigHand"
+          d="M 0,10
+             Q 10,10 7.5,-10
+             L 0,-155
+             L -7.5,-10
+             Q -10,10 0,10"
+          fill="url(#HandGrad)" stroke="none"/>
+    <use id="SmallHand" xlink:href="#BigHand" transform="scale(1,0.6)"/>
+  </defs>
+
+  <!-- The Clock -->
+  <g transform="translate(220,220)">
+      <!-- Clock Face -->
+      <circle id="Shadow"   cx="10" cy="10" r="200" filter="url(#Blur)"/>
+      <circle id="OuterRim" cx="0" cy="0" r="200" fill="url(#LinGradO)"/>
+      <circle id="InnerRim" cx="0" cy="0" r="180" fill="url(#LinGradI)"/>
+      <circle id="Face"     cx="0" cy="0" r="173" fill="url(#LinGradF)"/>
+      <!-- The digits -->
+      <g style="stroke: #CCF; fill: #CCF; font-size: 30;
+                font-family: 'Maiandra GD';"
+                text-anchor="middle">
+        <!-- dy compensates to center vertically the digits,
+             as neither dominant-baseline nor alignment-baseline
+             seems to work with ASV... -->
+        <!-- The easy to do digit placements... -->
+        <text id="d12" x="0"       y="-155"    dy="0.35em">12</text>
+        <text id="d03" x="155"     y="0"       dy="0.35em">3</text>
+        <text id="d06" x="0"       y="155"     dy="0.35em">6</text>
+        <text id="d09" x="-155"    y="0"       dy="0.35em">9</text>
+        <!-- A bit harder: use 155*cos(30) and 155*cos(60) and symetries -->
+        <text id="d01" x="77.5"    y="-134.23" dy="0.35em">1</text>
+        <text id="d02" x="134.23"  y="-77.5"   dy="0.35em">2</text>
+        <text id="d04" x="134.23"  y="77.5"    dy="0.35em">4</text>
+        <text id="d05" x="77.5"    y="134.23"  dy="0.35em">5</text>
+        <text id="d07" x="-77.5"   y="134.23"  dy="0.35em">7</text>
+        <text id="d08" x="-134.23" y="77.5"    dy="0.35em">8</text>
+        <text id="d10" x="-134.23" y="-77.5"   dy="0.35em">10</text>
+        <text id="d11" x="-77.5"   y="-134.23" dy="0.35em">11</text>
+      </g>
+      <!-- The Hands -->
+      <g>
+        <!-- Hour -->
+        <g id="HourHand">
+          <use xlink:href="#SmallHand">
+            <animateTransform attributeName="transform" type="rotate" dur="43200s" values="0;360" repeatCount="indefinite"/>
+          </use>
+        </g>
+        <!-- Minutes -->
+        <g id="MinuteHand">
+          <use xlink:href="#BigHand">
+            <animateTransform attributeName="transform" type="rotate" dur="3600s" values="0;360" repeatCount="indefinite"/>
+          </use>
+        </g>
+        <!-- Seconds -->
+        <g id="SecondHand">
+          <line x1="0" y1="20" x2="0" y2="-155" stroke="white" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" dur="60s" values="0;360" repeatCount="indefinite"/>
+          </line>
+          <circle cx="0" cy="0" r="4" fill="white"/>
+        </g>
+      </g>
+  </g>
+<!-- Contruction lines...
+  <line x1="0" x2="500" y1="65" y2="65" stroke="red"/>
+  <path id="Cross" stroke="orange" d="M 0 220 h 500 M 220 0 v 500"/>
+-->
+</svg>

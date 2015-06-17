@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<svg width="640" height="480"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Tests SVG</title>
+  <desc>
+Un fichier pour tester les petits exemples de SVG...
+  </desc>
+  <metadata><!-- SVG example -->
+    <rdf:RDF
+         xmlns:rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs = "http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:dc = "http://purl.org/dc/elements/1.1/" >
+      <rdf:Description about="http://example.org/myfoo"
+           dc:title="MyFoo Financial Report"
+           dc:description="$three $bar $thousands $dollars $from 1998 $through 2000"
+           dc:publisher="Example Organization"
+           dc:date="2000-04-11"
+           dc:format="image/svg+xml"
+           dc:language="en" >
+        <dc:creator>
+          <rdf:Bag>
+            <rdf:li>Irving Bird</rdf:li>
+            <rdf:li>Mary Lambert</rdf:li>
+          </rdf:Bag>
+        </dc:creator>
+      </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+
+  <metadata><!-- digimon example -->
+    <rdf:RDF xmlns:rdf="http://www.w3c.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/">
+     <rdf:Description
+          rdf:about=
+"http://www.cs.helsinki.fi/group/digimon/examples/rdf/mpoly.png">
+      <dc:title>Multiple polygons</dc:title>
+      <dc:comment>RDF Test Case</dc:comment>
+      <dc:Creator>Kimmo Könönen</dc:Creator>
+      <dc:Date>28.06.2003</dc:Date>
+     </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+
+  <metadata><!-- RDF Primer example (expanded) -->
+    <rdf:RDF
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <rdf:Description rdf:about="http://www.foo.org/described/file.html">
+        <dc:title>D-Lib Program - Research in Digital Libraries</dc:title>
+        <dc:description>The D-Lib program supports the community of people
+         with research interests in digital libraries and electronic
+         publishing.</dc:description>
+        <dc:creator>Eric J. Miller</dc:creator>
+        <dc:contributor>Amy Friedlander, typos fixing</dc:contributor>
+        <dc:publisher>Corporation For National Research Initiatives</dc:publisher>
+        <dc:date>1995-01-07</dc:date>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Research; statistical methods</rdf:li>
+            <rdf:li>Education, research, related topics</rdf:li>
+            <rdf:li>Library use Studies</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:rights>Copyright © 1998 Eric Miller</dc:rights>
+        <dc:type>World Wide Web Home Page</dc:type>
+        <dc:format>text/html</dc:format>
+        <dc:language>en</dc:language>
+      </rdf:Description>
+    </rdf:RDF>
+<!--
+* Title: A name given to the resource.
+* Creator: An entity (who/what) primarily responsible for making the content of the resource.
+* Subject: The topic of the content of the resource.
+* Description: An account of the content of the resource.
+* Publisher: An entity responsible for making the resource available
+* Contributor: An entity responsible for making contributions to the content of the resource.
+* Date: A date associated with an event in the life cycle of the resource.
+  Typically, the creation or availability date.
+* Type: The nature or genre of the content of the resource.
+* Format: The physical or digital manifestation of the resource.
+* Identifier: An unambiguous reference to the resource within a given context.
+  Like a URL, URI, or ISSN#.
+* Source: A reference to a resource from which the present resource is derived.
+* Language: A language of the intellectual content of the resource.
+* Relation: A reference to a related resource.
+* Coverage: The extent or scope of the content of the resource.
+  (e.g., a place or time).
+* Rights: Information about rights held in and over the resource.
+  Intellectual Property Rights, Copyright, etc.
+-->
+  </metadata>
+
+  <metadata><!-- PhiLhoSoft example -->
+    <rdf:RDF
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:vCard = "http://www.w3.org/2001/vcard-rdf/3.0#">
+      <rdf:Description rdf:about="http://Phi.Lho.free.fr/described/file.html">
+        <dc:title>Same title as in SVG data</dc:title>
+        <dc:description>Same description as in SVG data(?)</dc:description>
+<!--        <dc:creator>Philippe Lhoste</dc:creator>-->
+        <dc:creator>
+          <rdf:Description>
+            <vCard:FN>Philippe Lhoste</vCard:FN>
+            <vCard:N rdf:parseType="Resource">
+              <vCard:Family>Lhoste</vCard:Family>
+              <vCard:Given>Philippe</vCard:Given>
+              <vCard:Other>PhiLho</vCard:Other>
+            </vCard:N>
+            <vCard:EMAIL>PhiLho (a) GMX.net</vCard:EMAIL>
+            <vCard:URL rdf:resource="http://Phi.Lho.free.fr/"/>
+          </rdf:Description>
+        </dc:creator>
+        <dc:contributor>Foo Bar, typos fixing</dc:contributor>
+        <dc:publisher>PhiLhoSoft</dc:publisher>
+        <dc:date>2004-07-13</dc:date>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Tests of SVG</rdf:li>
+            <rdf:li>Examples of SVG</rdf:li>
+            <rdf:li>Samples of SVG</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <pls:history>
+          <rdf:Seq>
+            <rdf:li>1.0 -- 2004/07/13 -- Original release</rdf:li>
+            <rdf:li>1.1 -- 2004/07/15 -- Minor fixes</rdf:li>
+            <rdf:li>1.2 -- 2004/08/01 -- Added stuff</rdf:li>
+          </rdf:Seq>
+        </pls:history>
+        <dc:rights>Copyright © 2004 Philippe Lhoste, PhiLhoSoft</dc:rights>
+        <dc:type>Still Image</dc:type>
+<!-- OR --><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:format>image/svg+xml</dc:format>
+        <dc:language>en</dc:language>
+        <dc:title xml:lang="fr">Même titre que dans les données du SVG</dc:title>
+      </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+
+  <!-- Coller les exemples ci-dessous -->
+</svg>

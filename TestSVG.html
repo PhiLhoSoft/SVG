@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>SVG Display</title>
+</head>
+<body>
+This is a mix of HTML (this line) and SVG (the image below).<br />
+<!-- Embed isn't nice (deprecated in HTML4/XHTML) but necessary for
+     old browsers (Netscape 4) or IE/Win with ASV3 (Adobe desactivates
+     scripting if using object, for security reasons), or some other browsers (Safari 1.0).
+-->
+<embed name="Tests" src="onkey.svg" width="640" height="480" type="image/svg+xml" />
+<noembed>
+<!-- I still use object for some browsers snobbing embed... -->
+<object data="onkey.svg" width="640" height="480" type="image/svg+xml">
+<img src="onkey.png" width="640" height="480"
+     alt="Bitmap image for those without SVG plug-in"
+     title="A Nice Image" /><br />
+If you see this text instead of an image,
+you should go fetch a good SVG viewer...
+</object>
+</noembed>
+<br />
+It is nice, isn't it?
+<!--
+Note: For security reasons, Adobe desactivates scripting in IE for SVG files included
+in HTML pages with the more conformant <object> tag...
+http://www.adobe.com/svg/viewer/install/main.html
+
+So alas it is better to use only <embed> tag, even if it makes Web pages non conformant
+to XHTML (or HTML 4.0) and to the SVG spec.:
+http://www.w3.org/TR/SVG11/concepts.html#UsageOptions
+-->
+<p>Test SVG.org signature</p>
+<a href="http://Phi.Lho.free.fr">Philippe Lhoste</a> (near Paris -- France)<br />
+Professional computer programmer
+and amateur artist.<br />
+SVG is the perfect mix of both worlds...<br />
+<img src="http://Phi.Lho.free.fr/images/artwork/PLc.png" />
+</body>
+</html>
