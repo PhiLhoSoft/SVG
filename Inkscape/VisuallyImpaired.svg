@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="VisuallyImpaired"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="VisuallyImpaired.svg">
+  <title
+     id="title2983">Visually Impaired logo</title>
+  <defs
+     id="defs11" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="164.6844"
+     inkscape:cy="738.73508"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Visually Impaired logo</dc:title>
+        <dc:date>2014-11-17</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Philippe Lhoste</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>Manually made from a bitmap image</dc:source>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       id="path3037"
+       style="fill:#000000;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-rule:evenodd"
+       d="m 495.68904,238.17923 c 59.94005,19.80592 113.8414,57.23138 161.89489,103.66319 -36.80358,35.2881 -77.22676,70.95171 -168.10901,106.71902 25.05161,-31.91028 41.41804,-68.39196 41.29897,-111.71377 -0.12226,-44.48477 -18.30814,-71.7827 -35.08485,-98.66844 z M 388.75,232.63004 386.07143,219.59432 c 40.72005,4.38542 96.7084,34.7986 105,107.05358 5.15053,44.88296 -16.3467,86.72931 -47.41072,109.28571 l -4.73214,-13.21428 c 28.668,-29.01979 47.23953,-58.29797 36.16072,-110.71429 -8.10048,-38.32514 -46.37485,-71.60324 -86.33929,-79.375 z m -74.46629,-10.80266 c 5.25244,-2.54597 15.18954,-4.10045 15.21542,-4.10374 l 6.43973,19.3823 c -5.43734,1.472 -10.31801,3.77902 -15.08916,6.25032 z m -64.998,15.89194 c 4.41488,-2.52883 14.08866,-4.6383 14.10715,-4.64285 L 277.5,284.68361 c -4.54552,6.48494 -6.85781,12.78378 -9.46429,19.10714 z m 33.61476,-200.609677 53.48478,-0.104605 37.2529,139.979692 c 0,0 48.72809,-4.05214 124.36705,19.77825 61.71362,19.44315 102.46486,47.40807 147.48228,80.8122 30.67203,22.75947 64.71104,64.40992 64.71104,64.40992 0,0 -42.43688,49.52224 -84.02123,78.20016 -27.62073,19.04816 -54.78397,35.96251 -85.32726,49.84936 -37.08797,16.86246 -81.69238,27.32271 -81.69238,27.32271 l 34.30187,128.46794 -54.04317,0.25254 -48.44399,-180.31223 -16.20576,0 16.16244,60.10408 c -17.48478,-0.15477 -30.49269,0.25007 -54.80078,-0.75761 l -19.0756,-72.15195 -17.54243,-11.43818 21.71828,82.8325 c -18.60364,-2.97067 -37.20729,-6.74242 -55.81093,-11.61675 l -64.14468,-233.85031 -10.60661,4.79823 59.599,224.75893 c -20.60423,-7.62543 -41.18889,-15.29978 -60.86168,-25.25381 l -45.70941,-169.70562 -6.06091,5.05075 40.92912,159.36952 C 156.77117,444.71581 134.77991,432.12627 113.8947,416.21861 L 92.903397,337.03894 80.054589,348.5384 94.196725,401.5714 C 73.164003,382.49568 52.946462,362.80858 34.597724,341.71987 61.812448,313.68504 53.632772,312.9291 121.47084,260.15005 c 31.04192,-24.15109 81.46024,-47.59275 114.90486,-59.85154 32.96282,-12.08219 54.09973,-16.40812 84.34774,-20.20305 z" />
+  </g>
+</svg>

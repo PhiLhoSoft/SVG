@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   width="600"
+   height="600"
+   id="GradleLogo">
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gradle Logo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     d="m 401.2,128.4 -148.1,0 -44.8,-78.3 c 29,-11 61.3,-16.6 94.3,-16.6 133,0 242.5,96.9 261.5,223.9 l -88.7,0 z"
+     style="fill:#006633;fill-opacity:1;stroke:none" />
+  <path
+     d="M 397.2,302.2 a 95.44,95.68 0 0 1 -190.87,0 95.44,95.68 0 1 1 190.87,0 z"
+     id="Center"
+     style="fill:#006633;fill-opacity:1;stroke:none"/>
+  <path
+     d="M 564.8,339.5 C 546.3,466.9 437.3,564.8 301,564.9 155,564.9 37,445.9 36.5,300.3 36.3,214.6 76,138.7 136.5,90.7 l 44.2,76.2 -77.5,134 99.5,172.7 198.7,0 76.8,-134 z"
+     id="Lower"
+     style="fill:#83b817;fill-opacity:1;stroke:none"/>
+</svg>

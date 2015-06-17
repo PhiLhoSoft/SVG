@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="styles/ytsNeige.css" type="text/css"?>
+<!DOCTYPE svg SYSTEM "dtd/svg11-flat-20030114.dtd">
+<svg id="ytsRoot" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 width="100%" height="100%" viewBox="0 0 1120 630" preserveAspectRatio="none" onload="ytsInit();"
+	 contentScriptType="text/ecmascript" version="1.1" baseProfile="basic"
+	  >
+
+	<!-- Font pour PDA :  style="font-size:22px;" -->
+
+	<title>Neige</title>
+	<desc>
+		Neige : preserveAspectRatio="xMidYMid meet" ou "none"
+		Niveau	Fonctionnalités
+		1	Survoler une case avalanche est neutre
+		2	Marquer les avalanches avec la touche + inhibe le déclenchement d'avalanches
+			Calcul du nombre d'avalanches détectées, ignorées (survol)
+		3	Plaques à vent
+		4	Neige poudreuse
+			Départs spontanés d'avalanche
+	</desc>
+
+	<script type="text/ecmascript">
+		//<![CDATA[
+			// Variables globales
+			var ytsSeparIdent=null;
+			var ytsFx = 1;
+			var ytsFy = 1;
+			
+			function ytsInit() {
+				ytsFeedback('Yes Hello World');
+				ytsTrace('erty');
+				
+				ytsInitSol( true );
+				document.documentElement.addEventListener( "keypress", ytsGererSaisieTexteCb,false );
+			}
+			function ytsInitFacteurTransformation( ) {
+				try{ // Test pour Firefox qui leve une exception sur getBBox
+					var root = document.rootElement;
+					var bbox = root.getBBox();
+				}
+				catch(e) { // BUG Firefox 1.5
+					//alert( 'ERREUR : ' + e);
+					
+					var p = document.documentElement.createSVGPoint();
+					p.x = 300;
+					p.y = 300;
+					
+					var m = document.getElementById( 'ytsRoot' ).getScreenCTM(document.documentElement);
+			
+					p = p.matrixTransform(m.inverse());
+					ytsFx = p.x / 300;
+					ytsFy = p.y / 300;
+        
+					return;
+				}
+				// Calcul les facteurs pour transformer les coordonnees ecran (mouse events) en coordonnees user
+				var root = document.rootElement;
+				var bbox = root.getBBox();
+				
+				var matrix = root.getCTM( );	// SVGMatrix
+				var point = root.createSVGPoint( );
+				point.x = bbox.width;
+				point.y = bbox.height;
+				var pointDeux = point.matrixTransform( matrix );
+				var widthZoneEcran = pointDeux.x;
+				var heightZoneEcran = pointDeux.y;
+				
+				var viewBox = root.getAttributeNS(null,  'viewBox' );
+				var viewBoxes = viewBox.split(' ');
+				var widthViewBox = viewBoxes[2] - viewBoxes[0];
+				var heightViewBox = viewBoxes[3] - viewBoxes[1];
+				
+				ytsFx = widthViewBox / widthZoneEcran;
+				ytsFy = heightViewBox / heightZoneEcran;
+
+				//alert( widthZoneEcran +' x '+ heightZoneEcran +' : '+ widthViewBox +' x '+ heightViewBox );
+			}
+		//]]>
+	</script>
+	
+	<script type="text/ecmascript">
+		//<![CDATA[
+			window.ytsInitSol = ytsInitSol;
+			
+			var ytsNamespaceSVG = 'http://www.w3.org/2000/svg';
+			var ytsNamespaceXLINK = 'http://www.w3.org/1999/xlink';
+			var ytsMonocle=null;
+			
+			var ytsLargeurSol=0;
+			var ytsHauteurSol=0;
+			
+			var ytsLigneSkieur0=0;
+			var ytsColonneSkieur0=0;
+			var ytsLigneBut=null;
+			var ytsColonneBut=null;
+			var ytsNbButsAtteints=0;
+			var ytsNbAvalanches=0;
+			var ytsNiveau = 0;
+			
+			var ytsTabCouches=null;
+			var ytsTabMarqueAvalanche=null;
+			var ytsTagSansAvalanche=0;
+			var ytsTagCandidatAvalanche=1;
+			var ytsTagAvalanche=2;
+			var ytsTimeoutRuptureCouche=900;
+			var ytsNbAvalanchesDetectees=0;
+			var ytsNbAvalanchesIgnorees=0;
+			var ytsNbAvalanchesFrauduleuses=0;
+			var ytsTabDefCouche = new Array(
+									'ytsCoucheTerre', 'ytsCoucheRocher', 'ytsCoucheVegetale',
+									'ytsCoucheNeige', 'ytsCoucheDechet', 'ytsCouchePlaqueVent',
+									'ytsCouchePoudreuse'
+									);
+			var ytsCoucheTerreCst=0;
+			var ytsCoucheRocherCst=1;
+			var ytsCoucheVegetaleCst=2;
+			var ytsCoucheNeigeCst=3;
+			var ytsCoucheDechetCst=4;
+			var ytsCouchePlaqueVentCst=5;
+			var ytsCouchePoudreuseCst=6;
+			
+			var ytsMeteo=null;
+			var ytsMeteoPrecedente=null;
+			var ytsTemperature=null;
+			var ytsVent=null;
+			var ytsTabDefMeteo = new Array( 'ytsSoleil', 'ytsBrouillard', 'ytsPluie', 'ytsNeige', 'ytsGrele' );
+			var ytsSoleilCst=0;
+			var ytsBrouillardCst=1;
+			var ytsPluieCst=2;
+			var ytsNeigeCst=3;
+			var ytsGreleCst=4;
+			
+			var ytsModeSansAvalanche=false;
+			var ytsZoneMaxAvalancheRougie=0;
+			var ytsSigneMaxAvalanche=0;
+			
+			function ytsInitSol( pPremierSol ) {
+				ytsNbButsAtteints = 0;
+				ytsNbAvalanches = 0;
+					
+				// Construire le sol en triangle
+				var largeur = 24;
+				var hauteur = largeur;
+				ytsLargeurSol = largeur;
+				ytsHauteurSol = hauteur;
+				
+				/*for(i=0; i<ytsHauteurSol; i++)
+					ytsTrace( i +' '+ ytsNbColonne(i) );
+				for(i=0; i<=ytsLargeurSol; i++)
+					ytsTrace( i +' '+ ytsNbLigne(i) );*/
+				/*for(i=0; i<10; i++ ) {
+					// Déterminer la case dans laquelle ajouter la plaque à vent
+					var numCase = Math.floor( Math.random() * (ytsLargeurSol*ytsHauteurSol/2));
+					var ligne = ytsNumeroCaseLigne( numCase );
+					var col = ytsNumeroCaseColonne( numCase );
+					ytsTrace( 'Plaque : ' + numCase +' '+ ligne +' * '+ col );
+				}*/
+				ytsTabCouches = new Array( ytsHauteurSol );
+				var solTerre = document.getElementById( 'ytsSolTerre' );
+				for(ligne=0; ligne<ytsHauteurSol; ligne++) {
+					// nouvelle ligne
+					nbColonnes = ytsNbColonne( ligne );
+					ytsTabCouches[ligne] = new Array( nbColonnes );
+					for( col=0; col<nbColonnes; col++ ) {
+						// ajouter une case
+						x = col * 20;
+						y = ligne * 20;
+						//ytsCreerElementUse( 'case'+ligne+'x'+col, 'ytsCaseDef', x, y, 'ytsSolTerre', false);
+						
+						// Allouer des couches
+						// Générateur de terrain
+						ytsTabCouches[ligne][col] = new Array( );
+						//ytsTabCouches[ligne][col].push( Math.floor(Math.random()*5) );
+						
+						// Generateur de couches de terre
+						var terrain = Math.floor(Math.random()*2);
+						var couche=null;
+						if( terrain == ytsCoucheTerreCst ) {
+							// Ajouter une couche de terre
+							ytsTabCouches[ligne][col].push( terrain );
+							couche = terrain;
+						}
+						
+						// Générateur de couches de rocher
+						terrain = Math.floor(Math.random()*2);
+						if( terrain == ytsCoucheRocherCst ) {
+							// Ajouter une couche de rocher
+							ytsTabCouches[ligne][col].push( terrain );
+							couche = terrain;
+						}
+						
+						// Générateur de couches végétales
+						terrain = 2 + Math.floor(Math.random()*3);
+						if( terrain == ytsCoucheVegetaleCst ) {
+							// Ajouter une couche Végétale
+							ytsTabCouches[ligne][col].push( terrain );
+							couche = terrain;
+						}
+						
+						// Générateur de couches de neige
+						terrain = 2 + Math.floor(Math.random()*3);
+						if( terrain == ytsCoucheNeigeCst ) {
+							// Ajouter une couche de neige
+							ytsTabCouches[ligne][col].push( terrain );
+							couche = terrain;
+						}
+						
+						// Générateur de couches de déchets
+						terrain = 2 + Math.floor(Math.random()*10);
+						if( terrain == ytsCoucheDechetCst ) {
+							// Ajouter une couche de Déchets
+							ytsTabCouches[ligne][col].push( terrain );
+							couche = terrain;
+						}
+						
+						if( ytsNiveau === 3 ) {
+							// Générateur de plaques à vent
+							terrain = 3 + Math.floor(Math.random()*3);
+							if( terrain == ytsCouchePlaqueVentCst ) {
+								// Ajouter une couche de Plaque à vents
+								ytsTabCouches[ligne][col].push( terrain );
+								couche = terrain;
+							}
+						}
+						
+						if( ytsNiveau === 4 ) {
+							// Générateur de couches de poudreuse
+							terrain = 3 + Math.floor(Math.random()*3);
+							if( terrain == ytsCouchePoudreuseCst ) {
+								// Ajouter une couche de poudreuse
+								ytsTabCouches[ligne][col].push( terrain );
+								couche = terrain;
+							}
+						}
+						
+						// Colorer la case si une couche a été allouée
+						if( couche != null )
+							ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[couche]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+						else
+							ytsCreerElementUse( 'case'+ligne+'x'+col, 'ytsCaseDef', x, y, 'ytsSolTerre', false);
+					}
+				}
+				// Pas de marque d'avalanche à cette étape
+				ytsTabMarqueAvalanche = null;
+				
+				// Initialiser le niveau
+				ytsSetNiveau( 1 );
+				
+				// Initialiser le but du skieur
+				ytsNouveauBut();
+				
+				// Initialiser le score
+				ytsScore( ytsNbButsAtteints, ytsNbAvalanches, null, null );
+				
+				// Initialiser la météo s'il s'agit du premier sol initialisé
+				if( pPremierSol )
+					setTimeout( "ytsUpdateMeteo()", 100);
+			}
+			function ytsNouveauSol() {
+				switch( ytsNiveau ) {
+					case 1:
+						// Initialiser un nouveau sol
+						ytsInitSol( false );
+						break;
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+						var niveauRequis = ytsNiveau;
+						
+						// Effacer les tags d'avalanche
+						for(ligne=0; ligne<ytsHauteurSol; ligne++) {
+							for(colonne=0; colonne<ytsNbColonne(ligne); colonne++)
+								if( ytsTabMarqueAvalanche[ligne][colonne] === ytsTagAvalanche ) {
+									var obj = document.getElementById( 'tagAvalanche'+(ligne)+'x'+(colonne) );
+									if( obj != null )
+										document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+									else
+										ytsTrace( 'obj null ' + ligne +'*'+ colonne );
+								}
+						}
+						// Initialiser un nouveau sol
+						ytsInitSol( false );
+						
+						// Initialiser le niveau
+						ytsSetNiveau( niveauRequis );
+						break;
+					default:
+						ytsTrace( 'ERREUR : niveau inconnu' );
+				}
+			}
+			function ytsNbColonne( ligne ) {
+				// Ligne compris entre 1 et quelquechose
+				if( ligne == -1 ) {
+					ytsTrace( 'ERREUR : ligne à -1.' );
+					return -1;
+				}
+				if( ligne >= ytsHauteurSol ) {
+					ytsTrace( 'ERREUR : ligne supérieure au maximum.' );
+					ligne = ytsHauteurSol-1;
+				}
+				return ytsLargeurSol - ligne * (ytsLargeurSol / ytsHauteurSol);
+			}
+			function ytsNbLigne( colonne ) {
+				// Colonne compris entre 1 et quelquechose
+				if( colonne == -1 ) {
+					ytsTrace( 'ERREUR : colonne à -1.' );
+					return -1;
+				}
+				if( colonne >= ytsLargeurSol ) {
+					ytsTrace( 'ERREUR : colonne supérieure au maximum.' );
+					colonne = ytsLargeurSol-1;
+				}
+				return ytsHauteurSol - colonne * (ytsLargeurSol / ytsHauteurSol);
+			}
+			function ytsNumeroCaseLigne( numeroCase ) {
+				// numeroCase in [1, (ytsLargeurSol * ytsHauteurSol)]
+				return Math.floor(numeroCase / ytsLargeurSol);
+			}
+			function ytsNumeroCaseColonne( numeroCase ) {
+				var col = numeroCase % ytsLargeurSol;
+				if( col >= ytsNbColonne( ytsNumeroCaseLigne( numeroCase ) ) )
+					col = Math.floor( Math.random() * ytsNbColonne( ytsNumeroCaseLigne( numeroCase ) ) );
+				return col;
+			}
+			function ytsSetNiveau( pNiveau ) {
+				var ancienNiveau = ytsNiveau;
+				ytsNiveau = pNiveau;
+				switch( ytsNiveau ) {
+					case 1:
+						// Niveau 1
+						document.getElementById( 'ytsScoreNiveau1' ).setAttributeNS( null, 'visibility', 'visible' );
+						document.getElementById( 'ytsNiveau' ).firstChild.nodeValue = 1;
+						ytsScore( 0, 0, 'Bienvenue au niveau 1. Conduiser le skieur sur le but. Touches 8 4 6 2', 'NIVEAU' );
+						ytsTabMarqueAvalanche = null;
+						ytsTimeoutRuptureCouche = 900;
+						break;
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+						// Niveau 2 et 3 et 4, 5
+						document.getElementById( 'ytsScoreNiveau2' ).setAttributeNS( null, 'visibility', 'visible' );
+						document.getElementById( 'ytsNiveau' ).firstChild.nodeValue = ytsNiveau;
+						// Réinitialiser les scores buts et avalanches
+						ytsNbButsAtteints=0;
+						ytsNbAvalanches=0;
+						ytsScore( ytsNbButsAtteints, ytsNbAvalanches, 'Bienvenue au niveau ' + ytsNiveau + '. Marquer les avalanches avec la touche +.', 'NIVEAU' );
+						
+						if( ytsTabMarqueAvalanche == null ) {
+							// Initialiser le tableau de marquage des avalanches
+							ytsTabMarqueAvalanche=new Array();
+							for(i=0; i<ytsHauteurSol; i++) {
+								ytsTabMarqueAvalanche[i] = new Array();
+								for(j=0; j<ytsNbColonne(i); j++)
+									ytsTabMarqueAvalanche[i][j]=null;
+							}
+						}
+						// Avalanches spontanées
+						if( ytsNiveau >= 4 && ancienNiveau != ytsNiveau) {
+							setTimeout( "ytsRuptureSpontaneeCouche()", 10000);
+							ytsTimeoutRuptureCouche = 2000; // Allonger le temps de détection
+						}
+						else
+							ytsTimeoutRuptureCouche = 900;
+						break;
+					default:
+						ytsTrace( 'ERREUR : niveau inconnu. ' + ytsNiveau );
+						ytsNiveau = ancienNiveau;
+						break;
+				}
+			}
+			function ytsNouveauBut() {
+				var oldLigneBut = ytsLigneBut;
+				var oldColonneBut = ytsColonneBut;
+				while( oldLigneBut === ytsLigneBut && oldColonneBut === ytsColonneBut ) {
+					ytsLigneBut = Math.floor( Math.random()* ytsHauteurSol );
+					ytsColonneBut = Math.floor( Math.random() * ytsNbColonne( ytsLigneBut ) );
+				}
+				
+				// Dessiner le nouveau but
+				var but = document.getElementById( 'ytsBut' );
+				var trans = null;
+				//but.setAttributeNS( null, 'transform', but.getAttributeNS(null, 'transform') + ' translate('+ ytsColonneBut*20+' '+ ytsLigneBut*20 +')');
+				but.setAttributeNS( null, 'transform', ' translate('+ ytsColonneBut*20+' '+ ytsLigneBut*20 +')');
+				ytsFeedback( but.getAttributeNS(null, 'transform') + ' translate('+ ytsColonneBut*20+' '+ ytsLigneBut*20 +')' );
+				
+			}
+			function ytsScore( pNbButs, pNbAvalanches, pMessage, pCategorieMessage ) {
+				if( pNbButs != null )
+					document.getElementById( 'ytsScoreButs' ).firstChild.nodeValue = pNbButs;
+				if( pNbAvalanches != null )
+					document.getElementById( 'ytsScoreAvalanches' ).firstChild.nodeValue = pNbAvalanches;
+				if( pMessage != null )
+					document.getElementById( 'ytsScoreMessage' ).firstChild.nodeValue = pMessage;
+				switch( pCategorieMessage ) {
+					case 'POSITIF':
+						document.getElementById( 'ytsScoreMessage' ).setAttributeNS( null, 'fill', 'green' );
+						break;
+					case 'NEGATIF':
+						document.getElementById( 'ytsScoreMessage' ).setAttributeNS( null, 'fill', 'red' );
+						break;
+					default:
+						document.getElementById( 'ytsScoreMessage' ).setAttributeNS( null, 'fill', 'black' );
+						break;
+				}
+				//bug ?setTimeout( "ytsScore( null, null, 'mp', null);", 20000);
+			}
+			function ytsScoreNiveau2( pNbAvalanchesDetectees, pNbAvalanchesIgnorees, pNbAvalanchesFrauduleuses, pMessage, pCategorieMessage ) {
+				if( pNbAvalanchesDetectees != null )
+					document.getElementById( 'ytsAvalanchesDetectees' ).firstChild.nodeValue = pNbAvalanchesDetectees;
+				if( pNbAvalanchesIgnorees != null )
+					document.getElementById( 'ytsAvalanchesIgnorees' ).firstChild.nodeValue = pNbAvalanchesIgnorees;
+				if( pNbAvalanchesFrauduleuses != null )
+					document.getElementById( 'ytsAvalanchesFrauduleuses' ).firstChild.nodeValue = pNbAvalanchesFrauduleuses;
+				
+				// Etablir l'indice de qualité de détection d'avalanches
+				var nbDetections = ytsNbAvalanchesDetectees - ytsNbAvalanchesFrauduleuses;
+				if( nbDetections < 0 )
+					nbDetections = 0;
+				var qualite = nbDetections / (ytsNbAvalanchesDetectees + ytsNbAvalanchesIgnorees);
+				qualite = Math.round( qualite * 100 ) / 100;
+				document.getElementById( 'ytsQualiteDetectionAvalanches' ).firstChild.nodeValue = qualite;
+				
+				ytsScore( null, null, pMessage, pCategorieMessage );
+			}
+			function ytsUpdateMeteo() {
+				ytsMeteoPrecedente = ytsMeteo;
+				ytsMeteo = Math.floor(Math.random() * ytsTabDefMeteo.length);
+				ytsTrace( 'Météo : ' + ytsMeteo );
+				
+				var objMeteo = document.getElementById('ytsMeteoDyn');
+				if( objMeteo != null )
+					document.getElementById('ytsMeteoPanel').removeChild( objMeteo );
+				ytsCreerElementUse( 'ytsMeteoDyn', ytsTabDefMeteo[ytsMeteo]+'Def', 0, 0, 'ytsMeteoPanel', false);
+				
+				// Déterminer la température
+				ytsTemperature = Math.floor( Math.random() * 25 ) - 10;
+				document.getElementById('ytsTemperatureLabel').firstChild.nodeValue = 'Température : ' + ytsTemperature + '°C';
+				
+				// Déterminer le vent
+				ytsVent = Math.floor( Math.random() * 60 );
+				document.getElementById('ytsVentLabel').firstChild.nodeValue = 'Vent : ' + ytsVent + ' Km/h';
+				
+				// Mettre à jour les couches de neige
+				ytsMajCouche();
+				
+				// Réenclencher le changement de météo
+				setTimeout( "ytsUpdateMeteo()", 10000);
+			}
+			function ytsMajCouche() {
+				//ytsMeteo = ytsSoleilCst;
+				//ytsMeteo = ytsNeigeCst;
+				//ytsTemperature=5;
+				if( ytsModeSansAvalanche ) return; // Debug
+				switch( ytsMeteo ) {
+					case ytsSoleilCst:
+						// ytsSoleil
+						var nbCouchesFondues=0;
+						if( ytsTemperature >= 5 ) {
+							// Mettre à jour le sol
+							var nbCouchesFonduesMax = Math.floor(Math.random() * 30 );
+							var nbCouchesFondues = 0;
+							for(nbCouchesFondues=0; nbCouchesFondues<nbCouchesFonduesMax; nbCouchesFondues++ ) {
+								// Déterminer la case dans laquelle la couche de neige fond
+								var numCase = Math.floor( Math.random() * (ytsLargeurSol*ytsHauteurSol));
+								var ligne = ytsNumeroCaseLigne( numCase );
+								var col = ytsNumeroCaseColonne( numCase );
+								//ytsTrace( 'Case fondue : ' + numCase +' '+ ligne +' * '+ col );
+								
+								// ajouter une case
+								x = col * 20;
+								y = ligne * 20;
+								
+								// Modifier la couche superficielle
+								// Générateur de terrain
+								var couche = null;
+								if( ytsTabCouches[ligne][col].length > 0 )
+									couche = ytsTabCouches[ligne][col][ytsTabCouches[ligne][col].length-1];
+								if( couche == ytsCoucheNeigeCst || couche == ytsCouchePlaqueVentCst || couche == ytsCouchePoudreuseCst ) {
+									// Faire fondre (supprimer) une couche de neige
+									nbCouchesFondues ++;
+									ytsTabCouches[ligne][col].pop();
+									
+									// Colorer la case
+									var objCase = document.getElementById('case'+ligne+'x'+col);
+									if( objCase != null )
+										document.getElementById('ytsSolTerre').removeChild( objCase );
+									if( ytsTabCouches[ligne][col].length > 0 )
+										ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[ytsTabCouches[ligne][col][ytsTabCouches[ligne][col].length-1]]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+									else
+										ytsCreerElementUse( 'case'+ligne+'x'+col, 'ytsCaseDef', x, y, 'ytsSolTerre', false);
+									
+									// Supprimer l'éventuel Tag d'avalanche
+									if( ytsNiveau > 1 ) {
+										if( ytsTabMarqueAvalanche[ligne][col] === ytsTagAvalanche ) {
+											ytsTabMarqueAvalanche[ligne][col] = null;
+											var obj = document.getElementById( 'tagAvalanche'+(ligne)+'x'+(col) );
+											if( obj != null )
+												document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+										}
+									}
+								}
+							}
+							/*
+							for(ligne=0; ligne<ytsHauteurSol; ligne++) {
+								// nouvelle ligne
+								nbColonnes = ytsNbColonne( ligne );
+								for( col=0; col<nbColonnes; col++ ) {
+									// ajouter une case
+									x = col * 20;
+									y = ligne * 20;
+									
+									// Modifier la couche superficielle
+									// Générateur de terrain
+									var couche = null;
+									if( ytsTabCouches[ligne][col].length > 0 )
+										couche = ytsTabCouches[ligne][col][ytsTabCouches[ligne][col].length-1];
+									if( couche == ytsCoucheNeigeCst && Math.floor(Math.random()*6) < 2 ) {
+										// Faire fondre (supprimer) une couche de neige
+										nbCouchesFondues ++;
+										ytsTabCouches[ligne][col].pop();
+										
+										// Colorer la case
+										var objCase = document.getElementById('case'+ligne+'x'+col);
+										if( objCase != null )
+											document.getElementById('ytsSolTerre').removeChild( objCase );
+										if( ytsTabCouches[ligne][col].length > 0 )
+											ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[ytsTabCouches[ligne][col][ytsTabCouches[ligne][col].length-1]]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+										else
+											ytsCreerElementUse( 'case'+ligne+'x'+col, 'ytsCaseDef', x, y, 'ytsSolTerre', false);
+										
+										// Supprimer l'éventuel Tag d'avalanche
+										if( ytsNiveau > 1 ) {
+											if( ytsTabMarqueAvalanche[ligne][col] === ytsTagAvalanche ) {
+												ytsTabMarqueAvalanche[ligne][col] = null;
+												var obj = document.getElementById( 'tagAvalanche'+(ligne)+'x'+(col) );
+												if( obj != null )
+													document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+											}
+										}
+									}
+								}
+							}*/
+						}
+						ytsTrace( 'Nb couches fondues : ' + nbCouchesFondues + ' (' + ytsTemperature + '°C)');
+						ytsScore( null, null, 'Soleil ('+ytsTemperature+' °C). Couches de neige fondues : ' + nbCouchesFondues, null );
+						break;
+					case ytsBrouillardCst:
+						// ytsBrouillard
+						ytsScore( null, null, '', null );
+						break;
+					case ytsPluieCst:
+						// ytsPluie
+						setTimeout( "ytsAnimerCalqueMeteo()", 100 );
+						ytsScore( null, null, '', null );
+						break;
+					case ytsNeigeCst:
+						// ytsNeige
+						var nbCouchesNeige=0;
+						if( ytsTemperature < 12 ) {
+							// Mettre à jour le sol pour la neige
+							// contiguite : encourager les zones de neige
+							var contiguite=0;
+							for(ligne=0; ligne<ytsHauteurSol; ligne++) {
+								// nouvelle ligne
+								nbColonnes = ytsNbColonne( ligne );
+								for( col=0; col<nbColonnes; col++ ) {
+									if( ytsTabCouches[ligne][col].length < 8 ) {
+										// Limiter le nombre de couches à 8
+										// ajouter une case
+										x = col * 20;
+										y = ligne * 20;
+										
+										// Allouer des couches
+										// Générateur de terrain
+										if( Math.floor(Math.random()*5) < (2+contiguite) ) {
+											// Ajouter une couche de neige
+											nbCouchesNeige ++;
+											contiguite = 1;
+											
+											// Choisir le type de couche de neige : neige ou poudreuse
+											var coucheNeigeuse=null;
+											if( ytsTemperature < 8 || ytsNiveau < 4 )
+												coucheNeigeuse = ytsCoucheNeigeCst;
+											else
+												coucheNeigeuse = ytsCouchePoudreuseCst;
+											
+											// Colorer la case
+											var creerCouche=false;
+											if( ytsTabCouches[ligne][col].length == 0 )
+												creerCouche = true;
+											else if( ytsTabCouches[ligne][col][(ytsTabCouches[ligne][col].length-1)] != coucheNeigeuse )
+													creerCouche = true;
+											if( creerCouche == true ) {
+												var objCase = document.getElementById('case'+ligne+'x'+col);
+												if( objCase != null )
+													document.getElementById('ytsSolTerre').removeChild( objCase );
+												ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[coucheNeigeuse]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+											}
+											ytsTabCouches[ligne][col].push( coucheNeigeuse );
+											
+											// Supprimer l'éventuel Tag d'avalanche
+											if( ytsNiveau > 1 ) {
+												if( ytsTabMarqueAvalanche[ligne][col] === ytsTagAvalanche ) {
+													ytsTabMarqueAvalanche[ligne][col] = null;
+													var obj = document.getElementById( 'tagAvalanche'+(ligne)+'x'+(col) );
+													if( obj != null )
+														document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+												}
+											}
+										}
+										else
+											contiguite = 0;
+									}
+								}
+							}
+						}
+						setTimeout( "ytsAnimerCalqueMeteo()", 100 );
+						ytsTrace( 'Nb couches de neige ajoutées : ' + nbCouchesNeige );
+						ytsScore( null, null, 'Neige. Nouvelles couches de neige : ' + nbCouchesNeige, null );
+						break;
+					case ytsGreleCst:
+						// ytsGrele
+						ytsScore( null, null, '', null );
+						break;
+					default :
+						ytsFeedback( 'ERREUR : météo inconnue' );
+						ytsScore( null, null, 'Météo inconnue', 'NEGATIF' );
+						break;
+				}
+				
+				// Déterminer les plaques à vent
+				if( ytsNiveau>=3 && ytsVent >= 60/2 && ytsTemperature < 12 ) {
+					var nbPlaqueVentMax = Math.floor(Math.random() * 5 );
+					var nbCouchesPlaqueVent = 0;
+					for(nbCouchesPlaqueVent=0; nbCouchesPlaqueVent<nbPlaqueVentMax; nbCouchesPlaqueVent++ ) {
+						// Déterminer la case dans laquelle ajouter la plaque à vent
+						var numCase = Math.floor( Math.random() * (ytsLargeurSol*ytsHauteurSol));
+						var ligne = ytsNumeroCaseLigne( numCase );
+						var col = ytsNumeroCaseColonne( numCase );
+						//ytsTrace( 'Plaque : ' + numCase +' '+ ligne +' * '+ col );
+						
+						if( ytsTabCouches[ligne][col].length < 8 ) {
+							// Ajouter la plaque à vent
+							// Colorer la case
+							var creerCouche=false;
+							if( ytsTabCouches[ligne][col].length == 0 )
+								creerCouche = true;
+							else if( ytsTabCouches[ligne][col][(ytsTabCouches[ligne][col].length-1)] != ytsCouchePlaqueVentCst )
+									creerCouche = true;
+							if( creerCouche == true ) {
+								// ajouter une case
+								x = col * 20;
+								y = ligne * 20;
+								
+								var objCase = document.getElementById('case'+ligne+'x'+col);
+								if( objCase != null )
+									document.getElementById('ytsSolTerre').removeChild( objCase );
+								ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[ytsCouchePlaqueVentCst]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+							}
+							ytsTabCouches[ligne][col].push( ytsCouchePlaqueVentCst );
+							
+							// Supprimer l'éventuel Tag d'avalanche
+							if( ytsNiveau > 1 ) {
+								if( ytsTabMarqueAvalanche[ligne][col] === ytsTagAvalanche ) {
+									ytsTabMarqueAvalanche[ligne][col] = null;
+									var obj = document.getElementById( 'tagAvalanche'+ligne+'x'+col );
+									if( obj != null )
+										document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+								}
+							}
+						}
+					}
+					ytsTrace( 'Nb plaques à vent ajoutées : ' + nbCouchesPlaqueVent );
+					if( nbCouchesPlaqueVent > 0 )
+						ytsScore( null, null, 'Vent ' + ytsVent + ' Km/h. Nouvelles plaques à vent : ' + nbCouchesPlaqueVent, null );
+				}
+			}
+			function ytsGetCalqueMeteo( pMeteo ) {
+				var nom=null;
+				switch( pMeteo ) {
+					case ytsPluieCst:
+						nom = 'ytsCalquePluie';
+						break;
+					case ytsNeigeCst:
+						nom = 'ytsCalqueNeige';
+						break;
+					default:
+						// Pas encore gérée
+						nom = null;
+						break;
+				}
+				return nom;
+			}
+			function ytsAnimerCalqueMeteo() {
+				if( ytsMeteo != ytsMeteoPrecedente ) {
+					// Le météo a changé
+					// Masquer le calque météo actuel
+					var nomCalque = ytsGetCalqueMeteo( ytsMeteoPrecedente );
+					if( nomCalque != null ) {
+						var calque = document.getElementById( nomCalque );
+						calque.setAttributeNS( null, 'visibility', 'hidden' );
+					}
+					
+					// Afficher le calque météo nouveau
+					nomCalque = ytsGetCalqueMeteo( ytsMeteo );
+					if( nomCalque != null ) {
+						var calque = document.getElementById( nomCalque );
+						calque.setAttributeNS( null, 'visibility', 'visible' );
+					}
+				}
+				
+				// Animer le calque météo
+				var nomCalque = ytsGetCalqueMeteo( ytsMeteo );
+				var activerTimeout=false;
+				switch( ytsMeteo ) {
+					case ytsPluieCst:
+						nom = 'ytsCalquePluie';
+						var calque = document.getElementById( nomCalque );
+						calque.setAttributeNS( null, 'transform', 'scale(' + Math.random() + ')' );
+						activerTimeout = true;
+						break;
+					case ytsNeigeCst:
+						// Animer le calque de neige
+						var calque = document.getElementById( nomCalque );
+						calque.setAttributeNS( null, 'transform', 'scale(' + Math.random() + ')' );
+						activerTimeout = true;
+						break;
+					default:
+						// La météo précédente n'était pas animée
+						break;
+				}
+				if( activerTimeout == true )
+					setTimeout( "ytsAnimerCalqueMeteo()", 1000 );
+				/*
+				var calque = document.getElementById( 'ytsCalqueNeige' );
+				if( ytsMeteo === ytsNeigeCst ) {
+					// Animer le calque de neige
+					calque.setAttributeNS( null, 'visibility', 'visible' );
+					calque.setAttributeNS( null, 'transform', 'scale(' + Math.random() + ')' );
+					setTimeout( "ytsAnimerCalqueNeige()", 1000 );
+				}
+				else
+					// Masquer le calque de neige
+					calque.setAttributeNS( null, 'visibility', 'hidden' );
+				*/
+			}
+			function ytsSetMonocle( pMonocle ) {
+				ytsMonocle = pMonocle;
+			}
+			function ytsGererSaisieTexteCb( evt ) {
+				// Get the character-code of the key that was pressed
+				//OLD_ASV3.03_OK				var key = evt.getCharCode();
+				var key = evt.charCode;
+				//alert( 'touche :' + key);
+				
+				// Get string equivalent of input character-code
+				var input_text = String.fromCharCode(key);
+				
+				//alert('ytsGererSaisieTexteCb ' + evt.keyCode +' '+ key +' '+ input_text +' '+ evt.target.id);
+				
+				ytsFeedback( evt.target.id +' '+ evt.target.tagName );
+				//ytsTrace('erty');
+				
+				var obj = evt.target;
+				if( obj != null ) {
+					var positionChanged=false;
+					if(key == 52) {
+						// Touche 4 Fleche gauche
+						if( ytsColonneSkieur0 > 0 ) {
+							/*ytsColonneSkieur0 --;
+							skieur = document.getElementById( 'ytsSkieur');
+							skieur.setAttributeNS( null, 'transform', skieur.getAttributeNS(null, 'transform') + ' translate(-20 0)');
+							*/
+							if( ytsDeplacementSkieurAutorise( 0, -1 ) === true ) {
+								// le déplacement du skieur est autorisé
+								ytsMoveSkieur( 0, -1 );
+								positionChanged = true;
+								ytsFeedback( 'gauche' + skieur.getAttributeNS(null, 'transform') );
+							}
+							else
+								ytsScore( null, null, 'Interdiction de skier sur de la terre ou du rocher. Attendre la neige.', 'NEGATIF' );
+						}
+					}
+					else if(key == 54) {
+						// Touche 6 Fleche droite
+						if( ytsColonneSkieur0+1 < ytsNbColonne( ytsLigneSkieur0 ) ) {
+							/*ytsColonneSkieur0 ++;
+							skieur = document.getElementById( 'ytsSkieur');
+							skieur.setAttributeNS( null, 'transform', skieur.getAttributeNS(null, 'transform') + ' translate(20 0)');
+							*/
+							if( ytsDeplacementSkieurAutorise( 0, 1 ) === true ) {
+								// le déplacement du skieur est autorisé
+								ytsMoveSkieur( 0, 1);
+								positionChanged = true;
+								ytsFeedback( 'droite' + skieur.getAttributeNS(null, 'transform') );
+							}
+							else
+								ytsScore( null, null, 'Interdiction de skier sur de la terre ou du rocher. Attendre la neige.', 'NEGATIF' );
+						}
+					}
+					else if(key == 50) {
+						// Touche 2 Fleche bas
+						if( ytsLigneSkieur0+1 < ytsNbLigne( ytsColonneSkieur0 ) ) {/*
+							ytsLigneSkieur0 ++;
+							skieur = document.getElementById( 'ytsSkieur');
+							skieur.setAttributeNS( null, 'transform', skieur.getAttributeNS(null, 'transform') + ' translate(0 20)');
+							*/
+							if( ytsDeplacementSkieurAutorise( 1, 0 ) === true ) {
+								// le déplacement du skieur est autorisé
+								ytsMoveSkieur( 1, 0 );
+								positionChanged = true;
+								ytsFeedback( 'bas' + skieur.getAttributeNS(null, 'transform') );
+							}
+							else
+								ytsScore( null, null, 'Interdiction de skier sur de la terre ou du rocher. Attendre la neige.', 'NEGATIF' );
+						}
+					}
+					else if(key == 56) {
+						// Touche 8 Fleche haut
+						if( ytsLigneSkieur0 > 0 ) {
+							/*ytsLigneSkieur0 --;
+							skieur = document.getElementById( 'ytsSkieur');
+							skieur.setAttributeNS( null, 'transform', skieur.getAttributeNS(null, 'transform') + ' translate(0 -20)');
+							*/
+							if( ytsDeplacementSkieurAutorise( -1, 0 ) === true ) {
+								// le déplacement du skieur est autorisé
+								ytsMoveSkieur( -1, 0 );
+								positionChanged = true;
+								ytsFeedback( 'haut' + skieur.getAttributeNS(null, 'transform') );
+							}
+							else
+								ytsScore( null, null, 'Interdiction de skier sur de la terre ou du rocher. Attendre la neige.', 'NEGATIF' );
+						}
+					}
+					else if(key == 53) {
+						// Touche 5 : stop
+						positionChanged = true; // forcé
+						skieur = document.getElementById( 'ytsSkieur');
+						//skieur.setAttributeNS( null, 'transform', skieur.getAttributeNS(null, 'transform') + ' translate(-20 0)');
+						ytsFeedback( 'stop' + skieur.getAttributeNS(null, 'transform') );
+					}
+					else if(key == 8) {
+						// Touche Backspace
+						// Empecher les avalanches
+						ytsModeSansAvalanche = !ytsModeSansAvalanche;
+						ytsTrace( 'Mode sans avalanche ' + ((ytsModeSansAvalanche==true)?'activé':'désactivé') );
+					}
+					else if(key == 43) {
+						// Touche +
+						// Marquer une avalanche
+						if( ytsNiveau > 1 ) {
+							if( ytsTabMarqueAvalanche[ytsLigneSkieur0][ytsColonneSkieur0] == null)
+								ytsTabMarqueAvalanche[ytsLigneSkieur0][ytsColonneSkieur0] = ytsTagCandidatAvalanche;
+							//ytsTrace( 'Marquer une avalanche ' + ytsLigneSkieur0 +' '+ ytsColonneSkieur0 );
+						}
+					}
+					if( positionChanged ) {
+						// La position du skieur a changé
+						// Afficher le terrain et les couches presentes sous le skieur
+						//ytsFeedback( ytsLigneSkieur0 +'*'+ ytsColonneSkieur0 +'*'+ ytsTabCouches[ytsLigneSkieur0][ytsColonneSkieur0] );
+						ytsAfficherCouches( ytsTabCouches[ytsLigneSkieur0][ytsColonneSkieur0] );
+						
+						// Calculer l'effet Rupture de Couche
+						if( !ytsModeSansAvalanche ) {
+							//ytsTrace( 'lancer timeout rupture ' + ytsLigneSkieur0 +' '+ ytsColonneSkieur0 );
+							var fct = 'ytsRuptureCouche('  + ytsLigneSkieur0 +', '+ ytsColonneSkieur0 + ');';
+							setTimeout( fct, ytsTimeoutRuptureCouche);
+						}
+						
+						// Le skieur a-t-il atteint le drapeau
+						ytsFeedback( ytsLigneSkieur0 +'*'+ ytsLigneBut +'*'+ ytsColonneSkieur0 +'*'+ ytsColonneBut);
+						if( ytsLigneSkieur0 == ytsLigneBut && ytsColonneSkieur0 == ytsColonneBut ) {
+							// Déterminer un nouveau but
+							ytsNouveauBut();
+							
+							ytsNbButsAtteints ++;
+							ytsScore( ytsNbButsAtteints, null, 'But atteint. Félicitations. Nouveau but.', 'POSITIF' );
+							
+							if( ytsNiveau == 1 && ytsNbButsAtteints == 10 ) {
+								// Passer au niveau 2
+								ytsSetNiveau( 2 );
+							}
+							if( ytsNiveau == 2 && ytsNbButsAtteints == 10 ) {
+								// Passer au niveau 3
+								ytsSetNiveau( 3 );
+							}
+							if( ytsNiveau == 3 && ytsNbButsAtteints == 10 ) {
+								// Passer au niveau 4
+								ytsSetNiveau( 4 );
+							}
+							if( ytsNiveau == 4 && ytsNbButsAtteints == 10 ) {
+								// Passer au niveau 5
+								ytsSetNiveau( 5 );
+								ytsNouveauSol();
+							}
+						}
+					}
+				}
+				//evt.preventDefault();
+			}
+			function ytsDeplacementSkieurAutorise( pLigne, pCol ) {
+				var autorisation=true;
+				if( ytsNiveau >= 5 ) {
+					// Vérifier que la case de destination a une couche de neige ou plaque à vent
+					var ligne = ytsLigneSkieur0 + pLigne;
+					var col = ytsColonneSkieur0 + pCol;
+					autorisation=false;
+					if( ligne >=0 && ligne <= ytsNbLigne(col) && col >= 0 && col <= ytsNbColonne(ligne) ) {
+						//ytsTrace('Aaa ' + ytsTabCouches[ligne][col] );
+						var tabCouches = ytsTabCouches[ligne][col];
+						var couche=null;
+						if( tabCouches.length > 0 )
+							couche = tabCouches[tabCouches.length-1];
+						
+						if( couche !== ytsCoucheRocherCst && couche !== ytsCoucheTerreCst )
+							autorisation = true;
+							
+						// Forcer l'autorisation si le but se trouve sur une couche de rocher ou de terre
+						if( autorisation === false )
+							if( ligne === ytsLigneBut && col === ytsColonneBut )
+								autorisation = true;
+					}
+				}
+				return autorisation;
+			}
+			function ytsMoveSkieur( pLigne, pCol ) {
+				if( ytsLigneSkieur0 + pLigne <= ytsNbLigne(ytsColonneSkieur0 + pCol) ) {
+					ytsLigneSkieur0 = ytsLigneSkieur0 + pLigne;
+				}
+				else
+					ytsLigneSkieur0 = ytsNbLigne(ytsColonneSkieur0 + pCol);
+					
+				if( ytsColonneSkieur0 + pCol <= ytsNbColonne(ytsLigneSkieur0) ) {
+					ytsColonneSkieur0 = ytsColonneSkieur0 + pCol;
+				}
+				else
+					ytsColonneSkieur0 = ytsNbColonne(ytsLigneSkieur0);
+				skieur = document.getElementById( 'ytsSkieur');
+				skieur.setAttributeNS( null, 'transform', 'translate('+ (ytsColonneSkieur0)*20 +' '+ (ytsLigneSkieur0)*20 +')');
+				ytsFeedback( 'ytsMoveSkieur' + skieur.getAttributeNS(null, 'transform') + ytsLigneSkieur0 +' '+  ytsColonneSkieur0);
+			}
+			function ytsAfficherCouches( tabCouches ) {
+				ytsFeedback( tabCouches );
+				
+				// Effacer les précédents signes d'avalanche
+				ytsEffacerSignesAvalanche();
+				
+				// Effacer les précédentes couches
+				ytsRemoveAllChildren( 'ytsCouchesPanel' );
+				
+				// Afficher les couches
+				for(i=0; i<tabCouches.length; i++) {
+					ytsCreerElementUse( 'ytsCoucheDyn'+i, ytsTabDefCouche[tabCouches[i]]+'Def', 0, 0, 'ytsCouchesPanel', false);
+					coucheDyn = document.getElementById( 'ytsCoucheDyn'+i );
+					coucheDyn.setAttributeNS( null, 'transform', 'translate(0 '+ 50*(tabCouches.length -1 - i) +')');
+				}
+			}
+			function ytsRuptureCouche( pLigneSkieur, pColonneSkieur ) {
+				var survol=false;
+				if( pLigneSkieur != ytsLigneSkieur0 || pColonneSkieur != ytsColonneSkieur0 )
+					survol = true;
+				if( survol && ytsNiveau == 1 ) {
+					// Niveau 1 : le survol ne déclenche pas d'avalanche
+					//ytsTrace( 'NONE rupture de couche ' + ytsLigneSkieur0 +' '+ ytsColonneSkieur0 +'*' + pLigneSkieur +' '+ pColonneSkieur );
+					return;
+				}
+				/*else
+					ytsTrace( 'rupture de couche ' + ytsLigneSkieur0 +' '+ ytsColonneSkieur0 +'*' + pLigneSkieur +' '+ pColonneSkieur );
+				*/
+				tabCouches = ytsTabCouches[pLigneSkieur][pColonneSkieur];
+				
+				// Regle #1 : rupture sur une couche de déchets
+				if( tabCouches.length == 0 )
+					if( ytsNiveau == 1 )
+						return;
+				
+				var trouve=false;
+				var coucheRupture=null;
+				var typeAvalanche='inconnu';
+				/* OLD OK
+				for(i=0; i<tabCouches.length && coucheRupture==null; i++) {
+					if( tabCouches[i] === ytsCoucheDechetCst || tabCouches[i] === ytsCouchePlaqueVentCst ) {
+						coucheRupture = i;
+						typeAvalanche = (tabCouches[i]==ytsCoucheDechetCst?'Déchets':'Plaque à vent');
+					}
+				}
+				*/
+				//var msg=null;
+				for(i=0; i<tabCouches.length && coucheRupture==null; i++) {
+					switch( tabCouches[i] ) {
+						case ytsCoucheDechetCst:
+							// Regle #1 : rupture sur une couche de déchets si 2 couches minimum au dessus
+							typeAvalanche = 'Déchets';
+							//if( (tabCouches.length - i) > 3 ) Avalanche systématique pour le skieur
+							coucheRupture = i;
+							break;
+						case ytsCouchePlaqueVentCst:
+							// Regle #1 : rupture sur une couche de plaque à vent
+							//if( Math.random() < 0.1 )
+							typeAvalanche = 'Plaque à vent';
+							coucheRupture = i;
+							break;
+						case ytsCouchePoudreuseCst:
+							// Regle #1 : rupture sur une couche de poudreuse si 2 couches minimum au dessus
+							if( (tabCouches.length - i) > 3 || Math.random() < 0.05 ) {
+								typeAvalanche = 'Poudreuse';
+								coucheRupture = i;
+							}
+							break;
+						default:
+							typeAvalanche = 'ERREUR';
+							break;
+					}
+				}
+				
+				var declencherAvalanche = false;
+				switch( ytsNiveau ) {
+					case 1:
+						// Niveau 1
+						if( coucheRupture != null )
+							declencherAvalanche = true;
+						break;
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+						// Niveau 2 et 3, 4, 5
+						if( coucheRupture != null ) {
+							// Une avalanche a lieu
+							if( ytsTabMarqueAvalanche[pLigneSkieur][pColonneSkieur] === ytsTagAvalanche ) {
+								// Avalanche déjà détectée. Ne pas la déclencher
+							}
+							else if( ytsTabMarqueAvalanche[pLigneSkieur][pColonneSkieur] === ytsTagCandidatAvalanche ) {
+								// Avalanche correctement détectée. Ne pas la déclencher
+								ytsTabMarqueAvalanche[pLigneSkieur][pColonneSkieur] = ytsTagAvalanche;
+								ytsNbAvalanchesDetectees ++;
+								ytsDessinerTagAvalanche( pLigneSkieur, pColonneSkieur );
+								ytsScoreNiveau2( ytsNbAvalanchesDetectees, null, null, 'Avalanche correctement détectée.', 'POSITIF' );
+							}
+							else {
+								// Avalanche non détectée. La déclencher si mode non survol.
+								ytsNbAvalanchesIgnorees ++;
+								ytsScoreNiveau2( null, ytsNbAvalanchesIgnorees, null, 'Avalanche non détectée.', 'NEGATIF' );
+								if( !survol )
+									declencherAvalanche = true;
+							}
+						}
+						else {
+							// Pas d'avalanche
+							if( ytsTabMarqueAvalanche[pLigneSkieur][pColonneSkieur] === ytsTagCandidatAvalanche ) {
+								ytsTabMarqueAvalanche[pLigneSkieur][pColonneSkieur] = ytsTagAvalanche;
+								ytsNbAvalanchesFrauduleuses ++;
+								ytsScoreNiveau2( null, null, ytsNbAvalanchesFrauduleuses, 'Pas d\'avalanche malgré le signalement.', 'NEGATIF' );
+							}
+						}
+						break;
+					default:
+						ytsFeedback( 'ERREUR : niveau inconnu' );
+						break;
+				}
+				if( declencherAvalanche === true) {
+					// Declencher une avalanche
+					ytsTrace( 'avalanche' );
+					ytsAvalanche( pLigneSkieur, pColonneSkieur, tabCouches.length - coucheRupture, true, typeAvalanche );
+				}
+			}
+			function ytsRuptureSpontaneeCouche() {
+				var numCase = Math.floor( Math.random() * (ytsLargeurSol*ytsHauteurSol));
+				var ligne = ytsNumeroCaseLigne( numCase );
+				var col = ytsNumeroCaseColonne( numCase );
+				//ytsTrace( 'Case avalanche spontanée : ' + numCase +' '+ ligne +' * '+ col );
+			
+				tabCouches = ytsTabCouches[ligne][col];
+				
+				// Identifier les cas d'avalanches
+				var coucheRupture=null;
+				var msg=null;
+				for(i=0; i<tabCouches.length && coucheRupture==null; i++) {
+					switch( tabCouches[i] ) {
+						case ytsCoucheDechetCst:
+							// Regle #1 : rupture sur une couche de déchets si 2 couches minimum au dessus
+							msg = 'Déchets';
+							if( (tabCouches.length - i) > 3 )
+								coucheRupture = i;
+							break;
+						case ytsCouchePlaqueVentCst:
+							// Regle #1 : rupture sur une couche de plaque à vent
+							msg = 'Plaque à vent';
+							if( Math.random() < 0.1 )
+								coucheRupture = i;
+							break;
+						case ytsCouchePoudreuseCst:
+							// Regle #1 : rupture sur une couche de poudreuse si 2 couches minimum au dessus
+							msg = 'Poudreuse';
+							if( (tabCouches.length - i) > 3 || Math.random() < 0.05 )
+								coucheRupture = i;
+							break;
+						default:
+							msg = 'ERREUR';
+							break;
+					}
+				}
+				
+				// Niveau 4 et supérieur
+				if( coucheRupture != null ) {
+					// Declencher une avalanche spontanée
+					ytsTrace( 'avalanche spontanée ' + msg +' '+ numCase +' '+ ligne +' '+ col );
+					ytsAvalanche( ligne, col, tabCouches.length - coucheRupture, false, msg );
+				}
+				
+				// Avalanches spontanées
+				setTimeout( "ytsRuptureSpontaneeCouche()", 10000);
+			}
+			function ytsAvalanche( pLigneSkieur, pColonneSkieur, pNbCouchesEmportees, pDeplacerSkieur, pTypeAvalanche ) {
+				ytsTrace( 'Nombre de couches emportees : ' + pNbCouchesEmportees);
+				ytsNbAvalanches ++;
+				var msg=null;
+				if( pDeplacerSkieur == false ) {
+					// Cas d'une avalanche spontanée
+					// Afficher les signes d'avalanche
+					ytsAfficherCouches( tabCouches );
+					msg = 'Avalanche spontanée !!! ' + pTypeAvalanche + '. Nombre de couches emportees : ' + pNbCouchesEmportees;
+				}
+				else
+					msg = 'Avalanche !!! ' + pTypeAvalanche + '. Nombre de couches emportees : ' + pNbCouchesEmportees;
+				ytsScore( null, ytsNbAvalanches, msg, 'NEGATIF' );
+				tabCouches = ytsTabCouches[pLigneSkieur][pColonneSkieur];
+				
+				// Nettoyer le rectangle 4x4 de l'avalanche
+				ytsEffacerZoneAvalancheRougie();
+				for(ligne=pLigneSkieur; ligne<ytsNbLigne( pColonneSkieur ) && ligne<(pLigneSkieur+4); ligne++) {
+					for(col=pColonneSkieur; col<ytsNbColonne( ligne ) && col < (pColonneSkieur+4); col++) {
+						// ajouter une case
+						x = col * 20;
+						y = ligne * 20;
+						
+						// DésAllouer les couches situées au dessus de la couche de rupture
+						// sur les trois premières colonnes
+						tabCouches = ytsTabCouches[ligne][col];
+						// Dépiler les couches emportées par l'avalanche
+						for(i=tabCouches.length-1, j=0; i>=0 && j<pNbCouchesEmportees; i--, j++) {
+							switch( tabCouches[i] ) {
+								case ytsCoucheVegetaleCst:
+								case ytsCoucheNeigeCst:
+								case ytsCoucheDechetCst:
+								case ytsCouchePlaqueVentCst:
+								case ytsCouchePoudreuseCst:
+									tabCouches.pop();
+									break;
+								default:
+									break;
+							}
+						}
+						// Supprimer la couche graphique
+						var objCase = document.getElementById('case'+ligne+'x'+col);
+						if( objCase != null )
+							document.getElementById('ytsSolTerre').removeChild( objCase );
+						if( tabCouches.length > 0 )
+							ytsCreerElementUse( 'case'+ligne+'x'+col, ytsTabDefCouche[tabCouches[tabCouches.length-1]]+'CaseDef', x+1, y+1, 'ytsSolTerre', false);
+						else
+							ytsCreerElementUse( 'case'+ligne+'x'+col, 'ytsCaseDef', x, y, 'ytsSolTerre', false);
+						
+						// Rougir la zone d'avalanche
+						ytsAfficherZoneAvalancheRougie( x, y );
+						
+						// Supprimer l'éventuel Tag d'avalanche
+						if( ytsNiveau > 1 ) {
+							if( ytsTabMarqueAvalanche[ligne][col] === ytsTagAvalanche ) {
+								ytsTabMarqueAvalanche[ligne][col] = null;
+								var obj = document.getElementById( 'tagAvalanche'+(ligne)+'x'+(col) );
+								if( obj != null )
+									document.getElementById( 'ytsPlancherAvatars').removeChild( obj );
+							}
+						}
+					}
+				}
+				// Afficher les signes de l'avalanche
+				ytsAfficherSignesAvalanche( pNbCouchesEmportees );
+
+				// Déplacer le skieur
+				if( pDeplacerSkieur == true )
+					ytsMoveSkieur( 3, 3 );
+				
+				// Effacer la zone rouge de l'avalanche
+				setTimeout( "ytsEffacerZoneAvalancheRougie()", 2000);
+			}
+			function ytsAfficherSignesAvalanche( pNbCouches ) {
+				if( ytsSigneMaxAvalanche > 0 )
+					ytsEffacerSignesAvalanche();
+				var signe=null;
+				for(i=0; i<pNbCouches; i++) {
+					signe = document.getElementById( 'signeAvalanche'+i );
+					if( signe == null )
+						ytsCreerElementUse( 'signeAvalanche'+i, 'ytsSigneAvalancheDef', 0, i*50, 'ytsSignePanel', false);
+					else
+						signe.setAttributeNS( null, 'visibility', 'visible' );
+				}
+				ytsSigneMaxAvalanche = pNbCouches;
+			}
+			function ytsEffacerSignesAvalanche() {
+				var signe=null;
+				for(i=0; i<ytsSigneMaxAvalanche; i++) {
+					signe = document.getElementById( 'signeAvalanche'+i );
+					if( signe != null )
+						signe.setAttributeNS( null, 'visibility', 'hidden' );
+				}
+				ytsSigneMaxAvalanche=0;
+			}
+			function ytsAfficherZoneAvalancheRougie( x, y ) {
+				var zoneAvalancheRougie = document.getElementById( 'ytsZoneAvalancheRougie' + ytsZoneMaxAvalancheRougie );
+				zoneAvalancheRougie.setAttributeNS( null, 'transform', 'translate(' + x +' '+ y + ')' );
+				zoneAvalancheRougie.setAttributeNS( null, 'visibility', 'visible' );
+				ytsZoneMaxAvalancheRougie ++;
+			}
+			function ytsEffacerZoneAvalancheRougie () {
+				for(i=0; i<ytsZoneMaxAvalancheRougie; i++) {
+					zoneAvalancheRougie = document.getElementById( 'ytsZoneAvalancheRougie' + i );
+					zoneAvalancheRougie.setAttributeNS( null, 'visibility', 'hidden' );
+				}
+				ytsZoneMaxAvalancheRougie = 0;
+			}
+			function ytsDessinerTagAvalanche( pLigne, pColonne ) {
+				ytsCreerElementUse( 'tagAvalanche'+pLigne+'x'+pColonne, 'ytsTag1AvalancheDef', pColonne*20, pLigne*20, 'ytsPlancherAvatars', false);
+			}
+			function ytsClickNouveauSolCb (evt) {
+				evt.preventDefault(); // preventCapture( ); preventBubble( );
+				var obj = evt.target;
+				var nom = obj.id;
+				//ytsTrace( 'ytsClickNouveauSolCb' );
+				//alert('ytsClickNouveauSolCb : ' + evt.target.id);
+				
+				// Créér un nouveau sol
+				ytsNouveauSol();
+			}
+			function ytsClickNeigeCb( evt ) {
+				// Forcer la météo à la chute de Neige
+				ytsMeteo = ytsNeigeCst;
+				ytsTemperature = Math.floor( Math.random() * 12 );
+				ytsMajCouche();
+			}
+			function ytsClickNiveauSuperieurCb( evt ) {
+				// Forcer le passage au niveau supérieur
+				ytsSetNiveau( ytsNiveau + 1 );
+			}
+		//]]>
+	</script>
+	
+	<script type="text/ecmascript">
+		//<![CDATA[
+			window.ytsFeedback = ytsFeedback;
+			window.ytsTrace = ytsTrace;
+			
+			var ytsNamespaceSVG = 'http://www.w3.org/2000/svg';
+			var ytsNamespaceXLINK = 'http://www.w3.org/1999/xlink';
+
+			function ytsFeedback(pMsg) {
+				//alert( document.getElementById('ytsFeedback').firstChild );
+				document.getElementById('ytsFeedback').firstChild.nodeValue = pMsg;
+			}
+			function ytsTrace(pMsg) {
+				var currentTime = new Date( );
+				var h = currentTime.getHours( );
+				var m = currentTime.getMinutes( );
+				var s = currentTime.getSeconds( );
+				
+				var obj = document.getElementById( 'ytsTraceLineY' );
+				var y = parseInt( obj.firstChild.nodeValue ) + 20;
+				obj.firstChild.nodeValue = y;
+				
+				var id = 'ytsTraceLine' + y;
+				ytsCreerElement( 'text', id, 0, y, 'ytsTraceContainer');
+				var msg = h +':'+ m +':'+ s +' '+ pMsg;
+				ytsCreerNoeudTexte( msg, id );
+				//document.getElementById( id ).setAttributeNS( null, 'font-size', '30' );
+			}
+			function ytsTraceEffacer( evt ) {
+				var obj = document.getElementById( 'ytsTraceContainer' );
+				var children = obj.childNodes;
+				while( children.length > 0 )
+					obj.removeChild( children.item( 0 ) );
+				
+				obj = document.getElementById( 'ytsTraceLineY' );
+				obj.firstChild.nodeValue = 30;
+			}
+			function ytsRemoveAllChildren( pIdPere ) {
+				var obj = document.getElementById( pIdPere );
+				var children = obj.childNodes;
+				while( children.length > 0 )
+					obj.removeChild( children.item( 0 ) );
+			}
+			function ytsCreerElementDef( pDessinXML ) {
+				if( pDessinXML != null) {
+					try {
+						// IE-ASV 3.0, Opera, Batik
+						document.getElementById("ytsDefs").appendChild( parseXML( pDessinXML, document) );
+					}
+					catch(e) {
+						// Firefox 1.5
+						var parser = new DOMParser();
+						var docFragment = parser.parseFromString( pDessinXML, 'text/xml' );
+						var objSrc = docFragment.documentElement;
+						
+						// Creer un noeud dans le defs du SVG a partir du dom parse
+						// cloneNode n'est pas adequat car le namespace ne devient pas svg sous Firefox
+						document.getElementById( 'ytsDefs' ).appendChild( ytsCloneNodeChangeNS( ytsNamespaceSVG, objSrc ) );
+					}
+				}
+			}
+			function ytsCloneNodeChangeNS( pNameSpace, pObjSrc ) {
+				var clone = null;
+				if( pObjSrc.nodeType === 1 ) {
+					// Noeud Element_Node
+					clone = document.createElementNS( ytsNamespaceSVG, pObjSrc.tagName );
+					
+					var i=0;
+					var attributes = pObjSrc.attributes;
+					for(i=0; i<attributes.length; i++) {
+						var ns = attributes.item( i ).namespaceURI;
+						clone.setAttributeNS( ns, attributes.item( i ).nodeName, attributes.item( i ).nodeValue );
+					}
+					var children = pObjSrc.childNodes;
+					for(i=0; i<children.length; i++) {
+						clone.appendChild( ytsCloneNodeChangeNS( pNameSpace, children.item( i ) ) );
+					}
+				}
+				else {
+					// Noeud Text_Node
+					clone = document.createTextNode( pObjSrc.nodeValue );
+				}
+				return clone;
+			}
+			function ytsCreerElement( pTagName, pId, pX, pY, pIdPere) {
+				var elt = document.createElementNS( ytsNamespaceSVG, pTagName );
+				if( pId != null )
+					elt.setAttributeNS( null, 'id', pId );
+				if(pTagName == 'g') {
+					//elt.setAttributeNS( null, 'onclick', 'ytsClickUseEltCb(evt);');
+					elt.setAttributeNS( null, 'transform', 'translate(' + pX +' '+ pY +')');
+				}
+				else {
+					//elt.setAttributeNS( null, 'onclick', 'ytsClickUseEltCb(evt);');
+					elt.setAttributeNS( null, 'x', pX);
+					elt.setAttributeNS( null, 'y', pY);
+				}
+				elt.setAttributeNS( null, 'fill-opacity', 1 );
+				document.getElementById( pIdPere ).appendChild( elt );
+			}
+			function ytsCreerNoeudTexte( pTexte, pIdPere ) {
+				var noeudTexte = document.createTextNode( pTexte );
+				document.getElementById( pIdPere ).appendChild( noeudTexte );
+			}
+			function ytsCreerElementUse( pId, pIdElementDef, pX, pY, pIdPere, pAjouterCallback) {
+				var elt = document.createElementNS( ytsNamespaceSVG, 'use' );
+				elt.setAttributeNS( null, 'id', pId );
+				if( pAjouterCallback == true )
+					elt.setAttributeNS( null, 'onclick', 'ytsClickUseEltCb(evt);');
+				elt.setAttributeNS( null, 'x', pX);
+				elt.setAttributeNS( null, 'y', pY);
+				elt.setAttributeNS( ytsNamespaceXLINK, 'xlink:href', '#'+pIdElementDef );//123456789
+				elt.setAttributeNS( null, 'fill-opacity', 1 );
+				document.getElementById( pIdPere ).appendChild( elt );
+			}
+			function ytsClickUseEltCb(evt) {
+				evt.preventDefault(); // preventCapture( ); preventBubble( );
+				var obj = evt.target;
+				var nom = obj.id;
+				//alert( 'gggg:' + obj.id +' # '+ obj.getAttribute('id') );
+				alert('ytsClickUseEltCb : ' + evt.target.id);
+			}
+			var ytsMovingPanel = null;
+			function ytsMovingPanelMouseDown( evt ) {
+				var obj = evt.target;
+				if(obj.nodeName == 'rect') {
+					obj.setAttributeNS( null, 'fill', 'yellow' );
+					var panel = obj.parentNode;
+					ytsMovingPanel = obj.parentNode;
+				}
+				evt.preventDefault();
+			}
+			function ytsMovingPanelMouseMove( evt ) {
+				if( ytsMovingPanel != null) {
+					var fx = ytsFx;
+					var fy = ytsFy;
+					
+					var op = ytsMovingPanel.getAttributeNS( null, 'transform' );
+					var x = Math.floor( evt.clientX  * fx - 20 * fx );
+					var y = Math.floor( evt.clientY * fy - 5 * fy );
+					
+					op = op +' '+  'translate(' + x +' '+ y +')';
+					op = 'translate(' + x +' '+ y +')';
+					ytsMovingPanel.setAttributeNS( null, 'transform', op );
+					ytsFeedback( evt.clientX +' # '+ op +' # '+ fx +' # '+ fy );
+				}
+			}
+			function ytsMovingPanelMouseUp( evt ) {
+				if( ytsMovingPanel !== null ) {
+					var obj = evt.target;
+					if(obj.nodeName == 'rect')
+						obj.setAttributeNS( null, 'fill', 'gray' );
+					ytsMovingPanel = null;
+				}
+			}
+			function ytsSetResolution( pFacteur ) {
+				// pFacteur : facteur du rapport 16/9 eme
+				/*
+					viewBox="0 0 1120 630"
+					16 : 256 x 144
+					20 : 320 x 180
+					30 : 480 x 270
+					40 : 640 x 360
+					50 : 800 x 450
+					60 : 960 x 540
+					70 : 1120 x 630
+				*/
+				//alert( document.getElementById( 'ytsRoot' ).viewBox );
+				//document.getElementById( 'ytsRoot' ).viewBox = '0 0 ' + pFacteur*16 +' '+ pFacteur*9;
+				document.getElementById( 'ytsRoot' ).currentScale = pFacteur / 70;
+			}
+		//]]>
+	</script>
+	
+	<defs id="ytsDefs">
+		<text id="ytsTitreApplication">Neige</text>
+		<path id="ConalitPath" d="M 30 330 s 50 -50 100 0 s 80 -50 110 0" style="stroke:blue;fill:none;stroke-width:10" />
+		<g id="ytsFeedbackPanel">
+			<desc>Panel pour afficher des messages</desc>
+			<text id="ytsFeedback" y="15">Feedback</text>
+		</g>
+		
+		<g id="ytsSkieurDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="yellow" fill="blue"/>
+			<text transform="translate(10 10)">Skieur</text>
+		</g>
+		<g id="ytsButDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="yellow" fill="yellow"/>
+			<text transform="translate(10 10)">But</text>
+		</g>
+		<g id="ytsCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="red" fill="none"/>
+		</g>
+		<!-- Avalanche -->
+		<g id="ytsCaseAvalancheDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" opacity="0.2" stroke="red" fill="red"/>
+		</g>
+		<g id="ytsTag1AvalancheDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" opacity="0.2" stroke="red" Xfill="red"/>
+			<text x="10" y="15">1</text>
+		</g>
+		<g id="ytsSigneAvalancheDef" opacity="0.5">
+			<polyline points="0,0 100,0 100,50 0,50 0,0" stroke="blue" fill="red"/>
+			<text x="25" y="20" stroke="white">Avalanche</text>
+		</g>
+		
+		<!-- Couches -->
+		<g id = "ytsCoucheTerreDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="brown"/>
+			<text x="5" y="40">Couche de Terre</text>
+		</g>
+		<g id = "ytsCoucheTerreCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="brown"/>
+		</g>
+		<g id = "ytsCoucheRocherDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="gray"/>
+			<text x="5" y="40">Couche de Rocher</text>
+		</g>
+		<g id = "ytsCoucheRocherCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="gray"/>
+		</g>
+		<g id = "ytsCoucheVegetaleDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="green"/>
+			<text x="5" y="40">Couche végétale</text>
+		</g>
+		<g id = "ytsCoucheVegetaleCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="green"/>
+		</g>
+		<g id = "ytsCoucheNeigeDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="white"/>
+			<text x="5" y="40">Couche de Neige</text>
+		</g>
+		<g id = "ytsCoucheNeigeCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="white"/>
+		</g>
+		<g id = "ytsCouchePoudreuseDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="white"/>
+			<text x="5" y="40">Couche de Poudreuse</text>
+		</g>
+		<g id = "ytsCouchePoudreuseCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="white"/>
+		</g>
+		<g id = "ytsCoucheDechetDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="orange"/>
+			<text x="5" y="40">Couche de Déchets</text>
+		</g>
+		<g id = "ytsCoucheDechetCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="orange"/>
+		</g>
+		<g id = "ytsCouchePlaqueVentDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="violet"/>
+			<text x="5" y="40">Couche Plaque à vent</text>
+		</g>
+		<g id = "ytsCouchePlaqueVentCaseDef">
+			<polyline points="0,0 20,0 20,20 0,20 0,0" stroke="blue" fill="violet"/>
+		</g>
+		
+		<!-- Météo -->
+		<g id="ytsSoleilDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="yellow"/>
+			<text x="5" y="40">Soleil</text>
+		</g>
+		<g id="ytsBrouillardDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="gray"/>
+			<text x="5" y="40">Brouillard</text>
+		</g>
+		<g id="ytsPluieDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="blue"/>
+			<text x="5" y="40">Pluie</text>
+		</g>
+		<g id="ytsNeigeDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="white"/>
+			<text x="5" y="40">Neige</text>
+		</g>
+		<g id="ytsGreleDef">
+			<polyline points="0,0 50,0 50,50 0,50 0,0" stroke="blue" fill="orange"/>
+			<text x="5" y="40">Grêle</text>
+		</g>
+		
+		<!-- Calques Météo -->
+		<g id="ytsGoutteEauDef">
+			<path d="M -0.5,7 C 5,-8.5 8,14 5,7 C 6.5,17 0,16.5 0.5,9.5" stroke="black" fill="blue" opacity="0.8"/>
+		</g>
+		<g id="ytsCalquePluieDef">
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(10 10)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(35 25)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(250 55)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(90 95)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(450 125)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(350 155)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(190 195)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(50 285)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(230 295)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(460 325)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(140 405)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(390 455)"/>
+			<use xlink:href="#ytsGoutteEauDef" transform="translate(60 455)"/>
+		</g>
+		
+		<!-- Calque Neige -->
+		<g id="ytsFloconDef">
+			<!--<path d="M 142,96 C 150,78 145,114 152,95 C 158,93 151,117 152,110 C 154,91 144,114 143,97" stroke="black" fill="white" opacity="0.8"/>-->
+			<path d="M 0,0 C 8,-18 3,18 10,-1 C 16,-3 9,21 10,14 C 12,-5 2,18 1,1" stroke="black" fill="white" opacity="0.8"/>
+		</g>
+		<g id="ytsCalqueNeigeDef">
+			<use xlink:href="#ytsFloconDef" transform="translate(10 10)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(35 25)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(250 55)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(90 95)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(450 125)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(350 155)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(190 195)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(50 285)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(230 295)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(460 325)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(140 405)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(390 455)"/>
+			<use xlink:href="#ytsFloconDef" transform="translate(60 455)"/>
+		</g>
+	</defs>
+	
+	<g>
+		<g>
+			<desc>Bulle trnte Sf45#kER?78</desc>
+			<text x="560" y="315"><tref xlink:href="#ytsTitreApplication"/></text>
+			<text x="500" y="100">
+				<textPath xlink:href="#ConalitPath">Neige : une e-malice prune</textPath>
+			</text>
+			<text x="500" y="150" transform="translate(500 150)">
+				<textPath xlink:href="#ConalitPath"> By Conalit &amp; Poore</textPath>
+			</text>
+		</g>
+		
+		<!--  transform="scale( 0.428 )"  2.33 ou 0.428 -->
+		<use xlink:href="#ytsFeedbackPanel" x="0" y="0" Xvisibility="hidden"/>
+		
+		<g id="ytsSolTerre" transform="translate(400 50) rotate(45)" fill="green">
+			<text>Sol Terre</text>			
+		</g>
+		
+		<g id="ytsAtmosphere" transform="translate(400 50) rotate(45)">
+			<polyline id="ytsSoleil" points="0,0 480,0 480,480 0,480" fill="yellow" visibility="hidden"/>
+			<use id="ytsCalquePluie" xlink:href="#ytsCalquePluieDef" Xtransform="translate(0 0)" visibility="hidden"/>
+			<use id="ytsCalqueNeige" xlink:href="#ytsCalqueNeigeDef" Xtransform="translate(0 0)" visibility="hidden"/>
+		</g>
+		
+		<g id="ytsPlancherAvatars" transform="translate(400 50) rotate(45)">
+			<!-- zone d'avalanche rougie préallouée -->
+			<!-- ligne 1 -->
+			<use id="ytsZoneAvalancheRougie0" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie1" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie2" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie3" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			
+			<!-- ligne 2 -->
+			<use id="ytsZoneAvalancheRougie4" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie5" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie6" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie7" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			
+			<!-- ligne 3 -->
+			<use id="ytsZoneAvalancheRougie8" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie9" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie10" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie11" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			
+			<!-- ligne 4 -->
+			<use id="ytsZoneAvalancheRougie12" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie13" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie14" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			<use id="ytsZoneAvalancheRougie15" xlink:href="#ytsCaseAvalancheDef" visibility="hidden"/>
+			
+			<use id="ytsSkieur" xlink:href="#ytsSkieurDef"/>
+			<use id="ytsBut" xlink:href="#ytsButDef"/>
+		</g>
+		
+		<g id="ytsMeteoPanel" transform="translate(100 50)">
+			<text>Météo</text>
+			<text id="ytsTemperatureLabel" y="65">Température</text>
+			<text id="ytsVentLabel" y="80">Vent</text>
+		</g>
+		
+		<g id="ytsCommandePanel">
+			<polyline points="0,0 100,0 100,20 0,20 0,0" fill="violet" onclick="ytsClickNouveauSolCb( evt );"/>
+			<text onclick="ytsClickNouveauSolCb( evt );" y="15" stroke="white">Nouveau sol</text>
+			
+			<g transform="translate(0 25)">
+				<polyline points="0,0 100,0 100,20 0,20 0,0" fill="violet" onclick="ytsClickNeigeCb( evt );"/>
+				<text onclick="ytsClickNeigeCb( evt );" y="15" stroke="white">Neige</text>
+			</g>
+			
+			<g transform="translate(0 50)">
+				<polyline points="0,0 100,0 100,20 0,20 0,0" fill="violet" onclick="ytsClickNiveauSuperieurCb( evt );"/>
+				<text onclick="ytsClickNiveauSuperieurCb( evt );" y="15" stroke="white">Niveau supérieur</text>
+			</g>
+			
+			<g transform="translate(0 75)">
+				<a xlink:href="http://boutondoc.perso.cegetel.net/energie">
+				<polyline points="0,0 100,0 100,20 0,20 0,0" fill="violet"/>
+				<text x="0" y="15" stroke="white">Home</text></a>
+			</g>
+		</g>
+		
+		<g id="ytsCouchesSignesPanel" transform="translate(760 15)">
+			<text>Couches superposées :</text>
+			<g id="ytsCouchesPanel" transform="translate(0 10)"/>
+			<g id="ytsSignePanel" transform="translate(0 10)"/>
+		</g>
+		
+		<g id="ytsScorePanel" transform="translate(450 0)" fill="green">
+			<polyline points="0,0 200,0 200,20 0,20 0,0" fill="green"/>
+			<text y="15" stroke="white">Niveau </text>
+			<g id="ytsScoreNiveau1" visibility="hidden">
+				<text id="ytsNiveau" x="80" y="15" stroke="white">1</text>
+				<text y="30">Buts atteints :</text>
+				<text id="ytsScoreButs" x="80" y="30">0</text>
+				<text y="45">Avalanches :</text>
+				<text id="ytsScoreAvalanches" x="80" y="45">0</text>
+				<text id="ytsScoreMessage" x="0" y="60">Déplacements : touches 8 4 6 2</text>
+			</g>
+			<g id="ytsScoreNiveau2" visibility="hidden" transform="translate(0 75)">
+				<text y="15">Avalanches détectées : </text>
+				<text id="ytsAvalanchesDetectees" x="130" y="15">0</text>
+				<text y="30">Avalanches ignorées : </text>
+				<text id="ytsAvalanchesIgnorees" x="130" y="30">0</text>
+				<text y="45">Avalanches frauduleuses : </text>
+				<text id="ytsAvalanchesFrauduleuses" x="150" y="45">0</text>
+				<text y="60">Qualité de détection d'avalanches : </text>
+				<text id="ytsQualiteDetectionAvalanches" x="200" y="60">0</text>
+			</g>
+		</g>
+		
+		<!-- ****************************************************************************************************************************************************** -->
+
+		<svg id="ytsScreenResolution" width="200" height="120" x="200" y="15" viewBox="0 0 100 115" overflow="hidden">
+			<text x="0" y="15" class="zoneBouton" onclick="ytsSetResolution( 16 );">256x144</text>
+			<text x="0" y="30" class="zoneBouton" onclick="ytsSetResolution( 20 );">320x180</text>
+			<text x="0" y="45" class="zoneBouton" onclick="ytsSetResolution( 30 );">480x270</text>
+			<text x="0" y="60" class="zoneBouton" onclick="ytsSetResolution( 40 );">640x360</text>
+			<text x="0" y="75" class="zoneBouton" onclick="ytsSetResolution( 50 );">800x450</text>
+			<text x="0" y="90" class="zoneBouton" onclick="ytsSetResolution( 60 );">960x540</text>
+			<text x="0" y="105" class="zoneBouton" onclick="ytsSetResolution( 70 );">1120x630</text>
+		</svg>
+		
+		
+		
+		<svg width="600" height="200" x="580" y="145" viewBox="0 0 10 200" overflow="visible" id="ytsDebug">
+			<g id="ytsTracePanel" visibility="hidden">
+				<rect width="190" height="25" opacity="0.2"  onmousedown="ytsMovingPanelMouseDown( evt );" onmousemove="ytsMovingPanelMouseMove( evt );"
+						onmouseup="ytsMovingPanelMouseUp( evt );"/>
+				<text id="ytsTraceLineY" visibility="hidden">30</text>
+				<text x="100" y="15" class="zoneBouton" onclick="ytsTraceEffacer( evt );">Effacer</text>
+				<text id="ytsTrace" x="0" y="15" font-size="30">salut</text>
+				<text x="0" y="615" >fin</text>
+				<g id="ytsTraceContainer"/>
+			</g>
+		</svg>
+	</g>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="clock.css"?>		
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="clock">
+	<g transform="translate(100,100) rotate(-90)">
+		<circle r="100"/>
+		<line x1="100"  y1="0"    x2="90"   y2="0"  />
+		<line x1="87"   y1="50"   x2="78"   y2="45" />
+		<line x1="50"   y1="87"   x2="45"   y2="78" />
+		<line x1="0"    y1="100"  x2="0"    y2="90" />
+		<line x1="-50"  y1="87"   x2="-45"  y2="78" />
+		<line x1="-87"  y1="50"   x2="-78"  y2="45" />
+		<line x1="-100" y1="0"    x2="-90"  y2="0"  />
+		<line x1="-87"  y1="-50"  x2="-78"  y2="-45"/>
+		<line x1="-50"  y1="-87"  x2="-45"  y2="-78"/>
+		<line x1="0"    y1="-100" x2="0"    y2="-90"/>
+		<line x1="50"   y1="-87"  x2="45"   y2="-78"/>
+		<line x1="87"   y1="-50"  x2="78"   y2="-45"/>
+		<line id="hourhand"   x1="0" y1="0" x2="0" y2="40"/>
+		<line id="minutehand" x1="0" y1="0" x2="0" y2="65"/>
+		<line id="secondhand" x1="0" y1="0" x2="0" y2="90"/>
+	</g>
+
+	<script type="text/javascript" xmlns="http://www.w3.org/1999/xhtml">
+		var sHand = document.getElementById('secondhand');
+		var mHand = document.getElementById('minutehand');
+		var hHand = document.getElementById('hourhand');
+
+		function updateSeconds() {
+			var angle = (new Date()).getSeconds() * Math.PI/30;
+
+			if (angle == 0)
+				updateMinutes();
+
+			sHand.x2.baseVal.value = 90 * Math.cos(angle);
+			sHand.y2.baseVal.value = 90 * Math.sin(angle);
+		}
+
+		function updateMinutes() {
+			var angle = (new Date()).getMinutes() * Math.PI/30;
+
+			if (angle == 0)
+				updateHours();
+
+			mHand.x2.baseVal.value = 65 * Math.cos(angle);
+			mHand.y2.baseVal.value = 65 * Math.sin(angle);
+		}
+
+		function updateHours() {
+			var angle = (new Date()).getHours() * Math.PI/6;
+			hHand.x2.baseVal.value = 40 * Math.cos(angle);
+			hHand.y2.baseVal.value = 40 * Math.sin(angle);
+		}
+		updateSeconds();
+		updateMinutes();
+		updateHours();
+		setInterval('updateSeconds()', 1000);
+	</script>
+</svg>
